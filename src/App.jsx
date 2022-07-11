@@ -1,14 +1,15 @@
 import React from "react";
-import { ChakraProvider, Text, Heading } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
+import { Routes, Route } from "react-router-dom";
 import theme from "./Global/theme";
+import Home from "./Pages/Home";
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <div className="App">
-        <Heading>Head سر 123654</Heading>
-        <Text>Hello World سلام دنیا  ۱۲۳۴۴</Text>
-      </div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
     </ChakraProvider>
   );
 }
