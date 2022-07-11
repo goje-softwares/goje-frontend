@@ -1,8 +1,10 @@
 import React from "react";
-import { Box, IconButton, Button } from "@chakra-ui/react";
-import { MoonIcon } from "@chakra-ui/icons";
+import { Box, IconButton, Button, useColorMode } from "@chakra-ui/react";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
 export default function Navbar() {
+  const { colorMode, toggleColorMode } = useColorMode();
+
   return (
     <Box>
       <Box
@@ -16,7 +18,8 @@ export default function Navbar() {
             variant="outline"
             color={"grass"}
             borderColor="grass"
-            icon={<MoonIcon />}
+            icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+            onClick={toggleColorMode}
           />
         </Box>
         <Box>
