@@ -12,6 +12,7 @@ import {
   Tab,
   TabPanel,
   TabPanels,
+  HStack,
 } from "@chakra-ui/react";
 
 export default function LoginSignup() {
@@ -35,19 +36,31 @@ export default function LoginSignup() {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalBody p="5">
+          <ModalBody pt="5">
             <Tabs colorScheme="green" isFitted>
               <TabList>
                 <Tab>ورود</Tab>
                 <Tab>عضویت</Tab>
               </TabList>
               <TabPanels>
-                <TabPanel>
-                  <p>لاگین</p>
+                <TabPanel pl='0' pr='0'>
+                  <Box>
+                    <Box></Box>
+                    <Box>
+                      <HStack justify={'left'} spacing={"10px"}>
+                        <Button colorScheme="green">ورود</Button>
+                        <Button
+                          colorScheme="gray"
+                          variant={"outline"}
+                          onClick={onClose}
+                        >
+                          انصراف
+                        </Button>
+                      </HStack>
+                    </Box>
+                  </Box>
                 </TabPanel>
-                <TabPanel>
-                  <p>ساین آپ</p>
-                </TabPanel>
+                <TabPanel></TabPanel>
               </TabPanels>
             </Tabs>
           </ModalBody>
