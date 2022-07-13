@@ -11,11 +11,18 @@ const theme = extendTheme({
     body: `'Vazirmatn', sans-serif`,
   },
   colors: {
-    lightGray: "#FAF8F8",
-    tomato: "#CD1624",
-    tomatoLight: "#EC4A57",
-    tomatoVeryLight: "#F4929A",
-    grass: "#006F57",
+    tomato: {
+      50: "#ffe4e8",
+      100: "#fdb8be",
+      200: "#f58b93",
+      300: "#ef5d69",
+      400: "#e9303e",
+      500: "#cf1624",
+      600: "#a20f1b",
+      700: "#740813",
+      800: "#480309",
+      900: "#1f0001",
+    },
   },
   config,
 });
