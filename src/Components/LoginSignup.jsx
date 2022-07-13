@@ -43,11 +43,11 @@ export default function LoginSignup() {
                 <Tab>عضویت</Tab>
               </TabList>
               <TabPanels>
-                <TabPanel pl='0' pr='0'>
+                <TabPanel pl="0" pr="0">
                   <Box>
                     <Box></Box>
                     <Box>
-                      <HStack justify={'left'} spacing={"10px"}>
+                      <HStack justify={"left"} spacing={"10px"}>
                         <Button colorScheme="green">ورود</Button>
                         <Button
                           colorScheme="gray"
