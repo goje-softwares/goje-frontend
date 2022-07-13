@@ -23,12 +23,7 @@ export default function LoginSignup() {
   return (
     <>
       <Box>
-        <Button
-          onClick={onOpen}
-          color={"grass"}
-          borderColor="grass"
-          variant="outline"
-        >
+        <Button onClick={onOpen} colorScheme={"green"} variant="outline">
           ورود/عضویت
         </Button>
       </Box>

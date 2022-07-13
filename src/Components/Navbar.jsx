@@ -17,8 +17,7 @@ export default function Navbar() {
         <Box>
           <IconButton
             variant="outline"
-            color={"grass"}
-            borderColor="grass"
+            colorScheme={"green"}
             icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
             onClick={toggleColorMode}
           />
