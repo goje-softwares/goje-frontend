@@ -25,8 +25,7 @@ export default function LoginSignup() {
       <Box>
         <Button
           onClick={onOpen}
-          color={"grass"}
-          borderColor="grass"
+          colorScheme={"green"}
           variant="outline"
         >
           ورود/عضویت

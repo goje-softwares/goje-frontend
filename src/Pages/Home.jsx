@@ -1,10 +1,13 @@
 import React from "react";
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { Box, Heading, Text, useColorModeValue } from "@chakra-ui/react";
 
 export default function Home() {
+
+  const color = useColorModeValue('tomato.500', 'tomato.400');
+
   return (
     <Box mt="140px" textAlign={"center"}>
-      <Heading fontSize="5xl" color="tomato">
+      <Heading fontSize="5xl" color={color}>
         گـوجـه
       </Heading>
       <Text mt={"20px"}>به زودی...</Text>
