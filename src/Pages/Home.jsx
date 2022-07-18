@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Heading, Text, useColorModeValue } from "@chakra-ui/react";
-import Logo from "../Components/Logo";
+import Logo from "../Components/ui/Logo";
 
 export default function Home() {
   const color = useColorModeValue("tomato.500", "tomato.400");
