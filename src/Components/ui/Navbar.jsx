@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, IconButton, useColorMode } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-import LoginSignup from "./LoginSignup";
+import LoginSignup from "../popups/LoginSignup";
 
 export default function Navbar() {
   const { colorMode, toggleColorMode } = useColorMode();
