@@ -15,15 +15,13 @@ import {
   TabPanels,
 } from "@chakra-ui/react";
 import Login from "./Login";
+import Register from "./Register";
 
 export default function LoginSignup() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
-
-  const [show, setShow] = React.useState(false);
-  const handleClick = () => setShow(!show);
 
   return (
     <>
@@ -49,13 +47,11 @@ export default function LoginSignup() {
               </TabList>
               <TabPanels>
                 <TabPanel pl="0" pr="0">
-                  <Login
-                    show={show}
-                    handleClick={handleClick}
-                    onClose={onClose}
-                  />
+                  <Login onClose={onClose} />
                 </TabPanel>
-                <TabPanel></TabPanel>
+                <TabPanel pl="0" pr="0">
+                  <Register onClose={onClose} />
+                </TabPanel>
               </TabPanels>
             </Tabs>
           </ModalBody>
