@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   FormControl,
+  FormErrorMessage,
   InputGroup,
   InputLeftElement,
   HStack,
@@ -9,73 +10,188 @@ import {
   Text,
   Button,
   Box,
+  useToast,
 } from "@chakra-ui/react";
 import { ViewIcon } from "@chakra-ui/icons";
-export default function Login({ onClose }) {
-  const [show, setShow] = React.useState(false);
-  const handleClick = () => setShow(!show);
-  const [show2, setShow2] = React.useState(false);
-  const handleClick2 = () => setShow2(!show2);
+
+export default function Register({ props }) {
+  const [
+    onClose,
+    showPassword,
+    handleEyeClick,
+    showRPassword,
+    handleSecondEyeClick,
+    name,
+    handleNameChange,
+    handleNameBlur,
+    email,
+    handleEmailChange,
+    handleEmailBlur,
+    password,
+    handlePasswordChange,
+    handlePasswordBlur,
+    rPassword,
+    handleRPasswordChange,
+    handleRPasswordBlur,
+    handleSubmit,
+    toastErrors,
+    success,
+    setSuccess,
+    disableSubmit,
+  ] = props;
+
+  const toast = useToast();
+
+  // toasts
+  useEffect(() => {
+    if (success) {
+      if (!toast.isActive("success")) {
+        toast({
+          description: "حساب کاربری با موفقیت ایجاد شد",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          icon: <></>,
+          id: "success",
+          position: "top",
+        });
+        setSuccess(false);
+        onClose();
+      }
+    }
+
+    if (toastErrors.length > 0) {
+      for (let i = 0; i < toastErrors.length; i++) {
+        if (!toast.isActive(i)) {
+          toast({
+            description: toastErrors[i],
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+            icon: <></>,
+            id: i,
+            position: "bottom-left",
+          });
+        }
+      }
+    }
+  });
 
   return (
-    <Box>
-      <Box pt={"10px"} pb={"14px"}>
-        <Text textAlign={"center"} fontSize="sm" color="gray">
-          لطفا اطلاعات زیر را با دقت وارد نمایید.
-        </Text>
-      </Box>
+    <form onSubmit={handleSubmit}>
       <Box>
-        <VStack spacing={"10px"}>
-          <Input placeholder="نام" size="md" />
-          <FormControl>
-            <Input type="email" placeholder="ایمیل" />
-          </FormControl>
-          <InputGroup size="md">
-            <Input
-              pr="15px"
-              type={show ? "text" : "password"}
-              placeholder="رمز عبور"
-            />
-            <InputLeftElement width="3.2rem">
-              <Button h="1.75rem" size="sm" onClick={handleClick}>
-                <ViewIcon />
-              </Button>
-            </InputLeftElement>
-          </InputGroup>
-          <InputGroup size="md">
-            <Input
-              pr="15px"
-              type={show2 ? "text" : "password"}
-              placeholder="تکرار رمز عبور"
-            />
-            <InputLeftElement width="3.2rem">
-              <Button h="1.75rem" size="sm" onClick={handleClick2}>
-                <ViewIcon />
-              </Button>
-            </InputLeftElement>
-          </InputGroup>
-        </VStack>
-      </Box>
-      <Box pt="20px">
-        <HStack
-          display={"flex"}
-          justifyContent="space-around"
-          justify={"left"}
-          spacing={"10px"}
-        >
-          <Button width={"100%"} colorScheme="green">
-            ثبت نام
-          </Button>
-          <Button
-            width={"100%"}
-            colorScheme="gray"
-            variant={"outline"}
-            onClick={onClose}
+        <Box pt={"10px"} pb={"14px"}>
+          <Text textAlign={"center"} fontSize="sm" color="gray">
+            لطفا اطلاعات زیر را با دقت وارد نمایید.
+          </Text>
+        </Box>
+
+        <Box>
+          <VStack spacing={"10px"}>
+            <FormControl isInvalid={name.err}>
+              <Input
+                value={name.name}
+                onChange={handleNameChange}
+                onBlur={handleNameBlur}
+                placeholder="نام"
+                size="md"
+              />
+              {name.err ? (
+                <FormErrorMessage>{name.err}</FormErrorMessage>
+              ) : (
+                <></>
+              )}
+            </FormControl>
+
+            <FormControl isInvalid={email.err}>
+              <Input
+                value={email.email}
+                onChange={handleEmailChange}
+                onBlur={handleEmailBlur}
+                type="email"
+                placeholder="ایمیل"
+              />
+              {email.err ? (
+                <FormErrorMessage>{email.err}</FormErrorMessage>
+              ) : (
+                <></>
+              )}
+            </FormControl>
+
+            <InputGroup size="md">
+              <FormControl isInvalid={password.err}>
+                <Input
+                  value={password.password}
+                  onChange={handlePasswordChange}
+                  onBlur={handlePasswordBlur}
+                  pr="15px"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="رمز عبور"
+                />
+                <InputLeftElement width="3.2rem">
+                  <Button h="1.75rem" size="sm" onClick={handleEyeClick}>
+                    <ViewIcon />
+                  </Button>
+                </InputLeftElement>
+                {password.err ? (
+                  <FormErrorMessage>{password.err}</FormErrorMessage>
+                ) : (
+                  <></>
+                )}
+              </FormControl>
+            </InputGroup>
+
+            <FormControl isInvalid={rPassword.err}>
+              <InputGroup size="md">
+                <Input
+                  value={rPassword.rPassword}
+                  onChange={handleRPasswordChange}
+                  onBlur={handleRPasswordBlur}
+                  pr="15px"
+                  type={showRPassword ? "text" : "password"}
+                  placeholder="تکرار رمز عبور"
+                />
+                <InputLeftElement width="3.2rem">
+                  <Button h="1.75rem" size="sm" onClick={handleSecondEyeClick}>
+                    <ViewIcon />
+                  </Button>
+                </InputLeftElement>
+              </InputGroup>
+              {rPassword.err ? (
+                <FormErrorMessage>{rPassword.err}</FormErrorMessage>
+              ) : (
+                <></>
+              )}
+            </FormControl>
+          </VStack>
+        </Box>
+
+        <Box pt="20px">
+          <HStack
+            display={"flex"}
+            justifyContent="space-around"
+            justify={"left"}
+            spacing={"10px"}
           >
-            انصراف
-          </Button>
-        </HStack>
+            <Button
+              type="submit"
+              isDisabled={disableSubmit}
+              width={"100%"}
+              colorScheme="green"
+            >
+              ثبت نام
+            </Button>
+            <Button
+              width={"100%"}
+              colorScheme="gray"
+              variant={"outline"}
+              onClick={onClose}
+            >
+              انصراف
+            </Button>
+          </HStack>
+        </Box>
       </Box>
-    </Box>
+    </form>
   );
 }
