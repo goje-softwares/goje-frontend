@@ -50,10 +50,7 @@ export default function RegisterProvider({ onClose }) {
   };
 
   // repeat password
-  const [rPassword, setRPassword] = useState({
-    rPassword: "",
-    err: false,
-  });
+  const [rPassword, setRPassword] = useState({ rPassword: "", err: false });
   const handleRPasswordChange = (e) => {
     const value = e.target.value;
     setRPassword({
@@ -66,6 +63,44 @@ export default function RegisterProvider({ onClose }) {
       ...rPassword,
       err: validateRPassword(password.password, rPassword.rPassword),
     });
+  };
+
+  // submit
+  const [disableSubmit, setDistableSubmit] = useState(false);
+  const [toastErrors, setToastErrors] = useState([]);
+  const [success, setSuccess] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setDistableSubmit(true);
+    let tmpErrors = [];
+    if (validateName(name.name)) tmpErrors.push(validateName(name.name));
+    if (validateEmail(email.email)) tmpErrors.push(validateEmail(email.email));
+    if (validatePassword(password.password))
+      tmpErrors.push(validatePassword(password.password));
+    if (validateRPassword(password.password, rPassword.rPassword))
+      tmpErrors.push(validateRPassword(password.password, rPassword.rPassword));
+
+    if (tmpErrors.length > 0) {
+      setToastErrors(tmpErrors);
+      setTimeout(() => {
+        setToastErrors([]);
+        setDistableSubmit(false);
+      }, 5000);
+    } else {
+      setTimeout(() => {
+        setSuccess(true);
+        setToastErrors([]);
+        // reset states
+        setShowPassword(false);
+        setShowRepeatPassword(false);
+        setName({ name: "", err: false });
+        setEmail({ email: "", err: false });
+        setPassword({ password: "", err: false });
+        setRPassword({ rPassword: "", err: false });
+        setDistableSubmit(false);
+      }, 3000);
+    }
   };
 
   return (
@@ -89,6 +124,11 @@ export default function RegisterProvider({ onClose }) {
           rPassword,
           handleRPasswordChange,
           handleRPasswordBlur,
+          handleSubmit,
+          toastErrors,
+          success,
+          setSuccess,
+          disableSubmit,
         ]}
       />
     </>
