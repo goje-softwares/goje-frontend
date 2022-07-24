@@ -1,9 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import { ColorModeScript } from "@chakra-ui/react";
+import { ColorModeScript, createStandaloneToast } from "@chakra-ui/react";
 import theme from "./Global/theme";
 import App from "./App";
+
+const { ToastContainer } = createStandaloneToast({theme: theme})
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -11,6 +13,7 @@ root.render(
     <BrowserRouter>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <App />
+      <ToastContainer />
     </BrowserRouter>
   </React.StrictMode>
 );
