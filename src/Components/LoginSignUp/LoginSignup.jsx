@@ -14,8 +14,8 @@ import {
   TabPanel,
   TabPanels,
 } from "@chakra-ui/react";
-import Login from "./Login";
-import Register from "./Register";
+import LoginProvider from "./Providers/LoginProvider";
+import RegisterProvider from "./Providers/RegisterProvider";
 
 export default function LoginSignup() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -47,10 +47,10 @@ export default function LoginSignup() {
               </TabList>
               <TabPanels>
                 <TabPanel pl="0" pr="0">
-                  <Login onClose={onClose} />
+                  <LoginProvider onClose={onClose} />
                 </TabPanel>
                 <TabPanel pl="0" pr="0">
-                  <Register onClose={onClose} />
+                  <RegisterProvider onClose={onClose} />
                 </TabPanel>
               </TabPanels>
             </Tabs>

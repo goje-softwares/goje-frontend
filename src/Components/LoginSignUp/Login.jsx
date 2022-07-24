@@ -4,6 +4,8 @@ import {
   InputGroup,
   InputLeftElement,
   HStack,
+  FormControl,
+  FormErrorMessage,
   VStack,
   Input,
   Text,
@@ -11,9 +13,15 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { ViewIcon } from "@chakra-ui/icons";
-export default function Login({ onClose }) {
-  const [show, setShow] = React.useState(false);
-  const handleClick = () => setShow(!show);
+export default function Login({ props }) {
+  const [
+    onClose,
+    show,
+    handleClick,
+    email,
+    handleEmailChange,
+    handleEmailBlur,
+  ] = props;
 
   return (
     <Box>
@@ -24,12 +32,25 @@ export default function Login({ onClose }) {
       </Box>
       <Box>
         <VStack spacing={"10px"}>
-          <Input placeholder="ایمیل" size="md" />
+          <FormControl isInvalid={email.err}>
+            <Input
+              value={email.email}
+              onChange={handleEmailChange}
+              onBlur={handleEmailBlur}
+              placeholder="ایمیل"
+              size="md"
+            />
+            {email.err ? (
+              <FormErrorMessage>{email.err}</FormErrorMessage>
+            ) : (
+              <></>
+            )}
+          </FormControl>
           <InputGroup size="md">
             <Input
               pr="15px"
               type={show ? "text" : "password"}
-              placeholder="رمز ورود"
+              placeholder="رمز عبور"
             />
             <InputLeftElement width="3.2rem">
               <Button h="1.75rem" size="sm" onClick={handleClick}>

@@ -1,6 +1,7 @@
 import React from "react";
 import {
   FormControl,
+  FormErrorMessage,
   InputGroup,
   InputLeftElement,
   HStack,
@@ -11,11 +12,27 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { ViewIcon } from "@chakra-ui/icons";
-export default function Login({ onClose }) {
-  const [show, setShow] = React.useState(false);
-  const handleClick = () => setShow(!show);
-  const [show2, setShow2] = React.useState(false);
-  const handleClick2 = () => setShow2(!show2);
+
+export default function Register({ props }) {
+  const [
+    onClose,
+    showPassword,
+    handleEyeClick,
+    showRPassword,
+    handleSecondEyeClick,
+    name,
+    handleNameChange,
+    handleNameBlur,
+    email,
+    handleEmailChange,
+    handleEmailBlur,
+    password,
+    handlePasswordChange,
+    handlePasswordBlur,
+    rPassword,
+    handleRPasswordChange,
+    handleRPasswordBlur,
+  ] = props;
 
   return (
     <Box>
@@ -24,38 +41,83 @@ export default function Login({ onClose }) {
           لطفا اطلاعات زیر را با دقت وارد نمایید.
         </Text>
       </Box>
+
       <Box>
         <VStack spacing={"10px"}>
-          <Input placeholder="نام" size="md" />
-          <FormControl>
-            <Input type="email" placeholder="ایمیل" />
+          <FormControl isInvalid={name.err}>
+            <Input
+              value={name.name}
+              onChange={handleNameChange}
+              onBlur={handleNameBlur}
+              placeholder="نام"
+              size="md"
+            />
+            {name.err ? <FormErrorMessage>{name.err}</FormErrorMessage> : <></>}
           </FormControl>
-          <InputGroup size="md">
+
+          <FormControl isInvalid={email.err}>
             <Input
-              pr="15px"
-              type={show ? "text" : "password"}
-              placeholder="رمز عبور"
+              value={email.email}
+              onChange={handleEmailChange}
+              onBlur={handleEmailBlur}
+              type="email"
+              placeholder="ایمیل"
             />
-            <InputLeftElement width="3.2rem">
-              <Button h="1.75rem" size="sm" onClick={handleClick}>
-                <ViewIcon />
-              </Button>
-            </InputLeftElement>
-          </InputGroup>
+            {email.err ? (
+              <FormErrorMessage>{email.err}</FormErrorMessage>
+            ) : (
+              <></>
+            )}
+          </FormControl>
+
           <InputGroup size="md">
-            <Input
-              pr="15px"
-              type={show2 ? "text" : "password"}
-              placeholder="تکرار رمز عبور"
-            />
-            <InputLeftElement width="3.2rem">
-              <Button h="1.75rem" size="sm" onClick={handleClick2}>
-                <ViewIcon />
-              </Button>
-            </InputLeftElement>
+            <FormControl isInvalid={password.err}>
+              <Input
+                value={password.password}
+                onChange={handlePasswordChange}
+                onBlur={handlePasswordBlur}
+                pr="15px"
+                type={showPassword ? "text" : "password"}
+                placeholder="رمز عبور"
+              />
+              <InputLeftElement width="3.2rem">
+                <Button h="1.75rem" size="sm" onClick={handleEyeClick}>
+                  <ViewIcon />
+                </Button>
+              </InputLeftElement>
+              {password.err ? (
+                <FormErrorMessage>{password.err}</FormErrorMessage>
+              ) : (
+                <></>
+              )}
+            </FormControl>
           </InputGroup>
+
+          <FormControl isInvalid={rPassword.err}>
+            <InputGroup size="md">
+              <Input
+                value={rPassword.rPassword}
+                onChange={handleRPasswordChange}
+                onBlur={handleRPasswordBlur}
+                pr="15px"
+                type={showRPassword ? "text" : "password"}
+                placeholder="تکرار رمز عبور"
+              />
+              <InputLeftElement width="3.2rem">
+                <Button h="1.75rem" size="sm" onClick={handleSecondEyeClick}>
+                  <ViewIcon />
+                </Button>
+              </InputLeftElement>
+            </InputGroup>
+            {rPassword.err ? (
+              <FormErrorMessage>{rPassword.err}</FormErrorMessage>
+            ) : (
+              <></>
+            )}
+          </FormControl>
         </VStack>
       </Box>
+      
       <Box pt="20px">
         <HStack
           display={"flex"}
