@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "../../../api/axios";
 
 import {
   validateName,
@@ -65,14 +66,21 @@ export default function RegisterProvider({ onClose }) {
     });
   };
 
+  const clearToastsErrorsAfter3sec = () => {
+    setTimeout(() => {
+      setToastErrors([]);
+      setDisableSubmit(false);
+    }, 3000);
+  };
+
   // submit
-  const [disableSubmit, setDistableSubmit] = useState(false);
+  const [disableSubmit, setDisableSubmit] = useState(false);
   const [toastErrors, setToastErrors] = useState([]);
   const [success, setSuccess] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setDistableSubmit(true);
+    setDisableSubmit(true);
     let tmpErrors = [];
     if (validateName(name.name)) tmpErrors.push(validateName(name.name));
     if (validateEmail(email.email)) tmpErrors.push(validateEmail(email.email));
@@ -83,23 +91,37 @@ export default function RegisterProvider({ onClose }) {
 
     if (tmpErrors.length > 0) {
       setToastErrors(tmpErrors);
-      setTimeout(() => {
-        setToastErrors([]);
-        setDistableSubmit(false);
-      }, 5000);
+      clearToastsErrorsAfter3sec();
     } else {
-      setTimeout(() => {
-        setSuccess(true);
-        setToastErrors([]);
-        // reset states
-        setShowPassword(false);
-        setShowRepeatPassword(false);
-        setName({ name: "", err: false });
-        setEmail({ email: "", err: false });
-        setPassword({ password: "", err: false });
-        setRPassword({ rPassword: "", err: false });
-        setDistableSubmit(false);
-      }, 3000);
+      const data = {
+        name: name.name,
+        email: email.email,
+        password: password.password,
+      };
+
+      axios
+        .post("/auth/register", data)
+        .then((res) => {
+          if (res.status === 200) {
+            if (
+              res.data.email &&
+              res.data.email[0] === "The email has already been taken."
+            ) {
+              setToastErrors(["ایمیل قبلا در سیستم ثبت شده است"]);
+              clearToastsErrorsAfter3sec();
+            } else {
+              setToastErrors([]);
+              onClose();
+              setSuccess(true);
+            }
+          }
+        })
+        .catch((err) => {
+          setToastErrors(["عملیات ورود با خطا روبرو شد"]);
+          clearToastsErrorsAfter3sec();
+          setDisableSubmit(false);
+          err && console.error(err);
+        });
     }
   };
 
