@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import { validateEmail, validatePassword } from "../../../utils/validator";
 import Login from "../Login";
+import axios from "../../../api/axios";
 
 export default function LoginProvider({ onClose }) {
   const [show, setShow] = React.useState(false);
@@ -21,14 +22,21 @@ export default function LoginProvider({ onClose }) {
     setPassword({ ...password, password: value });
   };
 
+  const clearToastsErrorsAfter3sec = () => {
+    setTimeout(() => {
+      setToastErrors([]);
+      setDisableSubmit(false);
+    }, 3000);
+  };
+
   // submit
-  const [disableSubmit, setDistableSubmit] = useState(false);
+  const [disableSubmit, setDisableSubmit] = useState(false);
   const [toastErrors, setToastErrors] = useState([]);
+  const [success, setSuccess] = useState(false);
 
   const handleSubmit = (e) => {
-    console.log('submit emmited')
     e.preventDefault();
-    setDistableSubmit(true);
+    setDisableSubmit(true);
     let tmpErrors = [];
     if (validateEmail(email.email)) tmpErrors.push(validateEmail(email.email));
     if (validatePassword(password.password))
@@ -36,19 +44,32 @@ export default function LoginProvider({ onClose }) {
 
     if (tmpErrors.length > 0) {
       setToastErrors(tmpErrors);
-      setTimeout(() => {
-        setToastErrors([]);
-        setDistableSubmit(false);
-      }, 3000);
+      clearToastsErrorsAfter3sec();
     } else {
-      setTimeout(() => {
-        setToastErrors([]);
-        // reset states
-        setShow(false);
-        setEmail({ email: "", err: false });
-        setPassword({ password: "", err: false });
-        setDistableSubmit(false);
-      }, 3000);
+      // TODO: save tokens
+      // TODO: signup
+      // TODO: logiur
+      // TODO: check token
+      const data = {
+        email: email.email,
+        password: password.password,
+      };
+      axios
+        .post("/auth/login", data)
+        .then((res) => {
+          if (res.status === 200) {
+            setToastErrors([]);
+            onClose();
+            setSuccess(true);
+          }
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            setToastErrors(["ایمیل یا رمز عبور اشتباه است"]);
+            clearToastsErrorsAfter3sec();
+            setDisableSubmit(false);
+          }
+        });
     }
   };
 
@@ -66,6 +87,8 @@ export default function LoginProvider({ onClose }) {
           disableSubmit,
           toastErrors,
           handleSubmit,
+          success,
+          setSuccess,
         ]}
       />
     </>

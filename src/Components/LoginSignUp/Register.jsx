@@ -53,10 +53,9 @@ export default function Register({ props }) {
           isClosable: true,
           icon: <></>,
           id: "success",
-          position: "top",
+          position: "bottom-left",
         });
         setSuccess(false);
-        onClose();
       }
     }
 

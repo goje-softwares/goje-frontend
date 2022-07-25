@@ -99,6 +99,7 @@ export default function RegisterProvider({ onClose }) {
         setPassword({ password: "", err: false });
         setRPassword({ rPassword: "", err: false });
         setDistableSubmit(false);
+        onClose();
       }, 3000);
     }
   };

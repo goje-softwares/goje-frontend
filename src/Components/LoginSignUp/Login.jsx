@@ -25,12 +25,30 @@ export default function Login({ props }) {
     disableSubmit,
     toastErrors,
     handleSubmit,
+    success,
+    setSuccess
   ] = props;
 
   const toast = useToast();
 
   // toasts
   useEffect(() => {
+// TODO: make a toastsConfis.js file
+    if (success) {
+      if (!toast.isActive("success")) {
+        toast({
+          description: "با موفقیت وارد شدید",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          icon: <></>,
+          id: "success",
+          position: "bottom-left",
+        });
+        setSuccess(false);
+      }
+    }
+
     if (toastErrors.length > 0) {
       for (let i = 0; i < toastErrors.length; i++) {
         if (!toast.isActive(i)) {
