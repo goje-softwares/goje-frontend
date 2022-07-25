@@ -46,14 +46,11 @@ export default function LoginProvider({ onClose }) {
       setToastErrors(tmpErrors);
       clearToastsErrorsAfter3sec();
     } else {
-      // TODO: save tokens
-      // TODO: signup
-      // TODO: logiur
-      // TODO: check token
       const data = {
         email: email.email,
         password: password.password,
       };
+
       axios
         .post("/auth/login", data)
         .then((res) => {
@@ -63,6 +60,7 @@ export default function LoginProvider({ onClose }) {
             setSuccess(true);
           }
         })
+
         .catch((err) => {
           if (err?.response.status === 401) {
             setToastErrors(["ایمیل یا رمز عبور اشتباه است"]);
@@ -75,6 +73,7 @@ export default function LoginProvider({ onClose }) {
           }
           clearToastsErrorsAfter3sec();
           setDisableSubmit(false);
+          err && console.error(err);
         });
     }
   };
