@@ -64,11 +64,17 @@ export default function LoginProvider({ onClose }) {
           }
         })
         .catch((err) => {
-          if (err.response.status === 401) {
+          if (err?.response.status === 401) {
             setToastErrors(["ایمیل یا رمز عبور اشتباه است"]);
-            clearToastsErrorsAfter3sec();
-            setDisableSubmit(false);
+          } else if (err.response?.status === 404) {
+            setToastErrors([
+              "ارتباط با سرور برقرار نشد(اینترنت خود را بررسی کنید)",
+            ]);
+          } else {
+            setToastErrors(["عملیات ورود با خطا روبرو شد"]);
           }
+          clearToastsErrorsAfter3sec();
+          setDisableSubmit(false);
         });
     }
   };
