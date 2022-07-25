@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import { validateEmail, validatePassword } from "../../../utils/validator";
 import Login from "../Login";
 import axios from "../../../api/axios";
+import AuthContext from "../../../Context/AuthProvider";
 
 export default function LoginProvider({ onClose }) {
+
+  // global auth
+  const { setAuth } = useContext(AuthContext);
+
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
 
@@ -55,14 +60,20 @@ export default function LoginProvider({ onClose }) {
         .post("/auth/login", data)
         .then((res) => {
           if (res.status === 200) {
+            setAuth({
+              access_token: res.data.access_token,
+              token_type: res.data.token_type,
+              // TODO: name: ,
+              // TODO: email: ,
+              // etc...
+            });
             setToastErrors([]);
             onClose();
             setSuccess(true);
           }
         })
-
         .catch((err) => {
-          if (err?.response.status === 401) {
+          if (err?.response?.status === 401) {
             setToastErrors(["ایمیل یا رمز عبور اشتباه است"]);
           } else if (err.response?.status === 404) {
             setToastErrors([
