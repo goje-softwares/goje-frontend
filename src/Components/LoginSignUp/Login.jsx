@@ -13,6 +13,9 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { ViewIcon } from "@chakra-ui/icons";
+
+import { toastConfig } from "../../Global/toastConfig";
+
 export default function Login({ props }) {
   const [
     onClose,
@@ -26,40 +29,33 @@ export default function Login({ props }) {
     toastErrors,
     handleSubmit,
     success,
-    setSuccess
+    setSuccess,
   ] = props;
 
   const toast = useToast();
 
   // toasts
   useEffect(() => {
-// TODO: make a toastsConfis.js file
     if (success) {
       if (!toast.isActive("success")) {
         toast({
-          description: "با موفقیت وارد شدید",
           status: "success",
-          duration: 5000,
-          isClosable: true,
-          icon: <></>,
+          description: "با موفقیت وارد شدید",
           id: "success",
-          position: "bottom-left",
+          ...toastConfig,
         });
-        setSuccess(false);
       }
+      setSuccess(false);
     }
 
     if (toastErrors.length > 0) {
       for (let i = 0; i < toastErrors.length; i++) {
         if (!toast.isActive(i)) {
           toast({
-            description: toastErrors[i],
             status: "error",
-            duration: 4000,
-            isClosable: true,
-            icon: <></>,
+            description: toastErrors[i],
             id: i,
-            position: "bottom-left",
+            ...toastConfig,
           });
         }
       }
@@ -110,7 +106,12 @@ export default function Login({ props }) {
             justify={"left"}
             spacing={"10px"}
           >
-            <Button type="submit" disabled={disableSubmit} width={"100%"} colorScheme="green">
+            <Button
+              type="submit"
+              disabled={disableSubmit}
+              width={"100%"}
+              colorScheme="green"
+            >
               ورود
             </Button>
             <Button
