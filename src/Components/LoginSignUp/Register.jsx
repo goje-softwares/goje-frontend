@@ -14,6 +14,8 @@ import {
 } from "@chakra-ui/react";
 import { ViewIcon } from "@chakra-ui/icons";
 
+import { toastConfig } from "../../Global/toastConfig";
+
 export default function Register({ props }) {
   const [
     onClose,
@@ -47,29 +49,23 @@ export default function Register({ props }) {
     if (success) {
       if (!toast.isActive("success")) {
         toast({
-          description: "حساب کاربری با موفقیت ایجاد شد",
           status: "success",
-          duration: 5000,
-          isClosable: true,
-          icon: <></>,
+          description: "حساب کاربری با موفقیت ایجاد شد",
           id: "success",
-          position: "bottom-left",
+          ...toastConfig
         });
-        setSuccess(false);
       }
+      setSuccess(false);
     }
 
     if (toastErrors.length > 0) {
       for (let i = 0; i < toastErrors.length; i++) {
         if (!toast.isActive(i)) {
           toast({
-            description: toastErrors[i],
             status: "error",
-            duration: 5000,
-            isClosable: true,
-            icon: <></>,
+            description: toastErrors[i],
             id: i,
-            position: "bottom-left",
+            ...toastConfig
           });
         }
       }
