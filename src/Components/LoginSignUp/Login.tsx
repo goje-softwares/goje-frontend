@@ -25,6 +25,7 @@ type Props = {
 
 export default function Login({ onClose }: Props) {
   // global auth
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { setAuth }: any = useContext(AuthContext);
 
   const [show, setShow] = React.useState(false);
