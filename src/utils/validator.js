@@ -27,7 +27,7 @@ export const validatePassword = (password) => {
   return false;
 };
 
-export const validateRPassword = (password ,rPassword) => {
+export const validateRPassword = (password, rPassword) => {
   if (validator.isEmpty(rPassword)) {
     return "تکرار رمز عبور نمیتواند خالی باشد.";
   } else if (!validator.equals(password, rPassword)) {

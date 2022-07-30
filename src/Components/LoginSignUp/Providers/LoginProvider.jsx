@@ -7,7 +7,6 @@ import AuthContext from "../../../Context/AuthProvider";
 
 // eslint-disable-next-line react/prop-types
 export default function LoginProvider({ onClose }) {
-
   // global auth
   const { setAuth } = useContext(AuthContext);
 

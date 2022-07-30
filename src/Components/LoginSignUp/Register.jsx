@@ -53,7 +53,7 @@ export default function Register({ props }) {
           status: "success",
           description: "حساب کاربری با موفقیت ایجاد شد",
           id: "success",
-          ...toastConfig
+          ...toastConfig,
         });
       }
       setSuccess(false);
@@ -66,7 +66,7 @@ export default function Register({ props }) {
             status: "error",
             description: toastErrors[i],
             id: i,
-            ...toastConfig
+            ...toastConfig,
           });
         }
       }
