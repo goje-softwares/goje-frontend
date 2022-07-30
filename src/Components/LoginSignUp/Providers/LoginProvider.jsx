@@ -5,6 +5,7 @@ import Login from "../Login";
 import axios from "../../../api/axios";
 import AuthContext from "../../../Context/AuthProvider";
 
+// eslint-disable-next-line react/prop-types
 export default function LoginProvider({ onClose }) {
 
   // global auth

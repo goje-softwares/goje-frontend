@@ -9,6 +9,7 @@ import {
 } from "../../../utils/validator";
 import Register from "../Register";
 
+// eslint-disable-next-line react/prop-types
 export default function RegisterProvider({ onClose }) {
   // show and hide password states
   const [showPassword, setShowPassword] = useState(false);

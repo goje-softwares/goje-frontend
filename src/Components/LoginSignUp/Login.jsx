@@ -16,6 +16,7 @@ import { ViewIcon } from "@chakra-ui/icons";
 
 import { toastConfig } from "../../Global/toastConfig";
 
+// eslint-disable-next-line react/prop-types
 export default function Login({ props }) {
   const [
     onClose,
