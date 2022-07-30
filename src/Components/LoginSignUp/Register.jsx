@@ -14,8 +14,6 @@ import {
 } from "@chakra-ui/react";
 import { ViewIcon } from "@chakra-ui/icons";
 
-import { toastConfig } from "../../Global/toastConfig";
-
 // eslint-disable-next-line react/prop-types
 export default function Register({ props }) {
   const [
@@ -53,7 +51,10 @@ export default function Register({ props }) {
           status: "success",
           description: "حساب کاربری با موفقیت ایجاد شد",
           id: "success",
-          ...toastConfig,
+          position: "bottom-left",
+          duration: 4000,
+          isClosable: true,
+          icon: <></>,
         });
       }
       setSuccess(false);
@@ -66,7 +67,10 @@ export default function Register({ props }) {
             status: "error",
             description: toastErrors[i],
             id: i,
-            ...toastConfig,
+            position: "bottom-left",
+            duration: 4000,
+            isClosable: true,
+            icon: <></>,
           });
         }
       }
