@@ -14,7 +14,7 @@ export default function Home() {
       mt="110px"
       textAlign={"center"}
     >
-      <Logo boxSize='6em' />
+      <Logo boxSize="6em" />
       <Heading fontSize="5xl" color={color}>
         گـوجـه
       </Heading>

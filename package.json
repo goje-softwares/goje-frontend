@@ -7,21 +7,26 @@
     "start": "react-scripts start",
     "dev": "react-scripts start",
     "build": "react-scripts build",
+    "build-ts": "tsc",
     "eject": "react-scripts eject",
-    "pretty": "prettier --write \"**/*.{js,jsx,json,md}\"",
-    "lint": "eslint \"**/*.{js,jsx}\""
+    "pretty": "prettier --write \"**/*.{ts,tsx,json,md}\"",
+    "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.3",
     "@chakra-ui/react": "^2.2.1",
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
+    "@types/node": "^18.6.2",
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
     "axios": "^0.27.2",
     "framer-motion": "^6.3.16",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "typescript": "^4.7.4",
     "validator": "^13.7.0",
     "web-vitals": "^2.1.0"
   },
@@ -44,6 +49,9 @@
     ]
   },
   "devDependencies": {
+    "@types/validator": "^13.7.4",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
