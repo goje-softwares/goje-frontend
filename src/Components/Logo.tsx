@@ -2,8 +2,10 @@ import React from "react";
 import { Image } from "@chakra-ui/react";
 import logoFile from "../assets/logo192.png";
 
-// eslint-disable-next-line react/prop-types
-const Logo = ({ boxSize }) => {
+type Props = {
+  boxSize: string;
+};
+const Logo = ({ boxSize }: Props) => {
   return <Image boxSize={boxSize} src={logoFile} alt="Logo" />;
 };
 

@@ -16,6 +16,7 @@ export default function Navbar() {
       >
         <Box>
           <IconButton
+            aria-label="change color mode"
             variant="outline"
             colorScheme={"green"}
             icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}

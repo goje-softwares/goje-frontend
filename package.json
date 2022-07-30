@@ -7,6 +7,7 @@
     "start": "react-scripts start",
     "dev": "react-scripts start",
     "build": "react-scripts build",
+    "build-ts": "tsc",
     "eject": "react-scripts eject",
     "pretty": "prettier --write \"**/*.{js,jsx,json,md,ts,tsx}\"",
     "lint": "eslint \"**/*.{js,jsx,ts,tsx}\""
@@ -48,6 +49,7 @@
     ]
   },
   "devDependencies": {
+    "@types/validator": "^13.7.4",
     "@typescript-eslint/eslint-plugin": "^5.31.0",
     "@typescript-eslint/parser": "^5.31.0",
     "eslint": "^8.19.0",
