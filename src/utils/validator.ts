@@ -1,6 +1,6 @@
 import validator from "validator";
 
-export const validateEmail = (email) => {
+export const validateEmail = (email: string) => {
   if (validator.isEmpty(email)) {
     return "ایمیل نمیتواند خالی باشد.";
   } else if (!validator.isEmail(email)) {
@@ -9,14 +9,14 @@ export const validateEmail = (email) => {
   return false;
 };
 
-export const validateName = (name) => {
+export const validateName = (name: string) => {
   if (validator.isEmpty(name)) {
     return "نام نمیتواند خالی باشد.";
   }
   return false;
 };
 
-export const validatePassword = (password) => {
+export const validatePassword = (password: string) => {
   if (validator.isEmpty(password)) {
     return "رمز عبور نمیتواند خالی باشد.";
   } else if (validator.isLength(password, { min: 1, max: 7 })) {
@@ -27,7 +27,7 @@ export const validatePassword = (password) => {
   return false;
 };
 
-export const validateRPassword = (password ,rPassword) => {
+export const validateRPassword = (password: string, rPassword: string) => {
   if (validator.isEmpty(rPassword)) {
     return "تکرار رمز عبور نمیتواند خالی باشد.";
   } else if (!validator.equals(password, rPassword)) {
