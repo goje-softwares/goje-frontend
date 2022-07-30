@@ -9,8 +9,8 @@
     "build": "react-scripts build",
     "build-ts": "tsc",
     "eject": "react-scripts eject",
-    "pretty": "prettier --write \"**/*.{js,jsx,json,md,ts,tsx}\"",
-    "lint": "eslint \"**/*.{js,jsx,ts,tsx}\""
+    "pretty": "prettier --write \"**/*.{ts,tsx,json,md}\"",
+    "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.3",

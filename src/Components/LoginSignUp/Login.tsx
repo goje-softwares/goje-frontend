@@ -17,25 +17,29 @@ import { ViewIcon } from "@chakra-ui/icons";
 
 import AuthContext from "../../Context/AuthProvider";
 import { validateEmail, validatePassword } from "../../utils/validator";
+import { eFunc, onClose, submitFunc, ToastErrors } from "../../Types";
 
-// eslint-disable-next-line react/prop-types
-export default function Login({ onClose }) {
+type Props = {
+  onClose: onClose;
+};
+
+export default function Login({ onClose }: Props) {
   // global auth
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth }: any = useContext(AuthContext);
 
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
 
   // email
   const [email, setEmail] = useState({ email: "", err: false });
-  const handleEmailChange = (e) => {
+  const handleEmailChange = (e: eFunc) => {
     const value = e.target.value;
     setEmail({ ...email, email: value });
   };
 
   // password
   const [password, setPassword] = useState({ password: "", err: false });
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e: eFunc) => {
     const value = e.target.value;
     setPassword({ ...password, password: value });
   };
@@ -49,13 +53,13 @@ export default function Login({ onClose }) {
 
   // submit
   const [disableSubmit, setDisableSubmit] = useState(false);
-  const [toastErrors, setToastErrors] = useState([]);
+  const [toastErrors, setToastErrors] = useState<ToastErrors>([]);
   const [success, setSuccess] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: submitFunc) => {
     e.preventDefault();
     setDisableSubmit(true);
-    let tmpErrors = [];
+    const tmpErrors = [];
     if (validateEmail(email.email)) tmpErrors.push(validateEmail(email.email));
     if (validatePassword(password.password))
       tmpErrors.push(validatePassword(password.password));
@@ -121,7 +125,7 @@ export default function Login({ onClose }) {
       setSuccess(false);
     }
 
-    if (toastErrors.length > 0) {
+    if (toastErrors && toastErrors.length > 0) {
       for (let i = 0; i < toastErrors.length; i++) {
         if (!toast.isActive(i)) {
           toast({
@@ -136,7 +140,7 @@ export default function Login({ onClose }) {
         }
       }
     }
-  });
+  }, [success, toastErrors, toast]);
 
   return (
     <form onSubmit={handleSubmit}>

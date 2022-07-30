@@ -1,5 +1,11 @@
+import React from "react";
+
 export type func = () => void;
 export type bool = boolean;
+export type str = string;
+
+export type eFunc = React.ChangeEvent<HTMLInputElement>;
+export type submitFunc = React.FormEvent<HTMLFormElement>;
 export type onClose = func;
 export type showPassword = bool;
 export type handleEyeClick = func;
@@ -22,3 +28,25 @@ export type toastErrors = string[];
 export type success = null | "success";
 export type setSuccess = (status: bool) => void;
 export type disableSubmit = bool;
+
+export type Name = {
+  name: str;
+  err: str | bool;
+};
+
+export type ToastErrors = (string | boolean)[];
+
+export type Email = {
+  email: str;
+  err: str | bool;
+};
+
+export type Password = {
+  password: str;
+  err: str | bool;
+};
+
+export type RPassword = {
+  rPassword: str;
+  err: str | bool;
+};

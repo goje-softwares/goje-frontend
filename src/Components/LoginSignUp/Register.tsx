@@ -21,9 +21,23 @@ import {
   validatePassword,
   validateRPassword,
 } from "../../utils/validator";
+import {
+  eFunc,
+  Email,
+  Name,
+  onClose,
+  Password,
+  RPassword,
+  submitFunc,
+  ToastErrors,
+} from "../../Types";
+
+type Props = {
+  onClose: onClose;
+};
 
 // eslint-disable-next-line react/prop-types
-export default function Register({ onClose }) {
+export default function Register({ onClose }: Props) {
   // show and hide password states
   const [showPassword, setShowPassword] = useState(false);
   const handleEyeClick = () => setShowPassword(!showPassword);
@@ -31,8 +45,8 @@ export default function Register({ onClose }) {
   const handleSecondEyeClick = () => setShowRepeatPassword(!showRPassword);
 
   // name
-  const [name, setName] = useState({ name: "", err: false });
-  const handleNameChange = (e) => {
+  const [name, setName] = useState<Name>({ name: "", err: false });
+  const handleNameChange = (e: eFunc) => {
     const value = e.target.value;
     setName({ name: value, err: validateName(value) });
   };
@@ -41,8 +55,8 @@ export default function Register({ onClose }) {
   };
 
   // email
-  const [email, setEmail] = useState({ email: "", err: false });
-  const handleEmailChange = (e) => {
+  const [email, setEmail] = useState<Email>({ email: "", err: false });
+  const handleEmailChange = (e: eFunc) => {
     const value = e.target.value;
     setEmail({ email: value, err: validateEmail(value) });
   };
@@ -51,8 +65,11 @@ export default function Register({ onClose }) {
   };
 
   // password
-  const [password, setPassword] = useState({ password: "", err: false });
-  const handlePasswordChange = (e) => {
+  const [password, setPassword] = useState<Password>({
+    password: "",
+    err: false,
+  });
+  const handlePasswordChange = (e: eFunc) => {
     const value = e.target.value;
     setPassword({ password: value, err: validatePassword(value) });
   };
@@ -65,8 +82,11 @@ export default function Register({ onClose }) {
   };
 
   // repeat password
-  const [rPassword, setRPassword] = useState({ rPassword: "", err: false });
-  const handleRPasswordChange = (e) => {
+  const [rPassword, setRPassword] = useState<RPassword>({
+    rPassword: "",
+    err: false,
+  });
+  const handleRPasswordChange = (e: eFunc) => {
     const value = e.target.value;
     setRPassword({
       rPassword: value,
@@ -89,13 +109,13 @@ export default function Register({ onClose }) {
 
   // submit
   const [disableSubmit, setDisableSubmit] = useState(false);
-  const [toastErrors, setToastErrors] = useState([]);
+  const [toastErrors, setToastErrors] = useState<ToastErrors>([]);
   const [success, setSuccess] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: submitFunc) => {
     e.preventDefault();
     setDisableSubmit(true);
-    let tmpErrors = [];
+    const tmpErrors = [];
     if (validateName(name.name)) tmpErrors.push(validateName(name.name));
     if (validateEmail(email.email)) tmpErrors.push(validateEmail(email.email));
     if (validatePassword(password.password))
@@ -173,7 +193,12 @@ export default function Register({ onClose }) {
         }
       }
     }
-  });
+  }, [success, toastErrors, toast]);
+
+  const isNameValid = name.err ? true : false;
+  const isEmailValid = email.err ? true : false;
+  const isPasswordValid = password.err ? true : false;
+  const isRPasswordValid = rPassword.err ? true : false;
 
   return (
     <form onSubmit={handleSubmit}>
@@ -186,7 +211,7 @@ export default function Register({ onClose }) {
 
         <Box>
           <VStack spacing={"10px"}>
-            <FormControl isInvalid={name.err}>
+            <FormControl isInvalid={isNameValid}>
               <Input
                 value={name.name}
                 onChange={handleNameChange}
@@ -201,7 +226,7 @@ export default function Register({ onClose }) {
               )}
             </FormControl>
 
-            <FormControl isInvalid={email.err}>
+            <FormControl isInvalid={isEmailValid}>
               <Input
                 value={email.email}
                 onChange={handleEmailChange}
@@ -217,7 +242,7 @@ export default function Register({ onClose }) {
             </FormControl>
 
             <InputGroup size="md">
-              <FormControl isInvalid={password.err}>
+              <FormControl isInvalid={isPasswordValid}>
                 <Input
                   value={password.password}
                   onChange={handlePasswordChange}
@@ -239,7 +264,7 @@ export default function Register({ onClose }) {
               </FormControl>
             </InputGroup>
 
-            <FormControl isInvalid={rPassword.err}>
+            <FormControl isInvalid={isRPasswordValid}>
               <InputGroup size="md">
                 <Input
                   value={rPassword.rPassword}
