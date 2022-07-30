@@ -15,7 +15,7 @@ import {
   TabPanels,
 } from "@chakra-ui/react";
 import Login from "./Login";
-import Register from './Register'
+import Register from "./Register";
 
 export default function LoginSignup() {
   const { isOpen, onOpen, onClose } = useDisclosure();
