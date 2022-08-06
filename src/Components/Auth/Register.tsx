@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "../../api/axios";
+import axios, { APIs } from "../../api/axios";
 import {
   FormControl,
   FormErrorMessage,
@@ -12,6 +12,7 @@ import {
   Button,
   Box,
   useToast,
+  ToastPosition,
 } from "@chakra-ui/react";
 import { ViewIcon } from "@chakra-ui/icons";
 
@@ -31,6 +32,7 @@ import {
   submitFunc,
   ToastErrors,
 } from "../../Types";
+import { toastConfig } from "../../Global/toastConfig";
 
 type Props = {
   onClose: onClose;
@@ -133,24 +135,26 @@ export default function Register({ onClose }: Props) {
         password: password.password,
       };
 
+      // TODO: cleanCode
+      const url = APIs.auth.register;
       axios
-        .post("/auth/register", data)
+        .post(url, data)
         .then((res) => {
-          if (res.status === 200) {
-            if (
-              res.data.email &&
-              res.data.email[0] === "The email has already been taken."
-            ) {
-              setToastErrors(["ایمیل قبلا در سیستم ثبت شده است"]);
-              clearToastsErrorsAfter3sec();
-            } else {
-              setToastErrors([]);
-              onClose();
-              setSuccess(true);
-            }
+          console.log(res);
+          if (
+            res.status === 200 &&
+            res?.data?.email[0] === "The email has already been taken."
+          ) {
+            setToastErrors(["ایمیل قبلا در سیستم ثبت شده است"]);
+            clearToastsErrorsAfter3sec();
+          } else if (res.status === 201) {
+            setToastErrors([]);
+            onClose();
+            setSuccess(true);
           }
         })
         .catch((err) => {
+          console.log(err);
           setToastErrors(["عملیات ورود با خطا روبرو شد"]);
           clearToastsErrorsAfter3sec();
           setDisableSubmit(false);
@@ -160,6 +164,7 @@ export default function Register({ onClose }: Props) {
   };
 
   const toast = useToast();
+  const { position, duration, isClosable } = toastConfig;
 
   // toasts
   useEffect(() => {
@@ -169,9 +174,9 @@ export default function Register({ onClose }: Props) {
           status: "success",
           description: "حساب کاربری با موفقیت ایجاد شد",
           id: "success",
-          position: "bottom-left",
-          duration: 4000,
-          isClosable: true,
+          position: position as ToastPosition,
+          duration: duration,
+          isClosable: isClosable,
           icon: <></>,
         });
       }
@@ -193,7 +198,7 @@ export default function Register({ onClose }: Props) {
         }
       }
     }
-  }, [success, toastErrors, toast]);
+  }, [success, toastErrors, toast, position, duration, isClosable]);
 
   const isNameValid = name.err ? true : false;
   const isEmailValid = email.err ? true : false;
