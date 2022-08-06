@@ -135,10 +135,10 @@ export default function Register({ onClose }: Props) {
         password: password.password,
       };
 
-      // TODO: cleanCode
-      const url = APIs.auth.register;
-      axios
-        .post(url, data)
+    // TODO: cleanCode
+    const request = APIs.auth.register;
+    request.data = data
+    axios(request)
         .then((res) => {
           console.log(res);
           if (
