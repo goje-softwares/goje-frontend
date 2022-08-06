@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "../../api/axios";
+import axios, { APIs } from "../../api/axios";
 import {
   FormControl,
   FormErrorMessage,
@@ -134,9 +134,11 @@ export default function Register({ onClose }: Props) {
       };
 
       console.log("were here");
+      const url = APIs.auth.register;
       axios
-        .post("/auth/register", data)
+        .post(url, data)
         .then((res) => {
+          console.log(res);
           if (res.status === 200) {
             if (
               res.data.email &&
@@ -152,6 +154,7 @@ export default function Register({ onClose }: Props) {
           }
         })
         .catch((err) => {
+          console.log(err);
           setToastErrors(["عملیات ورود با خطا روبرو شد"]);
           clearToastsErrorsAfter3sec();
           setDisableSubmit(false);
