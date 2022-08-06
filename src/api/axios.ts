@@ -13,9 +13,9 @@ export default axios.create({
 
 export const APIs = {
   auth: {
-    login: "api/auth/login",
-    register: "api/auth/register",
-    logout: "api/auth/logout",
+    login: "/api/auth/login",
+    register: "/api/auth/register",
+    logout: "/api/auth/logout",
   },
   // product: {
   //   list: {

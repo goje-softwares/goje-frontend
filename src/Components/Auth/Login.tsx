@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import axios from "../../api/axios";
+import axios, { APIs } from "../../api/axios";
 import {
   Link,
   InputGroup,
@@ -77,9 +77,12 @@ export default function Login({ onClose }: Props) {
         password: password.password,
       };
 
+      // TODO: cleanCode
+      const url = APIs.auth.login;
       axios
-        .post("/auth/login", data)
+        .post(url, data)
         .then((res) => {
+          console.log(res);
           if (res.status === 200) {
             setAuth({
               access_token: res.data.access_token,
@@ -94,6 +97,7 @@ export default function Login({ onClose }: Props) {
           }
         })
         .catch((err) => {
+          console.log(err);
           if (err?.response?.status === 401) {
             setToastErrors(["ایمیل یا رمز عبور اشتباه است"]);
           } else if (err.response?.status === 404) {

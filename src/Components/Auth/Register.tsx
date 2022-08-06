@@ -135,25 +135,26 @@ export default function Register({ onClose }: Props) {
         password: password.password,
       };
 
+      // TODO: cleanCode
       const url = APIs.auth.register;
       axios
         .post(url, data)
         .then((res) => {
-          if (res.status === 200) {
-            if (
-              res.data.email &&
-              res.data.email[0] === "The email has already been taken."
-            ) {
-              setToastErrors(["ایمیل قبلا در سیستم ثبت شده است"]);
-              clearToastsErrorsAfter3sec();
-            } else {
-              setToastErrors([]);
-              onClose();
-              setSuccess(true);
-            }
+          console.log(res);
+          if (
+            res.status === 200 &&
+            res?.data?.email[0] === "The email has already been taken."
+          ) {
+            setToastErrors(["ایمیل قبلا در سیستم ثبت شده است"]);
+            clearToastsErrorsAfter3sec();
+          } else if (res.status === 201) {
+            setToastErrors([]);
+            onClose();
+            setSuccess(true);
           }
         })
         .catch((err) => {
+          console.log(err);
           setToastErrors(["عملیات ورود با خطا روبرو شد"]);
           clearToastsErrorsAfter3sec();
           setDisableSubmit(false);
