@@ -12,6 +12,7 @@ import {
   Button,
   Box,
   useToast,
+  ToastPosition,
 } from "@chakra-ui/react";
 import { ViewIcon } from "@chakra-ui/icons";
 
@@ -31,6 +32,7 @@ import {
   submitFunc,
   ToastErrors,
 } from "../../Types";
+import { toastConfig } from "../../Global/toastConfig";
 
 type Props = {
   onClose: onClose;
@@ -133,12 +135,10 @@ export default function Register({ onClose }: Props) {
         password: password.password,
       };
 
-      console.log("were here");
       const url = APIs.auth.register;
       axios
         .post(url, data)
         .then((res) => {
-          console.log(res);
           if (res.status === 200) {
             if (
               res.data.email &&
@@ -154,7 +154,6 @@ export default function Register({ onClose }: Props) {
           }
         })
         .catch((err) => {
-          console.log(err);
           setToastErrors(["عملیات ورود با خطا روبرو شد"]);
           clearToastsErrorsAfter3sec();
           setDisableSubmit(false);
@@ -164,6 +163,7 @@ export default function Register({ onClose }: Props) {
   };
 
   const toast = useToast();
+  const { position, duration, isClosable } = toastConfig;
 
   // toasts
   useEffect(() => {
@@ -173,9 +173,9 @@ export default function Register({ onClose }: Props) {
           status: "success",
           description: "حساب کاربری با موفقیت ایجاد شد",
           id: "success",
-          position: "bottom-left",
-          duration: 4000,
-          isClosable: true,
+          position: position as ToastPosition,
+          duration: duration,
+          isClosable: isClosable,
           icon: <></>,
         });
       }
@@ -197,7 +197,7 @@ export default function Register({ onClose }: Props) {
         }
       }
     }
-  }, [success, toastErrors, toast]);
+  }, [success, toastErrors, toast, position, duration, isClosable]);
 
   const isNameValid = name.err ? true : false;
   const isEmailValid = email.err ? true : false;

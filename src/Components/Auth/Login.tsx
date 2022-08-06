@@ -12,12 +12,15 @@ import {
   Button,
   Box,
   useToast,
+  ToastPosition,
 } from "@chakra-ui/react";
 import { ViewIcon } from "@chakra-ui/icons";
 
 import AuthContext from "../../Context/AuthProvider";
 import { validateEmail, validatePassword } from "../../utils/validator";
 import { eFunc, onClose, submitFunc, ToastErrors } from "../../Types";
+
+import { toastConfig } from "../../Global/toastConfig";
 
 type Props = {
   onClose: onClose;
@@ -108,6 +111,7 @@ export default function Login({ onClose }: Props) {
   };
 
   const toast = useToast();
+  const { position, duration, isClosable } = toastConfig;
 
   // toasts
   useEffect(() => {
@@ -117,9 +121,9 @@ export default function Login({ onClose }: Props) {
           status: "success",
           description: "با موفقیت وارد شدید",
           id: "success",
-          position: "bottom-left",
-          duration: 4000,
-          isClosable: true,
+          position: position as ToastPosition,
+          duration: duration,
+          isClosable: isClosable,
           icon: <></>,
         });
       }
@@ -133,15 +137,15 @@ export default function Login({ onClose }: Props) {
             status: "error",
             description: toastErrors[i],
             id: i,
-            position: "bottom-left",
-            duration: 4000,
-            isClosable: true,
+            position: position as ToastPosition,
+            duration: duration,
+            isClosable: isClosable,
             icon: <></>,
           });
         }
       }
     }
-  }, [success, toastErrors, toast]);
+  }, [success, toastErrors, toast, position, duration, isClosable]);
 
   return (
     <form onSubmit={handleSubmit}>
