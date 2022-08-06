@@ -133,6 +133,7 @@ export default function Register({ onClose }: Props) {
         password: password.password,
       };
 
+      console.log("were here");
       axios
         .post("/auth/register", data)
         .then((res) => {

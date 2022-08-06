@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, IconButton, useColorMode } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-import LoginSignup from "./LoginSignUp/LoginSignup";
+import Auth from "../Pages/Auth";
 
 export default function Navbar() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -23,7 +23,7 @@ export default function Navbar() {
             onClick={toggleColorMode}
           />
         </Box>
-        <LoginSignup />
+        <Auth />
       </Box>
       <Box mr={"10px"} ml={"10px"}>
         <hr />
