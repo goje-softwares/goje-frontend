@@ -2,9 +2,9 @@ import axios from "axios";
 
 // TOOD: .env it
 const url = {
-  local: "http://localhost:8000/",
-  dev: "https://goje.herokuapp.com/",
-  production: "https://goje.herokuapp.com/",
+  local: "http://localhost:8000/api/",
+  dev: "https://goje.herokuapp.com/api/",
+  production: "https://goje.herokuapp.com/api/",
 };
 
 export default axios.create({
@@ -13,9 +13,21 @@ export default axios.create({
 
 export const APIs = {
   auth: {
-    login: "/api/auth/login",
-    register: "/api/auth/register",
-    logout: "/api/auth/logout",
+    login:  {
+      method: "post",
+      url: "auth/login",
+      data: {}
+
+    },
+    register:  {
+      method: "post",
+      url: "auth/register",
+      data: {}
+    },
+    logout:  {
+      method: "post",
+      url: "auth/logout",
+    },
   },
   // product: {
   //   list: {
