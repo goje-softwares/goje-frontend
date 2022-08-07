@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios, { APIs } from "../api/axios";
 import {
   FormControl,
@@ -26,20 +27,25 @@ import {
   eFunc,
   Email,
   Name,
-  onClose,
   Password,
   RPassword,
   submitFunc,
   ToastErrors,
 } from "../Global/Types";
 import { toastConfig } from "../Global/toastConfig";
-import { Link } from "react-router-dom";
 import CancelButton from "../Components/Form/CancelButton";
 import FormWrapper from "../Components/Form/FormWrapper";
 import SubmitButton from "../Components/Form/SubmitButton";
+import useAuth from "../Hooks/useAuth";
+import { routes } from "../Global/Routes";
 
 // eslint-disable-next-line react/prop-types
 export default function Register() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { setAuth }: any = useAuth();
+
+  const navigate = useNavigate();
+
   // show and hide password states
   const [showPassword, setShowPassword] = useState(false);
   const handleEyeClick = () => setShowPassword(!showPassword);
@@ -148,8 +154,15 @@ export default function Register() {
             setToastErrors(["ایمیل قبلا در سیستم ثبت شده است"]);
             clearToastsErrorsAfter3sec();
           } else if (res.status === 201) {
+            setAuth({
+              email: res.data.data.email,
+              name: res.data.data.name,
+              access_token: res.data.access_token,
+              token_type: res.data.token_type,
+            });
             setToastErrors([]);
             setSuccess(true);
+            navigate(routes.dashboard);
           }
         })
         .catch((err) => {

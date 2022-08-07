@@ -1,33 +1,35 @@
 import React from "react";
 import { ChakraProvider } from "@chakra-ui/react";
 import { Routes, Route } from "react-router-dom";
+
 import theme from "./Global/theme";
-import Layout from "./Layout";
 import Home from "./Pages/Home";
 import Dashboard from "./Pages/Dashboard";
 import NotFound from "./Pages/NotFound";
 import Navbar from "./Components/Navbar";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
+import RequireAuth from "./Components/RequireAuth";
+import { routes } from "./Global/Routes";
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/">
           {/* public routes */}
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-
+          <Route path={routes.home} element={<Home />} />
+          <Route path={routes.login} element={<Login />} />
+          <Route path={routes.register} element={<Register />} />
 
           {/* protected routes */}
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route element={<RequireAuth />}>
+            <Route path={routes.dashboard} element={<Dashboard />} />
+          </Route>
 
           {/* catch all */}
-          <Route path="/404" element={<NotFound />} />
-
+          <Route path={routes.notFound} element={<NotFound />} />
         </Route>
       </Routes>
     </ChakraProvider>

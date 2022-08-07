@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import axios, { APIs } from "../api/axios";
 import {
-  Link,
   InputGroup,
   InputLeftElement,
   HStack,
@@ -16,19 +16,21 @@ import {
 } from "@chakra-ui/react";
 import { ViewIcon } from "@chakra-ui/icons";
 
-import AuthContext from "../Context/AuthProvider";
 import { validateEmail, validatePassword } from "../utils/validator";
 import { eFunc, submitFunc, ToastErrors } from "../Global/Types";
-
 import { toastConfig } from "../Global/toastConfig";
 import CancelButton from "../Components/Form/CancelButton";
 import SubmitButton from "../Components/Form/SubmitButton";
 import FormWrapper from "../Components/Form/FormWrapper";
+import useAuth from "../Hooks/useAuth";
+import { routes } from "../Global/Routes";
 
 export default function Login() {
-  // global auth
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { setAuth }: any = useContext(AuthContext);
+  const { setAuth }: any = useAuth();
+
+  // TODO: https://youtu.be/oUZjO00NkhY?list=PL0Zuz27SZ-6PRCpm9clX0WiBEMB70FWwd&t=1010
+  const navigate = useNavigate();
 
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
@@ -84,14 +86,14 @@ export default function Login() {
           console.log(res);
           if (res.status === 200) {
             setAuth({
+              email: res.data.data.email,
+              name: res.data.data.name,
               access_token: res.data.access_token,
               token_type: res.data.token_type,
-              // TODO: name: ,
-              // TODO: email: ,
-              // etc...
             });
             setToastErrors([]);
             setSuccess(true);
+            navigate(routes.dashboard);
           }
         })
         .catch((err) => {
@@ -185,7 +187,9 @@ export default function Login() {
             </VStack>
           </Box>
           <Box mt={"10px"}>
-            <Link fontSize={"sm"}>فراموشی رمز عبور</Link>
+            <Link to={"#"}>
+              <Text fontSize={"sm"}>فراموشی رمز عبور</Text>
+            </Link>
           </Box>
           <Box pt="20px">
             <HStack

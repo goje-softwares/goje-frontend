@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 
 const AuthContext = createContext({});
 
@@ -9,6 +9,10 @@ interface Props {
 export const AuthProvider = ({ children }: Props) => {
   const [auth, setAuth] = useState({});
 
+  useEffect(() => {
+    console.log(auth);
+  });
+  
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>
       {children}

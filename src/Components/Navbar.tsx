@@ -21,6 +21,7 @@ export default function Navbar() {
         flexDirection="row"
         m="10px"
       >
+        <Link to={'/dashboard'}>dashboard</Link>
         <HStack>
           <Link to={routes.register}>
             <Button colorScheme={"green"}>عضویت</Button>
