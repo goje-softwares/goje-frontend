@@ -4,7 +4,7 @@ export default class store {
   }
 
   static get(key: string) {
-    return localStorage.getItem(key) ?? null;
+    return localStorage.getItem(key) ?? '';
   }
 
   static set(key: string, value: string) {

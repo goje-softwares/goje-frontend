@@ -6,6 +6,7 @@ export default function RequireAuth() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { auth }: any = useAuth();
   const location = useLocation();
+  // TODO: improve security
   return auth?.name ? (
     // like props.children but for react-router-dom routes
     <Outlet />
