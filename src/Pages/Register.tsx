@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios, { APIs } from "../../api/axios";
+import axios, { APIs } from "../api/axios";
 import {
   FormControl,
   FormErrorMessage,
@@ -21,7 +21,7 @@ import {
   validateEmail,
   validatePassword,
   validateRPassword,
-} from "../../utils/validator";
+} from "../utils/validator";
 import {
   eFunc,
   Email,
@@ -31,15 +31,15 @@ import {
   RPassword,
   submitFunc,
   ToastErrors,
-} from "../../Types";
-import { toastConfig } from "../../Global/toastConfig";
-
-type Props = {
-  onClose: onClose;
-};
+} from "../Global/Types";
+import { toastConfig } from "../Global/toastConfig";
+import { Link } from "react-router-dom";
+import CancelButton from "../Components/Form/CancelButton";
+import FormWrapper from "../Components/Form/FormWrapper";
+import SubmitButton from "../Components/Form/SubmitButton";
 
 // eslint-disable-next-line react/prop-types
-export default function Register({ onClose }: Props) {
+export default function Register() {
   // show and hide password states
   const [showPassword, setShowPassword] = useState(false);
   const handleEyeClick = () => setShowPassword(!showPassword);
@@ -149,7 +149,6 @@ export default function Register({ onClose }: Props) {
             clearToastsErrorsAfter3sec();
           } else if (res.status === 201) {
             setToastErrors([]);
-            onClose();
             setSuccess(true);
           }
         })
@@ -181,6 +180,7 @@ export default function Register({ onClose }: Props) {
         });
       }
       setSuccess(false);
+      // TODO: rediredct...
     }
 
     if (toastErrors.length > 0) {
@@ -206,8 +206,8 @@ export default function Register({ onClose }: Props) {
   const isRPasswordValid = rPassword.err ? true : false;
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Box>
+    <FormWrapper>
+      <form onSubmit={handleSubmit}>
         <Box pt={"10px"} pb={"14px"}>
           <Text textAlign={"center"} fontSize="sm" color="gray">
             لطفا اطلاعات زیر را با دقت وارد نمایید.
@@ -301,25 +301,11 @@ export default function Register({ onClose }: Props) {
             justify={"left"}
             spacing={"10px"}
           >
-            <Button
-              type="submit"
-              isDisabled={disableSubmit}
-              width={"100%"}
-              colorScheme="green"
-            >
-              ثبت نام
-            </Button>
-            <Button
-              width={"100%"}
-              colorScheme="gray"
-              variant={"outline"}
-              onClick={onClose}
-            >
-              انصراف
-            </Button>
+            <SubmitButton disableSubmit={disableSubmit} text="ثبت نام" />
+            <CancelButton />
           </HStack>
         </Box>
-      </Box>
-    </form>
+      </form>
+    </FormWrapper>
   );
 }

@@ -1,7 +1,14 @@
 import React from "react";
-import { Box, IconButton, useColorMode } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  HStack,
+  IconButton,
+  useColorMode,
+} from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-import Auth from "../Pages/Auth";
+import { Link } from "react-router-dom";
+import { routes } from "../Global/Routes";
 
 export default function Navbar() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -11,20 +18,32 @@ export default function Navbar() {
       <Box
         display={"flex"}
         justifyContent="space-between"
-        flexDirection="row-reverse"
+        flexDirection="row"
         m="10px"
       >
-        <Box>
-          <IconButton
-            aria-label="change color mode"
-            variant="outline"
-            colorScheme={"green"}
-            icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
-            onClick={toggleColorMode}
-          />
-        </Box>
-        <Auth />
+        <HStack>
+          <Link to={routes.register}>
+            <Button colorScheme={"green"}>عضویت</Button>
+          </Link>
+          <Link to={routes.login}>
+            <Button colorScheme={"gray"} variant="outline">
+              ورود
+            </Button>
+          </Link>
+        </HStack>
+        <HStack>
+          <Box>
+            <IconButton
+              aria-label="change color mode"
+              variant="outline"
+              colorScheme={"green"}
+              icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+              onClick={toggleColorMode}
+            />
+          </Box>
+        </HStack>
       </Box>
+
       <Box mr={"10px"} ml={"10px"}>
         <hr />
       </Box>

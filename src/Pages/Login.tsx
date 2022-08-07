@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import axios, { APIs } from "../../api/axios";
+import axios, { APIs } from "../api/axios";
 import {
   Link,
   InputGroup,
@@ -16,17 +16,16 @@ import {
 } from "@chakra-ui/react";
 import { ViewIcon } from "@chakra-ui/icons";
 
-import AuthContext from "../../Context/AuthProvider";
-import { validateEmail, validatePassword } from "../../utils/validator";
-import { eFunc, onClose, submitFunc, ToastErrors } from "../../Types";
+import AuthContext from "../Context/AuthProvider";
+import { validateEmail, validatePassword } from "../utils/validator";
+import { eFunc, submitFunc, ToastErrors } from "../Global/Types";
 
-import { toastConfig } from "../../Global/toastConfig";
+import { toastConfig } from "../Global/toastConfig";
+import CancelButton from "../Components/Form/CancelButton";
+import SubmitButton from "../Components/Form/SubmitButton";
+import FormWrapper from "../Components/Form/FormWrapper";
 
-type Props = {
-  onClose: onClose;
-};
-
-export default function Login({ onClose }: Props) {
+export default function Login() {
   // global auth
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { setAuth }: any = useContext(AuthContext);
@@ -92,7 +91,6 @@ export default function Login({ onClose }: Props) {
               // etc...
             });
             setToastErrors([]);
-            onClose();
             setSuccess(true);
           }
         })
@@ -152,68 +150,56 @@ export default function Login({ onClose }: Props) {
   }, [success, toastErrors, toast, position, duration, isClosable]);
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Box>
-        <Box pt={"10px"} pb={"14px"}>
-          <Text textAlign={"center"} fontSize="sm" color="gray">
-            لطفا ایمیل و رمز عبور خود را وارد کنید.
-          </Text>
-        </Box>
-        <Box>
-          <VStack spacing={"10px"}>
-            <FormControl isInvalid={email.err}>
-              <Input
-                value={email.email}
-                onChange={handleEmailChange}
-                placeholder="ایمیل"
-                size="md"
-              />
-            </FormControl>
-            <InputGroup size="md">
-              <Input
-                pr="15px"
-                value={password.password}
-                onChange={handlePasswordChange}
-                type={show ? "text" : "password"}
-                placeholder="رمز عبور"
-              />
-              <InputLeftElement width="3.2rem">
-                <Button h="1.75rem" size="sm" onClick={handleClick}>
-                  <ViewIcon />
-                </Button>
-              </InputLeftElement>
-            </InputGroup>
-          </VStack>
-        </Box>
-        <Box mt={"10px"}>
-          <Link fontSize={"sm"}>فراموشی رمز عبور</Link>
-        </Box>
-        <Box pt="20px">
-          <HStack
-            display={"flex"}
-            justifyContent="space-around"
-            justify={"left"}
-            spacing={"10px"}
-          >
-            <Button
-              type="submit"
-              disabled={disableSubmit}
-              width={"100%"}
-              colorScheme="green"
+    <FormWrapper>
+      <form onSubmit={handleSubmit}>
+        <Box display={"flex"} flexDir="column">
+          <Box pt={"10px"} pb={"14px"}>
+            <Text textAlign={"center"} fontSize="sm" color="gray">
+              لطفا ایمیل و رمز عبور خود را وارد کنید.
+            </Text>
+          </Box>
+          <Box>
+            <VStack spacing={"10px"}>
+              <FormControl isInvalid={email.err}>
+                <Input
+                  value={email.email}
+                  onChange={handleEmailChange}
+                  placeholder="ایمیل"
+                  size="md"
+                />
+              </FormControl>
+              <InputGroup size="md">
+                <Input
+                  pr="15px"
+                  value={password.password}
+                  onChange={handlePasswordChange}
+                  type={show ? "text" : "password"}
+                  placeholder="رمز عبور"
+                />
+                <InputLeftElement width="3.2rem">
+                  <Button h="1.75rem" size="sm" onClick={handleClick}>
+                    <ViewIcon />
+                  </Button>
+                </InputLeftElement>
+              </InputGroup>
+            </VStack>
+          </Box>
+          <Box mt={"10px"}>
+            <Link fontSize={"sm"}>فراموشی رمز عبور</Link>
+          </Box>
+          <Box pt="20px">
+            <HStack
+              display={"flex"}
+              justifyContent="space-around"
+              justify={"left"}
+              spacing={"10px"}
             >
-              ورود
-            </Button>
-            <Button
-              width={"100%"}
-              colorScheme="gray"
-              variant={"outline"}
-              onClick={onClose}
-            >
-              انصراف
-            </Button>
-          </HStack>
+              <SubmitButton disableSubmit={disableSubmit} text="ورود" />
+              <CancelButton />
+            </HStack>
+          </Box>
         </Box>
-      </Box>
-    </form>
+      </form>
+    </FormWrapper>
   );
 }
