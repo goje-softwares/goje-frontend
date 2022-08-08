@@ -9,8 +9,9 @@ import NotFound from "./Pages/NotFound";
 import Navbar from "./Components/Navbar/Navbar";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
-import RequireAuth from "./Components/RequireAuth";
+import RequireAuth from "./Components/Auth/RequireAuth";
 import { routes } from "./Global/Routes";
+import RequireNotAuth from "./Components/Auth/RequireNotAuth";
 
 function App() {
   return (
@@ -20,8 +21,12 @@ function App() {
         <Route path="/">
           {/* public routes */}
           <Route path={routes.home} element={<Home />} />
-          <Route path={routes.login} element={<Login />} />
-          <Route path={routes.register} element={<Register />} />
+
+          {/* protected routes */}
+          <Route element={<RequireNotAuth />}>
+            <Route path={routes.login} element={<Login />} />
+            <Route path={routes.register} element={<Register />} />
+          </Route>
 
           {/* protected routes */}
           <Route element={<RequireAuth />}>

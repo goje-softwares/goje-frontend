@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation, Navigate, Outlet } from "react-router-dom";
-import useAuth from "../Hooks/useAuth";
+import useAuth from "../../Hooks/useAuth";
 
 export default function RequireAuth() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
