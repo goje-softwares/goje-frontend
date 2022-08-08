@@ -79,9 +79,9 @@ export default function Login() {
       };
 
       // TODO: cleanCode
-      const url = APIs.auth.login;
-      axios
-        .post(url, data)
+      const request = APIs.auth.login;
+      request.data = data
+      axios(request)
         .then((res) => {
           console.log(res);
           if (res.status === 200) {
