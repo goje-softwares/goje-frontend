@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useContext } from "react";
-import axios, { APIs } from "../../api/axios";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios, { APIs } from "../api/axios";
 import {
-  Link,
   InputGroup,
   InputLeftElement,
   HStack,
@@ -16,20 +16,21 @@ import {
 } from "@chakra-ui/react";
 import { ViewIcon } from "@chakra-ui/icons";
 
-import AuthContext from "../../Context/AuthProvider";
-import { validateEmail, validatePassword } from "../../utils/validator";
-import { eFunc, onClose, submitFunc, ToastErrors } from "../../Types";
+import { validateEmail, validatePassword } from "../utils/validator";
+import { eFunc, submitFunc, ToastErrors } from "../Global/Types";
+import { toastConfig } from "../Global/toastConfig";
+import CancelButton from "../Components/Form/CancelButton";
+import SubmitButton from "../Components/Form/SubmitButton";
+import FormWrapper from "../Components/Form/FormWrapper";
+import useAuth from "../Hooks/useAuth";
+import { routes } from "../Global/Routes";
 
-import { toastConfig } from "../../Global/toastConfig";
-
-type Props = {
-  onClose: onClose;
-};
-
-export default function Login({ onClose }: Props) {
-  // global auth
+export default function Login() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { setAuth }: any = useContext(AuthContext);
+  const { setAuth }: any = useAuth();
+
+  // TODO: https://youtu.be/oUZjO00NkhY?list=PL0Zuz27SZ-6PRCpm9clX0WiBEMB70FWwd&t=1010
+  const navigate = useNavigate();
 
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
@@ -77,23 +78,22 @@ export default function Login({ onClose }: Props) {
         password: password.password,
       };
 
-      // TODO: cleanCode
-      const url = APIs.auth.login;
-      axios
-        .post(url, data)
+      // TODO: cleanCode (seperate file)
+      const request = APIs.auth.login;
+      request.data = data;
+      axios(request)
         .then((res) => {
           console.log(res);
           if (res.status === 200) {
             setAuth({
+              email: res.data.data.email,
+              name: res.data.data.name,
               access_token: res.data.access_token,
               token_type: res.data.token_type,
-              // TODO: name: ,
-              // TODO: email: ,
-              // etc...
             });
             setToastErrors([]);
-            onClose();
             setSuccess(true);
+            navigate(routes.dashboard);
           }
         })
         .catch((err) => {
@@ -152,68 +152,58 @@ export default function Login({ onClose }: Props) {
   }, [success, toastErrors, toast, position, duration, isClosable]);
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Box>
-        <Box pt={"10px"} pb={"14px"}>
-          <Text textAlign={"center"} fontSize="sm" color="gray">
-            لطفا ایمیل و رمز عبور خود را وارد کنید.
-          </Text>
-        </Box>
-        <Box>
-          <VStack spacing={"10px"}>
-            <FormControl isInvalid={email.err}>
-              <Input
-                value={email.email}
-                onChange={handleEmailChange}
-                placeholder="ایمیل"
-                size="md"
-              />
-            </FormControl>
-            <InputGroup size="md">
-              <Input
-                pr="15px"
-                value={password.password}
-                onChange={handlePasswordChange}
-                type={show ? "text" : "password"}
-                placeholder="رمز عبور"
-              />
-              <InputLeftElement width="3.2rem">
-                <Button h="1.75rem" size="sm" onClick={handleClick}>
-                  <ViewIcon />
-                </Button>
-              </InputLeftElement>
-            </InputGroup>
-          </VStack>
-        </Box>
-        <Box mt={"10px"}>
-          <Link fontSize={"sm"}>فراموشی رمز عبور</Link>
-        </Box>
-        <Box pt="20px">
-          <HStack
-            display={"flex"}
-            justifyContent="space-around"
-            justify={"left"}
-            spacing={"10px"}
-          >
-            <Button
-              type="submit"
-              disabled={disableSubmit}
-              width={"100%"}
-              colorScheme="green"
+    <FormWrapper>
+      <form onSubmit={handleSubmit}>
+        <Box display={"flex"} flexDir="column">
+          <Box pt={"10px"} pb={"14px"}>
+            <Text textAlign={"center"} fontSize="sm" color="gray">
+              لطفا ایمیل و رمز عبور خود را وارد کنید.
+            </Text>
+          </Box>
+          <Box>
+            <VStack spacing={"10px"}>
+              <FormControl isInvalid={email.err}>
+                <Input
+                  value={email.email}
+                  onChange={handleEmailChange}
+                  placeholder="ایمیل"
+                  size="md"
+                />
+              </FormControl>
+              <InputGroup size="md">
+                <Input
+                  pr="15px"
+                  value={password.password}
+                  onChange={handlePasswordChange}
+                  type={show ? "text" : "password"}
+                  placeholder="رمز عبور"
+                />
+                <InputLeftElement width="3.2rem">
+                  <Button h="1.75rem" size="sm" onClick={handleClick}>
+                    <ViewIcon />
+                  </Button>
+                </InputLeftElement>
+              </InputGroup>
+            </VStack>
+          </Box>
+          <Box mt={"10px"}>
+            <Link to={"#"}>
+              <Text fontSize={"sm"}>فراموشی رمز عبور</Text>
+            </Link>
+          </Box>
+          <Box pt="20px">
+            <HStack
+              display={"flex"}
+              justifyContent="space-around"
+              justify={"left"}
+              spacing={"10px"}
             >
-              ورود
-            </Button>
-            <Button
-              width={"100%"}
-              colorScheme="gray"
-              variant={"outline"}
-              onClick={onClose}
-            >
-              انصراف
-            </Button>
-          </HStack>
+              <SubmitButton disableSubmit={disableSubmit} text="ورود" />
+              <CancelButton />
+            </HStack>
+          </Box>
         </Box>
-      </Box>
-    </form>
+      </form>
+    </FormWrapper>
   );
 }
