@@ -1,11 +1,8 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
+import { Children } from "../../Global/Interfaces";
 
-interface Props {
-  children: React.ReactNode;
-}
-
-export default function FormWrapper({ children }: Props) {
+export default function FormWrapper({ children }: Children) {
   return (
     <Box
       className="wrapper"

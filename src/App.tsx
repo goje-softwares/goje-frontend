@@ -6,7 +6,7 @@ import theme from "./Global/theme";
 import Home from "./Pages/Home";
 import Dashboard from "./Pages/Dashboard";
 import NotFound from "./Pages/NotFound";
-import Navbar from "./Components/Navbar";
+import Navbar from "./Components/Navbar/Navbar";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import RequireAuth from "./Components/RequireAuth";

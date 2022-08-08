@@ -1,11 +1,8 @@
 import React, { createContext, useEffect, useState } from "react";
+import { Children } from "../Global/Interfaces";
 import store from "../utils/store";
 
 const AuthContext = createContext({});
-
-interface Props {
-  children: React.ReactNode;
-}
 
 let initialState = {
   email: "",
@@ -27,7 +24,7 @@ if (
   };
 }
 
-export const AuthProvider = ({ children }: Props) => {
+export const AuthProvider = ({ children }: Children) => {
   const [auth, setAuth] = useState(initialState);
 
   useEffect(() => {
