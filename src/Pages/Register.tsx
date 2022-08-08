@@ -141,10 +141,10 @@ export default function Register() {
         password: password.password,
       };
 
-    // TODO: cleanCode
-    const request = APIs.auth.register;
-    request.data = data
-    axios(request)
+      // TODO: cleanCode (seperate file)
+      const request = APIs.auth.register;
+      request.data = data;
+      axios(request)
         .then((res) => {
           console.log(res);
           if (

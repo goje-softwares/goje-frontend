@@ -78,9 +78,9 @@ export default function Login() {
         password: password.password,
       };
 
-      // TODO: cleanCode
+      // TODO: cleanCode (seperate file)
       const request = APIs.auth.login;
-      request.data = data
+      request.data = data;
       axios(request)
         .then((res) => {
           console.log(res);
