@@ -1,30 +1,37 @@
 import React from "react";
-import { Box, IconButton, useColorMode } from "@chakra-ui/react";
-import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-import LoginSignup from "./LoginSignUp/LoginSignup";
+import { Box, HStack } from "@chakra-ui/react";
+import LoginButton from "./Auth/LoginButton";
+import SignUpBotton from "./Auth/SignUpButton";
+import NavBarWrapper from "./NavBarWrapper";
+import SwitchThemeButton from "./SwitchThemeButton";
+import GAvatar from "./GAvatar";
+import useAuth from "../Hooks/useAuth";
 
 export default function Navbar() {
-  const { colorMode, toggleColorMode } = useColorMode();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { auth }: any = useAuth();
 
   return (
     <Box>
-      <Box
-        display={"flex"}
-        justifyContent="space-between"
-        flexDirection="row-reverse"
-        m="10px"
-      >
-        <Box>
-          <IconButton
-            aria-label="change color mode"
-            variant="outline"
-            colorScheme={"green"}
-            icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
-            onClick={toggleColorMode}
-          />
-        </Box>
-        <LoginSignup />
-      </Box>
+      <NavBarWrapper>
+        {auth?.name ? (
+          <Box>
+            <HStack>
+              <GAvatar email={auth.email} />
+            </HStack>
+          </Box>
+        ) : (
+          <Box>
+            <HStack>
+              <SignUpBotton />
+              <LoginButton />
+            </HStack>
+          </Box>
+        )}
+        <HStack>
+          <SwitchThemeButton />
+        </HStack>
+      </NavBarWrapper>
       <Box mr={"10px"} ml={"10px"}>
         <hr />
       </Box>

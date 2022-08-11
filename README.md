@@ -15,3 +15,11 @@ yarn start
 ```
 
 project will run on [localhost:3000](http://localhost:3000)
+
+## pre-commit
+
+for husky to work run:
+
+```shell
+npx husky install
+```
