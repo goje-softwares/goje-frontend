@@ -38,6 +38,7 @@ import FormWrapper from "../Components/Form/FormWrapper";
 import SubmitButton from "../Components/Form/SubmitButton";
 import useAuth from "../Hooks/useAuth";
 import { routes } from "../Global/Routes";
+import { isDev } from "../utils/utils";
 
 // eslint-disable-next-line react/prop-types
 export default function Register() {
@@ -146,7 +147,9 @@ export default function Register() {
       request.data = data;
       api(request)
         .then((res) => {
-          console.log(res);
+          if (isDev()) {
+            console.log("api response:", res);
+          }
           if (
             res.status === 200 &&
             res?.data?.email[0] === "The email has already been taken."
@@ -166,11 +169,12 @@ export default function Register() {
           }
         })
         .catch((err) => {
-          console.log(err);
+          if (isDev()) {
+            console.error("api error:", err);
+          }
           setToastErrors(["عملیات ورود با خطا روبرو شد"]);
           clearToastsErrorsAfter3sec();
           setDisableSubmit(false);
-          err && console.error(err);
         });
     }
   };

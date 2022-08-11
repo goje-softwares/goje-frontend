@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import { Children } from "../Global/Interfaces";
 import store from "../utils/store";
+import { isDev } from "../utils/utils";
 
 const AuthContext = createContext({});
 
@@ -28,6 +29,10 @@ export const AuthProvider = ({ children }: Children) => {
   const [auth, setAuth] = useState(initialState);
 
   useEffect(() => {
+    if (isDev()) {
+      console.log("new auth state:", auth);
+    }
+
     if (auth) {
       store.set("email", auth.email);
       store.set("name", auth.name);
