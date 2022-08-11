@@ -24,6 +24,7 @@ import SubmitButton from "../Components/Form/SubmitButton";
 import FormWrapper from "../Components/Form/FormWrapper";
 import useAuth from "../Hooks/useAuth";
 import { routes } from "../Global/Routes";
+import { isDev } from "../utils/utils";
 
 export default function Login() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -83,7 +84,9 @@ export default function Login() {
       request.data = data;
       api(request)
         .then((res) => {
-          console.log(res);
+          if (isDev()) {
+            console.log("api response:", res);
+          }
           if (res.status === 200) {
             setAuth({
               email: res.data.data.email,
@@ -97,7 +100,9 @@ export default function Login() {
           }
         })
         .catch((err) => {
-          console.log(err);
+          if (isDev()) {
+            console.error("api error:", err);
+          }
           if (err?.response?.status === 401) {
             setToastErrors(["ایمیل یا رمز عبور اشتباه است"]);
           } else if (err.response?.status === 404) {
@@ -109,7 +114,6 @@ export default function Login() {
           }
           clearToastsErrorsAfter3sec();
           setDisableSubmit(false);
-          err && console.error(err);
         });
     }
   };

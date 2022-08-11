@@ -1,17 +1,16 @@
 import axios from "axios";
 import store from "../utils/store";
+import { isDev } from "../utils/utils";
 
-// TOOD: .env it
-const url = {
-  local: "http://localhost:8000/api/",
-  dev: "https://goje.herokuapp.com/api/",
-  production: "https://goje.herokuapp.com/api/",
-};
-
+const endPoint = process.env.REACT_APP_API_ENDPOINT;
 const axiosData = {
-  baseURL: url.local,
+  baseURL: process.env.REACT_APP_API_ENDPOINT,
   headers: {},
 };
+
+if (isDev()) {
+  console.log("API Endpoint: ", endPoint);
+}
 
 export const api = axios.create(axiosData);
 // reading token from store on every request
