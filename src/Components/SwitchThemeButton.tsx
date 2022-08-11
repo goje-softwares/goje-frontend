@@ -2,7 +2,7 @@ import { Box, IconButton, useColorMode } from "@chakra-ui/react";
 import React from "react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
-export default function SwitchModeButton() {
+export default function SwitchThemeButton() {
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (

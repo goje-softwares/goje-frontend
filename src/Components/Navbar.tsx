@@ -1,11 +1,11 @@
 import React from "react";
 import { Box, HStack } from "@chakra-ui/react";
-import LoginButton from "./Components/LoginButton";
-import SignUpBotton from "./Components/SignUpButton";
-import NavBarWrapper from "./Components/NavBarWrapper";
-import SwitchModeButton from "./Components/SwitchModeButton";
-import GAvatar from "./Components/GAvatar";
-import useAuth from "../../Hooks/useAuth";
+import LoginButton from "./Auth/LoginButton";
+import SignUpBotton from "./Auth/SignUpButton";
+import NavBarWrapper from "./NavBarWrapper";
+import SwitchThemeButton from "./SwitchThemeButton";
+import GAvatar from "./GAvatar";
+import useAuth from "../Hooks/useAuth";
 
 export default function Navbar() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -29,7 +29,7 @@ export default function Navbar() {
           </Box>
         )}
         <HStack>
-          <SwitchModeButton />
+          <SwitchThemeButton />
         </HStack>
       </NavBarWrapper>
       <Box mr={"10px"} ml={"10px"}>
