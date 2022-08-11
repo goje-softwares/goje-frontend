@@ -13,16 +13,15 @@ const axiosData = {
   headers: {},
 };
 
-const token = store.get("access_token");
-console.log(token);
-if (token) {
-  axiosData.headers = {
-    Authorization: `Bearer ${token}`,
-  };
-}
-
-export default axios.create(axiosData);
-
+export const api = axios.create(axiosData);
+// reading token from store on every request
+api.interceptors.request.use((req) => {
+  const token = store.get("access_token");
+  if (token && req.headers) {
+    req.headers["Authorization"] = `Bearer ${token}`;
+  }
+  return req;
+});
 export const APIs = {
   auth: {
     login: {

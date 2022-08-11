@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios, { APIs } from "../api/axios";
+import { api, APIs } from "../api/api";
 import {
   InputGroup,
   InputLeftElement,
@@ -81,7 +81,7 @@ export default function Login() {
       // TODO: cleanCode (seperate file)
       const request = APIs.auth.login;
       request.data = data;
-      axios(request)
+      api(request)
         .then((res) => {
           console.log(res);
           if (res.status === 200) {
