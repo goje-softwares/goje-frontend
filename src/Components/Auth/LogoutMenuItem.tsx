@@ -12,7 +12,6 @@ export default function LogoutMenuItem() {
 
   const handleClick = () => {
     const req = APIs.auth.logout;
-
     api(req)
       .then((res) => {
         console.log(res);
