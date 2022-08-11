@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
-import { Children } from "../../../Global/Interfaces";
+import { Children } from "../Global/Interfaces";
 
 export default function NavBarWrapper({ children }: Children) {
   return (
