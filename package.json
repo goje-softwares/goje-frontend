@@ -21,6 +21,7 @@
     "@types/react-dom": "^18.0.6",
     "axios": "^0.27.2",
     "framer-motion": "^6.3.16",
+    "lint-staged": "^13.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.3.0",
@@ -59,9 +60,10 @@
     "husky": "^8.0.1",
     "prettier": "^2.7.1"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn pretty && yarn lint && git add ."
-    }
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
   }
 }
