@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios, { APIs } from "../api/axios";
+import { api, APIs } from "../api/api";
 import {
   FormControl,
   FormErrorMessage,
@@ -144,7 +144,7 @@ export default function Register() {
       // TODO: cleanCode (seperate file)
       const request = APIs.auth.register;
       request.data = data;
-      axios(request)
+      api(request)
         .then((res) => {
           console.log(res);
           if (

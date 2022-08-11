@@ -1,7 +1,7 @@
 import { MenuItem } from "@chakra-ui/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import axios, { APIs } from "../../api/axios";
+import { api, APIs } from "../../api/api";
 import { routes } from "../../Global/Routes";
 import useAuth from "../../Hooks/useAuth";
 
@@ -12,9 +12,7 @@ export default function LogoutMenuItem() {
 
   const handleClick = () => {
     const req = APIs.auth.logout;
-    console.log("hi");
-
-    axios(req)
+    api(req)
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
