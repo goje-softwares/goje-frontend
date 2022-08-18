@@ -1,13 +1,7 @@
 import React from "react";
 import { Button } from "@chakra-ui/react";
-import { bool } from "../../Global/Types";
 
-type Props = {
-  disableSubmit: bool;
-  text: string;
-};
-
-export default function SubmitButton({ disableSubmit, text }: Props) {
+export default function SubmitButton({ disableSubmit, text }) {
   return (
     <Button
       type="submit"

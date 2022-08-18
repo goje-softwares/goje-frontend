@@ -1,5 +1,4 @@
 import React, { createContext, useEffect, useState } from "react";
-import { Children } from "../Global/Interfaces";
 import store from "../utils/store";
 import { isDev } from "../utils/utils";
 
@@ -25,7 +24,7 @@ if (
   };
 }
 
-export const AuthProvider = ({ children }: Children) => {
+export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(initialState);
 
   useEffect(() => {

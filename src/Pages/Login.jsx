@@ -12,12 +12,10 @@ import {
   Button,
   Box,
   useToast,
-  ToastPosition,
 } from "@chakra-ui/react";
 import { ViewIcon } from "@chakra-ui/icons";
 
 import { validateEmail, validatePassword } from "../utils/validator";
-import { eFunc, submitFunc, ToastErrors } from "../Global/Types";
 import { toastConfig } from "../Global/toastConfig";
 import CancelButton from "../Components/Form/CancelButton";
 import SubmitButton from "../Components/Form/SubmitButton";
@@ -27,8 +25,7 @@ import { routes } from "../Global/Routes";
 import { isDev } from "../utils/utils";
 
 export default function Login() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { setAuth }: any = useAuth();
+  const { setAuth } = useAuth();
 
   // TODO: https://youtu.be/oUZjO00NkhY?list=PL0Zuz27SZ-6PRCpm9clX0WiBEMB70FWwd&t=1010
   const navigate = useNavigate();
@@ -38,14 +35,14 @@ export default function Login() {
 
   // email
   const [email, setEmail] = useState({ email: "", err: false });
-  const handleEmailChange = (e: eFunc) => {
+  const handleEmailChange = (e) => {
     const value = e.target.value;
     setEmail({ ...email, email: value });
   };
 
   // password
   const [password, setPassword] = useState({ password: "", err: false });
-  const handlePasswordChange = (e: eFunc) => {
+  const handlePasswordChange = (e) => {
     const value = e.target.value;
     setPassword({ ...password, password: value });
   };
@@ -59,10 +56,10 @@ export default function Login() {
 
   // submit
   const [disableSubmit, setDisableSubmit] = useState(false);
-  const [toastErrors, setToastErrors] = useState<ToastErrors>([]);
+  const [toastErrors, setToastErrors] = useState([]);
   const [success, setSuccess] = useState(false);
 
-  const handleSubmit = (e: submitFunc) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setDisableSubmit(true);
     const tmpErrors = [];
@@ -129,7 +126,7 @@ export default function Login() {
           status: "success",
           description: "با موفقیت وارد شدید",
           id: "success",
-          position: position as ToastPosition,
+          position: position,
           duration: duration,
           isClosable: isClosable,
           icon: <></>,
@@ -145,7 +142,7 @@ export default function Login() {
             status: "error",
             description: toastErrors[i],
             id: i,
-            position: position as ToastPosition,
+            position: position,
             duration: duration,
             isClosable: isClosable,
             icon: <></>,

@@ -2,8 +2,10 @@ import axios from "axios";
 import store from "../utils/store";
 import { isDev } from "../utils/utils";
 
+// eslint-disable-next-line no-undef
 const endPoint = process.env.REACT_APP_API_ENDPOINT;
 const axiosData = {
+  // eslint-disable-next-line no-undef
   baseURL: process.env.REACT_APP_API_ENDPOINT,
   headers: {},
 };

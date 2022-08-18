@@ -9,12 +9,8 @@ import {
 import React from "react";
 import LogoutMenuItem from "./Auth/LogoutMenuItem";
 
-interface Props {
-  email: string;
-}
-
 // GojeAvatar
-export default function GAvatar({ email }: Props) {
+export default function GAvatar({ email }) {
   return (
     <Menu>
       <MenuButton>
