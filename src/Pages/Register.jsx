@@ -13,7 +13,6 @@ import {
   Button,
   Box,
   useToast,
-  ToastPosition,
 } from "@chakra-ui/react";
 import { ViewIcon } from "@chakra-ui/icons";
 
@@ -23,15 +22,6 @@ import {
   validatePassword,
   validateRPassword,
 } from "../utils/validator";
-import {
-  eFunc,
-  Email,
-  Name,
-  Password,
-  RPassword,
-  submitFunc,
-  ToastErrors,
-} from "../Global/Types";
 import { toastConfig } from "../Global/toastConfig";
 import CancelButton from "../Components/Form/CancelButton";
 import FormWrapper from "../Components/Form/FormWrapper";
@@ -42,8 +32,7 @@ import { isDev } from "../utils/utils";
 
 // eslint-disable-next-line react/prop-types
 export default function Register() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { setAuth }: any = useAuth();
+  const { setAuth } = useAuth();
 
   const navigate = useNavigate();
 
@@ -54,8 +43,8 @@ export default function Register() {
   const handleSecondEyeClick = () => setShowRepeatPassword(!showRPassword);
 
   // name
-  const [name, setName] = useState<Name>({ name: "", err: false });
-  const handleNameChange = (e: eFunc) => {
+  const [name, setName] = useState({ name: "", err: false });
+  const handleNameChange = (e) => {
     const value = e.target.value;
     setName({ name: value, err: validateName(value) });
   };
@@ -64,8 +53,8 @@ export default function Register() {
   };
 
   // email
-  const [email, setEmail] = useState<Email>({ email: "", err: false });
-  const handleEmailChange = (e: eFunc) => {
+  const [email, setEmail] = useState({ email: "", err: false });
+  const handleEmailChange = (e) => {
     const value = e.target.value;
     setEmail({ email: value, err: validateEmail(value) });
   };
@@ -74,11 +63,11 @@ export default function Register() {
   };
 
   // password
-  const [password, setPassword] = useState<Password>({
+  const [password, setPassword] = useState({
     password: "",
     err: false,
   });
-  const handlePasswordChange = (e: eFunc) => {
+  const handlePasswordChange = (e) => {
     const value = e.target.value;
     setPassword({ password: value, err: validatePassword(value) });
   };
@@ -91,11 +80,11 @@ export default function Register() {
   };
 
   // repeat password
-  const [rPassword, setRPassword] = useState<RPassword>({
+  const [rPassword, setRPassword] = useState({
     rPassword: "",
     err: false,
   });
-  const handleRPasswordChange = (e: eFunc) => {
+  const handleRPasswordChange = (e) => {
     const value = e.target.value;
     setRPassword({
       rPassword: value,
@@ -118,10 +107,10 @@ export default function Register() {
 
   // submit
   const [disableSubmit, setDisableSubmit] = useState(false);
-  const [toastErrors, setToastErrors] = useState<ToastErrors>([]);
+  const [toastErrors, setToastErrors] = useState([]);
   const [success, setSuccess] = useState(false);
 
-  const handleSubmit = (e: submitFunc) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setDisableSubmit(true);
     const tmpErrors = [];
@@ -190,7 +179,7 @@ export default function Register() {
           status: "success",
           description: "حساب کاربری با موفقیت ایجاد شد",
           id: "success",
-          position: position as ToastPosition,
+          position: position,
           duration: duration,
           isClosable: isClosable,
           icon: <></>,

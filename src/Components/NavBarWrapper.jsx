@@ -1,8 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
-import { Children } from "../Global/Interfaces";
 
-export default function NavBarWrapper({ children }: Children) {
+export default function NavBarWrapper({ children }) {
   return (
     <Box
       display={"flex"}

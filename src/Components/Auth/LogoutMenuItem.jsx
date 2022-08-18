@@ -7,8 +7,7 @@ import useAuth from "../../Hooks/useAuth";
 import { isDev } from "../../utils/utils";
 
 export default function LogoutMenuItem() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { setAuth }: any = useAuth();
+  const { setAuth } = useAuth();
   const navigate = useNavigate();
 
   const handleClick = () => {
