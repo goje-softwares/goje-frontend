@@ -5,7 +5,7 @@ import { routes } from "../../Global/Routes";
 
 export default function LoginButton() {
   return (
-    <Link to={routes.register}>
+    <Link id="login" to={routes.register}>
       <Button colorScheme={"green"}>عضویت</Button>
     </Link>
   );

@@ -8,8 +8,7 @@ import GAvatar from "./GAvatar";
 import useAuth from "../Hooks/useAuth";
 
 export default function Navbar() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { auth }: any = useAuth();
+  const { auth } = useAuth();
 
   return (
     <Box>

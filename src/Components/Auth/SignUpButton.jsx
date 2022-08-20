@@ -5,7 +5,7 @@ import { routes } from "../../Global/Routes";
 
 export default function SignUpBotton() {
   return (
-    <Link to={routes.login}>
+    <Link id="signup" to={routes.login}>
       <Button colorScheme={"gray"} variant="outline">
         ورود
       </Button>
