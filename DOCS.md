@@ -1,31 +1,31 @@
 # DOCS
 
-goje-frontend documents for developers
+goje-frontend document for developers
 
-## table of contents
+## Table of contents
 
-- [What You nedd to know?](#what-you-nedd-to-know)
+- [What You need to know?](#what-you-nedd-to-know)
 - [Getting Started](#getting-started)
   - [Install](#install)
   - [Run](#run)
 - [Testing](#testing)
 - [Folder/File Structure](#folderfile-structure)
 
-## What You nedd to know?
+## What You need to know?
 
-in order to work with goje-frontend source you need a good undrestanding of:
+to work with the goje-frontend source you need a good understanding of:
 
-- React, Chakra UI and JavaScript
+- React, Chakra UI, and JavaScript
 
-also be familiar with:
+also, be familiar with:
 
-- Command Line (Bash/PowerShell), Git, Yarn, Cypress and axios
+- Command Line (Bash/PowerShell), Git, Yarn, Cypress, and axios
 
 ## Getting Started
 
-### install
+### Install
 
-#### - softwares:
+#### - Softwares:
 
 make sure you have this installed on your machine:
 
@@ -33,11 +33,11 @@ make sure you have this installed on your machine:
 - [Yarn](https://yarnpkg.com/)
 - [Git](https://git-scm.com/)
 - MySQL `(for local backend server)`
-  in order for some scripts to run properly my suggestion is to use [LAMP](https://bitnami.com/stack/lamp) for linux/mac and [XAMP](https://www.apachefriends.org/download.html) for windows
+  for some scripts to run properly, my suggestion is to use [LAMP](https://bitnami.com/stack/lamp) for Linux/Mac and [XAMP](https://www.apachefriends.org/download.html) for windows
 - [PHP](https://www.php.net/) `(for local backend server)`
 - PowerShell `(if OS is windows)`
 
-#### - source:
+#### - Source:
 
 clone the frontend repo:
 
@@ -79,7 +79,7 @@ run the backend(while you are in the <u>goje-frontend</u> directory):
   php artisan db:wipe; php artisan migrate; php artisan serve
   ```
 
-finally run the frontend:
+finally, run the frontend:
 
 ```shell
 yarn dev
@@ -96,16 +96,16 @@ yarn test
 
 ## Folder/File Structure
 
-in order for easly reading the source here is some explenation of some importand files and folders:
+for easy reading of the source here is an explanation of some important files and folders:
 
 - /cypress: find all the testing stuff here
-- /scripts: some scripts for easy developing experince and wiping database for testing purposes
+- /scripts: some scripts for easy developing experience and wiping database for testing purposes
 - /src: real application
   - /Components: react components
-  - /Context: react contenxts
+  - /Context: react contexts
   - /Global: app global settings
-  - /Hooks: react custome hooks
+  - /Hooks: react custom hooks
   - /Pages: Pages of application
   - App.jsx: main file and routings
 
-also i do my best to get the 'code should speaks it self' approach so if you are a React developer it shouldent be hard to work with source code
+also, i do my best to get the 'code should speak it self approach so if you are a React developer it shouldn't be hard to work with source code
