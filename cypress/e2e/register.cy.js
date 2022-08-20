@@ -7,7 +7,7 @@ describe("SignUp", () => {
   const pass = "12345678";
 
   beforeEach(() => {
-    cy.exec("yarn wipe-backend-local-db");
+    cy.exec("yarn wipe:backend-db");
   });
   it("successfully registers", () => {
     cy.visit("/");

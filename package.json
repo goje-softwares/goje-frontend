@@ -10,9 +10,9 @@
     "pretty": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "lint": "eslint \"**/*.{js,jsx}\"",
     "test": "cypress open",
-    "start-backend-local-server": "node scripts/start-backend-local-server.js",
-    "stop-backend-local-server": "node scripts/stop-backend-local-server.js",
-    "wipe-backend-local-db": "node scripts/wipe-backend-local-db.js"
+    "start:backend": "node scripts/start-backend-local-server.js",
+    "stop:backend": "node scripts/stop-backend-local-server.js",
+    "wipe:backend-db": "node scripts/wipe-backend-local-db.js"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.3",
@@ -56,6 +56,7 @@
     "eslint-plugin-react": "^7.30.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "husky": "^8.0.1",
+    "node-bash": "^5.0.1",
     "node-powershell": "^5.0.1",
     "prettier": "^2.7.1"
   },
