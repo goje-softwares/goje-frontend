@@ -165,6 +165,7 @@ export default function Login() {
             <VStack spacing={"10px"}>
               <FormControl isInvalid={email.err}>
                 <Input
+                  id="email"
                   value={email.email}
                   onChange={handleEmailChange}
                   placeholder="ایمیل"
@@ -173,6 +174,7 @@ export default function Login() {
               </FormControl>
               <InputGroup size="md">
                 <Input
+                  id="password"
                   pr="15px"
                   value={password.password}
                   onChange={handlePasswordChange}

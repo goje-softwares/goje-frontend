@@ -224,6 +224,7 @@ export default function Register() {
           <VStack spacing={"10px"}>
             <FormControl isInvalid={isNameValid}>
               <Input
+                id="name"
                 value={name.name}
                 onChange={handleNameChange}
                 onBlur={handleNameBlur}
@@ -239,6 +240,7 @@ export default function Register() {
 
             <FormControl isInvalid={isEmailValid}>
               <Input
+                id="email"
                 value={email.email}
                 onChange={handleEmailChange}
                 onBlur={handleEmailBlur}
@@ -255,6 +257,7 @@ export default function Register() {
             <InputGroup size="md">
               <FormControl isInvalid={isPasswordValid}>
                 <Input
+                  id="password"
                   value={password.password}
                   onChange={handlePasswordChange}
                   onBlur={handlePasswordBlur}
@@ -278,6 +281,7 @@ export default function Register() {
             <FormControl isInvalid={isRPasswordValid}>
               <InputGroup size="md">
                 <Input
+                  id="rPassword"
                   value={rPassword.rPassword}
                   onChange={handleRPasswordChange}
                   onBlur={handleRPasswordBlur}

@@ -6,7 +6,12 @@ export default function CancelButton() {
   return (
     <Box width={"100%"}>
       <Link to={"/"}>
-        <Button width={"100%"} colorScheme="gray" variant={"outline"}>
+        <Button
+          id="cancle"
+          width={"100%"}
+          colorScheme="gray"
+          variant={"outline"}
+        >
           انصراف
         </Button>
       </Link>
