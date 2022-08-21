@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { api, APIs } from "../api/api";
+import { api, APIs } from "../plugins/api";
 import {
   InputGroup,
   InputLeftElement,
@@ -15,14 +15,14 @@ import {
 } from "@chakra-ui/react";
 import { ViewIcon } from "@chakra-ui/icons";
 
-import { validateEmail, validatePassword } from "../utils/validator";
+import { validateEmail, validatePassword } from "../plugins/validator";
 import { toastConfig } from "../Global/toastConfig";
 import CancelButton from "../Components/Form/CancelButton";
 import SubmitButton from "../Components/Form/SubmitButton";
 import FormWrapper from "../Components/Form/FormWrapper";
 import useAuth from "../Hooks/useAuth";
 import { routes } from "../Global/Routes";
-import { isDev } from "../utils/utils";
+import { isDev } from "../plugins/utils";
 
 export default function Login() {
   const { setAuth } = useAuth();
