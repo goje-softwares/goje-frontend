@@ -9,7 +9,8 @@
     "eject": "react-scripts eject",
     "pretty": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "lint": "eslint \"**/*.{js,jsx}\"",
-    "test": "cypress open",
+    "test": "cypress run --spec cypress/e2e/all.cy.js",
+    "cypress": "cypress open",
     "start:backend": "node scripts/start-backend-local-server.js",
     "stop:backend": "node scripts/stop-backend-local-server.js",
     "wipe:backend-db": "node scripts/wipe-backend-local-db.js"
