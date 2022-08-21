@@ -3,12 +3,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { routes } from "../../Global/Routes";
 
-export default function SignUpBotton() {
+export default function RegisterBotton() {
   return (
-    <Link id="signup" to={routes.login}>
-      <Button colorScheme={"gray"} variant="outline">
-        ورود
-      </Button>
+    <Link id="login-button" to={routes.register}>
+      <Button colorScheme={"green"}>عضویت</Button>
     </Link>
   );
 }
