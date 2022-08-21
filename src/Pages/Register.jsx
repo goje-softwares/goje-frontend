@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { api, APIs } from "../api/api";
+import { api, APIs } from "../plugins/api";
 import {
   FormControl,
   FormErrorMessage,
@@ -21,14 +21,14 @@ import {
   validateEmail,
   validatePassword,
   validateRPassword,
-} from "../utils/validator";
+} from "../plugins/validator";
 import { toastConfig } from "../Global/toastConfig";
 import CancelButton from "../Components/Form/CancelButton";
 import FormWrapper from "../Components/Form/FormWrapper";
 import SubmitButton from "../Components/Form/SubmitButton";
 import useAuth from "../Hooks/useAuth";
 import { routes } from "../Global/Routes";
-import { isDev } from "../utils/utils";
+import { isDev } from "../plugins/utils";
 
 // eslint-disable-next-line react/prop-types
 export default function Register() {

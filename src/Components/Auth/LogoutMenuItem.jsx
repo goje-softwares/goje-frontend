@@ -1,10 +1,10 @@
 import { MenuItem } from "@chakra-ui/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { api, APIs } from "../../api/api";
+import { api, APIs } from "../../plugins/api";
 import { routes } from "../../Global/Routes";
 import useAuth from "../../Hooks/useAuth";
-import { isDev } from "../../utils/utils";
+import { isDev } from "../../plugins/utils";
 
 export default function LogoutMenuItem() {
   const { setAuth } = useAuth();

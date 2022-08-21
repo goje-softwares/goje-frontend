@@ -5,8 +5,10 @@ import { routes } from "../../Global/Routes";
 
 export default function LoginButton() {
   return (
-    <Link id="login" to={routes.register}>
-      <Button colorScheme={"green"}>عضویت</Button>
+    <Link id="register-button" to={routes.login}>
+      <Button colorScheme={"gray"} variant="outline">
+        ورود
+      </Button>
     </Link>
   );
 }
