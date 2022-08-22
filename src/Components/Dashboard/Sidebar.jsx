@@ -1,13 +1,23 @@
-import { Box, ListItem, UnorderedList } from "@chakra-ui/react";
+import { Box, UnorderedList, ListItem, Icon } from "@chakra-ui/react";
 import React from "react";
 import { Link } from "react-router-dom";
 import { dashboard, products } from "../../Global/Routes";
 import Logo from "../Logo";
+import { FiPackage } from "react-icons/fi";
 
 export default function Sidebar() {
   return (
-    <Box height="100vh" borderRight={"1px soild gray"} w={"20%"} id="side-bar">
+    <Box
+      id="side-bar"
+      display={"flex"}
+      flexDir="column"
+      height="100vh"
+      color={"white"}
+      bg={"gray.900"}
+      w={"20%"}
+    >
       <Box
+        bg={"blackAlpha.400"}
         id="side-bar-header"
         display={"flex"}
         justifyContent="center"
@@ -19,10 +29,21 @@ export default function Sidebar() {
         </Link>
       </Box>
       <Box id="items">
-        <UnorderedList>
-          <ListItem>
-            <Link to={products}>محصولات</Link>
-          </ListItem>
+        <UnorderedList m="0" p={"0"} fontSize={"1.1rem"}>
+          <Link to={products}>
+            <ListItem
+              className="listItem"
+              display={"flex"}
+              alignItems={"center"}
+              p="5px"
+              _hover={{
+                background: "whiteAlpha.200",
+              }}
+            >
+              <Icon color={"tomato.400"} as={FiPackage} mr="10px" ml={"6px"} />
+              محصولات
+            </ListItem>
+          </Link>
         </UnorderedList>
       </Box>
     </Box>
