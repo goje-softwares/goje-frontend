@@ -21,7 +21,7 @@ import CancelButton from "../Components/Form/CancelButton";
 import SubmitButton from "../Components/Form/SubmitButton";
 import FormWrapper from "../Components/Form/FormWrapper";
 import useAuth from "../Hooks/useAuth";
-import { routes } from "../Global/Routes";
+import { dashboard, register } from "../Global/Routes";
 import { isDev } from "../plugins/utils";
 import Navbar from "../Components/Navbar";
 
@@ -94,7 +94,7 @@ export default function Login() {
             });
             setToastErrors([]);
             setSuccess(true);
-            navigate(routes.dashboard);
+            navigate(dashboard);
           }
         })
         .catch((err) => {
@@ -212,7 +212,7 @@ export default function Login() {
         </form>
         <Box pt={"20px"} textAlign="center">
           <Text fontSize={".8rem"}>
-            حساب کاربری ندارید؟ <Link to={routes.register}>ثبت نام کنید</Link>
+            حساب کاربری ندارید؟ <Link to={register}>ثبت نام کنید</Link>
           </Text>
         </Box>
       </FormWrapper>
