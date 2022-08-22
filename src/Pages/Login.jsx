@@ -23,6 +23,7 @@ import FormWrapper from "../Components/Form/FormWrapper";
 import useAuth from "../Hooks/useAuth";
 import { routes } from "../Global/Routes";
 import { isDev } from "../plugins/utils";
+import Navbar from "../Components/Navbar";
 
 export default function Login() {
   const { setAuth } = useAuth();
@@ -153,65 +154,68 @@ export default function Login() {
   }, [success, toastErrors, toast, position, duration, isClosable]);
 
   return (
-    <FormWrapper>
-      <form onSubmit={handleSubmit}>
-        <Box display={"flex"} flexDir="column">
-          <Box pt={"10px"} pb={"14px"}>
-            <Text textAlign={"center"} fontSize="sm" color="gray">
-              لطفا ایمیل و رمز عبور خود را وارد کنید.
-            </Text>
+    <>
+      <Navbar />
+      <FormWrapper>
+        <form onSubmit={handleSubmit}>
+          <Box display={"flex"} flexDir="column">
+            <Box pt={"10px"} pb={"14px"}>
+              <Text textAlign={"center"} fontSize="sm" color="gray">
+                لطفا ایمیل و رمز عبور خود را وارد کنید.
+              </Text>
+            </Box>
+            <Box>
+              <VStack spacing={"10px"}>
+                <FormControl isInvalid={email.err}>
+                  <Input
+                    id="email"
+                    value={email.email}
+                    onChange={handleEmailChange}
+                    placeholder="ایمیل"
+                    size="md"
+                  />
+                </FormControl>
+                <InputGroup size="md">
+                  <Input
+                    id="password"
+                    pr="15px"
+                    value={password.password}
+                    onChange={handlePasswordChange}
+                    type={show ? "text" : "password"}
+                    placeholder="رمز عبور"
+                  />
+                  <InputLeftElement width="3.2rem">
+                    <Button h="1.75rem" size="sm" onClick={handleClick}>
+                      <ViewIcon />
+                    </Button>
+                  </InputLeftElement>
+                </InputGroup>
+              </VStack>
+            </Box>
+            <Box mt={"10px"}>
+              <Link to={"#"}>
+                <Text fontSize={"sm"}>فراموشی رمز عبور</Text>
+              </Link>
+            </Box>
+            <Box pt="20px">
+              <HStack
+                display={"flex"}
+                justifyContent="space-around"
+                justify={"left"}
+                spacing={"10px"}
+              >
+                <SubmitButton disableSubmit={disableSubmit} text="ورود" />
+                <CancelButton />
+              </HStack>
+            </Box>
           </Box>
-          <Box>
-            <VStack spacing={"10px"}>
-              <FormControl isInvalid={email.err}>
-                <Input
-                  id="email"
-                  value={email.email}
-                  onChange={handleEmailChange}
-                  placeholder="ایمیل"
-                  size="md"
-                />
-              </FormControl>
-              <InputGroup size="md">
-                <Input
-                  id="password"
-                  pr="15px"
-                  value={password.password}
-                  onChange={handlePasswordChange}
-                  type={show ? "text" : "password"}
-                  placeholder="رمز عبور"
-                />
-                <InputLeftElement width="3.2rem">
-                  <Button h="1.75rem" size="sm" onClick={handleClick}>
-                    <ViewIcon />
-                  </Button>
-                </InputLeftElement>
-              </InputGroup>
-            </VStack>
-          </Box>
-          <Box mt={"10px"}>
-            <Link to={"#"}>
-              <Text fontSize={"sm"}>فراموشی رمز عبور</Text>
-            </Link>
-          </Box>
-          <Box pt="20px">
-            <HStack
-              display={"flex"}
-              justifyContent="space-around"
-              justify={"left"}
-              spacing={"10px"}
-            >
-              <SubmitButton disableSubmit={disableSubmit} text="ورود" />
-              <CancelButton />
-            </HStack>
-          </Box>
+        </form>
+        <Box pt={"20px"} textAlign="center">
+          <Text fontSize={".8rem"}>
+            حساب کاربری ندارید؟ <Link to={routes.register}>ثبت نام کنید</Link>
+          </Text>
         </Box>
-      </form>
-      <Box pt={"20px"} textAlign="center">
-        <Text fontSize={".8rem"}>
-          حساب کاربری ندارید؟ <Link to={routes.register}>ثبت نام کنید</Link>
-        </Text>
-      </Box>
-    </FormWrapper>
+      </FormWrapper>
+    </>
   );
 }
