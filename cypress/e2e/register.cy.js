@@ -11,7 +11,6 @@ describe("SignUp", () => {
   it("successfully registers", () => {
     cy.register(name, email, pass);
     cy.url().should("include", "/dashboard");
-    cy.contains("Dashboard");
   });
 });
 

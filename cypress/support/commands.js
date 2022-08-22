@@ -19,5 +19,4 @@ Cypress.Commands.add("login", (email, pass) => {
   cy.get("#password").type(pass);
   cy.get("form").submit();
   cy.url().should("include", "/dashboard");
-  cy.contains("Dashboard");
 });
