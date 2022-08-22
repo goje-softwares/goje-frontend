@@ -21,7 +21,7 @@ export default function Sidebar() {
       <Box id="items">
         <UnorderedList>
           <ListItem>
-            <Link to={products}>محصول</Link>
+            <Link to={products}>محصولات</Link>
           </ListItem>
         </UnorderedList>
       </Box>

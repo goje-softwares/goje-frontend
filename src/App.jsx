@@ -10,8 +10,8 @@ import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import RequireAuth from "./Components/Auth/RequireAuth";
 import RequireNotAuth from "./Components/Auth/RequireNotAuth";
-import Products from "./Pages/Dashboard/Products";
-import DashboardHome from "./Pages/Dashboard/DashboardHome";
+import DashboardHome from "./Components/Dashboard/DashboardHome";
+import Products from "./Components/Dashboard/Products";
 
 function App() {
   return (
