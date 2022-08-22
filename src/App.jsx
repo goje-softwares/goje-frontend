@@ -34,7 +34,7 @@ function App() {
           </Route>
 
           {/* catch all */}
-          <Route path={routes.notFound} element={<NotFound />} />
+          <Route path={"*"} element={<NotFound />} />
         </Route>
       </Routes>
     </ChakraProvider>

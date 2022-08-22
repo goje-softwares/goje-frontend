@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { api, APIs } from "../plugins/api";
 import {
   FormControl,
@@ -314,6 +314,11 @@ export default function Register() {
             <SubmitButton disableSubmit={disableSubmit} text="ثبت نام" />
             <CancelButton />
           </HStack>
+        </Box>
+        <Box pt={"20px"} textAlign="center">
+          <Text fontSize={".8rem"}>
+            قبلا ثبت نام کرده اید؟ <Link to={routes.login}>وارد شوید</Link>
+          </Text>
         </Box>
       </form>
     </FormWrapper>

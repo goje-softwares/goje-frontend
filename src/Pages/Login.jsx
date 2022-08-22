@@ -207,6 +207,11 @@ export default function Login() {
           </Box>
         </Box>
       </form>
+      <Box pt={"20px"} textAlign="center">
+        <Text fontSize={".8rem"}>
+          حساب کاربری ندارید؟ <Link to={routes.register}>ثبت نام کنید</Link>
+        </Text>
+      </Box>
     </FormWrapper>
   );
 }
