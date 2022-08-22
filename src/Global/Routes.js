@@ -1,7 +1,9 @@
-export const routes = {
-  home: "/",
-  register: "/register",
-  login: "/login",
-  dashboard: "/dashboard",
-  notFound: "/404",
-};
+// main routes
+export const home = "/";
+export const register = "/register";
+export const login = "/login";
+export const dashboard = "/dashboard";
+export const notFound = "/404";
+
+// sub routes
+export const products = dashboard + "/products";

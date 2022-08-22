@@ -2,7 +2,7 @@ import { MenuItem } from "@chakra-ui/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { api, APIs } from "../../plugins/api";
-import { routes } from "../../Global/Routes";
+import { home } from "../../Global/Routes";
 import useAuth from "../../Hooks/useAuth";
 import { isDev } from "../../plugins/utils";
 
@@ -19,7 +19,7 @@ export default function LogoutMenuItem() {
         }
         if (res.status === 200) {
           setAuth({ email: "", name: "", access_token: "", token_type: "" });
-          navigate(routes.home);
+          navigate(home);
         }
       })
       .catch((err) => {
