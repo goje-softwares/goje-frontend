@@ -1,32 +1,18 @@
-import {
-  Box,
-  FormControl,
-  FormLabel,
-  Heading,
-  Input,
-  useToast,
-} from "@chakra-ui/react";
+import { Box, FormControl, FormLabel, Heading, Input } from "@chakra-ui/react";
 import convertToEnDigits from "convert-to-en-digits";
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
-import { toastConfig } from "../../Global/toastConfig";
+import useToasts from "../../Hooks/useToasts";
 import { api, APIs } from "../../plugins/api";
+import { isDev } from "../../plugins/utils";
 import { validateName, validatePrice } from "../../plugins/validator";
 import SubmitButton from "../Form/SubmitButton";
 
 export default function AddProduct({ products, setProducts }) {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
-  const [toastErrors, setToastErrors] = useState([]);
-
+  const { toasts, setToasts } = useToasts();
   const [disableSubmit, setDisableSubmit] = useState(false);
-
-  const clearToastsErrorsAfter3sec = () => {
-    setTimeout(() => {
-      setToastErrors([]);
-      setDisableSubmit(false);
-    }, 3000);
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -37,8 +23,8 @@ export default function AddProduct({ products, setProducts }) {
     if (validatePrice(tmpPrice)) tmpErrors.push(validatePrice(tmpPrice));
 
     if (tmpErrors.length > 0) {
-      setToastErrors(tmpErrors);
-      clearToastsErrorsAfter3sec();
+      setToasts({ ...toasts, errors: [...tmpErrors] });
+      setDisableSubmit(false);
     } else {
       const data = {
         name: name,
@@ -50,41 +36,24 @@ export default function AddProduct({ products, setProducts }) {
         .then((res) => {
           if (res.status === 201) {
             setProducts([res.data, ...products]);
-            setDisableSubmit(false);
             setName("");
             setPrice("");
+            setToasts({ successes: ["محصول اضافه شد."] });
           }
-          // error checking + toast
-
-          console.log("log", res);
         })
         .catch((err) => {
-          // toasts
-          console.error(err);
+          if (err.code === "ERR_NETWORK") {
+            setToasts({ errors: ["ارتباط با سرور برقرار نشد."] });
+          } else {
+            if (err) {
+              setToasts({ errors: ["خطا"] });
+              if (isDev()) console.error(err);
+            }
+          }
         });
+      setDisableSubmit(false);
     }
   };
-
-  const toast = useToast();
-  const { position, duration, isClosable } = toastConfig;
-
-  useEffect(() => {
-    if (toastErrors && toastErrors.length > 0) {
-      for (let i = 0; i < toastErrors.length; i++) {
-        if (!toast.isActive(i)) {
-          toast({
-            status: "error",
-            description: toastErrors[i],
-            id: i,
-            position: position,
-            duration: duration,
-            isClosable: isClosable,
-            icon: <></>,
-          });
-        }
-      }
-    }
-  });
 
   return (
     <Box m="20px">
