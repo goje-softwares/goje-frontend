@@ -2,7 +2,6 @@ import React from "react";
 import { useEffect } from "react";
 import { useToast } from "@chakra-ui/toast";
 import useToasts from "../Hooks/useToasts";
-import { isDev } from "../plugins/utils";
 
 export default function Toasts() {
   const { toasts } = useToasts();
@@ -12,7 +11,6 @@ export default function Toasts() {
   const duration = 4000;
   const isClosable = true;
 
-  if (isDev()) console.log(toasts);
   useEffect(() => {
     const toastErrors = toasts.errors;
     if (toastErrors && toastErrors.length > 0) {

@@ -32,7 +32,13 @@ export default function Products() {
   return (
     <Box>
       <AddProduct products={products} setProducts={setProducts} />
-      <Box>
+      <Box
+        mt={"20px"}
+        display={"flex"}
+        flexDir="column"
+        justifyContent={"center"}
+        alignItems="center"
+      >
         {products?.length > 0 ? (
           products.map((p, index) => {
             return (

@@ -39,6 +39,7 @@ export default function AddProduct({ products, setProducts }) {
             setName("");
             setPrice("");
             setToasts({ successes: ["محصول اضافه شد."] });
+            if (isDev()) console.log("product added:", res.data);
           }
         })
         .catch((err) => {
@@ -57,40 +58,46 @@ export default function AddProduct({ products, setProducts }) {
 
   return (
     <Box m="20px">
-      <Heading p={"5px"} fontSize="xl">
+      <Heading p={"5px 0 10px 0"} fontSize="xl">
         اضافه کردن محصول
       </Heading>
       <hr />
-      <Box
-        display={"flex"}
-        flexDir="row"
-        justifyContent={"space-between"}
-        alignItems="center"
-      >
+      <Box width={"100%"}>
         <form onSubmit={handleSubmit}>
-          <FormControl>
-            <FormLabel>نام محصول</FormLabel>
-            <Input
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-              type="text"
-              placeholder="نام محصول"
-              value={name}
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel>قیمت</FormLabel>
-            <Input
-              onChange={(e) => {
-                setPrice(e.target.value);
-              }}
-              type="text"
-              placeholder="قیمت"
-              value={price}
-            />
-          </FormControl>
-          <SubmitButton disableSubmit={disableSubmit} text={"اضافه"} />
+          <Box
+            mt={"20px"}
+            display="flex"
+            flexDir={"row"}
+            justifyContent="space-between"
+            alignItems={"end"}
+            width="80%"
+          >
+            <FormControl width={"30%"}>
+              <FormLabel>نام محصول</FormLabel>
+              <Input
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
+                type="text"
+                placeholder="نام محصول"
+                value={name}
+              />
+            </FormControl>
+            <FormControl width={"30%"}>
+              <FormLabel>قیمت</FormLabel>
+              <Input
+                onChange={(e) => {
+                  setPrice(e.target.value);
+                }}
+                type="text"
+                placeholder="قیمت"
+                value={price}
+              />
+            </FormControl>
+            <FormControl width={"30%"}>
+              <SubmitButton disableSubmit={disableSubmit} text={"اضافه"} />
+            </FormControl>
+          </Box>
         </form>
       </Box>
     </Box>
