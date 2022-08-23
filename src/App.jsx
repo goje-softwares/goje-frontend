@@ -12,10 +12,12 @@ import RequireAuth from "./Components/Auth/RequireAuth";
 import RequireNotAuth from "./Components/Auth/RequireNotAuth";
 import DashboardHome from "./Components/Dashboard/DashboardHome";
 import Products from "./Components/Dashboard/Products";
+import Toasts from "./Components/Toasts";
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
+      <Toasts />
       <Routes>
         <Route path="/">
           {/* public routes */}
