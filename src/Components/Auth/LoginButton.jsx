@@ -5,7 +5,7 @@ import { login } from "../../Global/Routes";
 
 export default function LoginButton() {
   return (
-    <Link id="register-button" to={login}>
+    <Link id="login-button" to={login}>
       <Button colorScheme={"gray"} variant="outline">
         ورود
       </Button>

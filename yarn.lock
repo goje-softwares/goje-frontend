@@ -4013,6 +4013,11 @@ convert-source-map@^1.4.0, convert-source-map@^1.5.0, convert-source-map@^1.6.0,
   dependencies:
     safe-buffer "~5.1.1"
 
+convert-to-en-digits@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/convert-to-en-digits/-/convert-to-en-digits-1.0.2.tgz#08e8bf9435d7d1472e6f089702501dba5e6c0b5f"
+  integrity sha512-RGgH+v0HyatYXgG70x24/84nUTkI2LavQH9g5X/bKlTmldTnG8q77Jel/zj5jrqdIwjm3f2OnF4QsAQNvoFxjw==
+
 cookie-signature@1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/cookie-signature/-/cookie-signature-1.0.6.tgz#e303a882b342cc3ee8ca513a79999734dab3ae2c"

@@ -11,7 +11,7 @@ export default function Sidebar() {
       id="side-bar"
       display={"flex"}
       flexDir="column"
-      height="100vh"
+      height="auto"
       color={"white"}
       bg={"gray.900"}
       w={"20%"}
@@ -32,6 +32,7 @@ export default function Sidebar() {
         <UnorderedList m="0" p={"0"} fontSize={"1.1rem"}>
           <Link to={products}>
             <ListItem
+              id="productItem"
               className="listItem"
               display={"flex"}
               alignItems={"center"}

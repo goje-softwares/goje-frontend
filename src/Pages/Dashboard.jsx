@@ -12,14 +12,7 @@ export default function Dashboard() {
         <Box id="nav-bar" h="88px">
           <Navbar />
         </Box>
-        <Box
-          w={"100%"}
-          h="100%"
-          display={"flex"}
-          flexDir="column"
-          justifyContent="center"
-          alignItems={"center"}
-        >
+        <Box w={"100%"} h="100%">
           <Outlet />
         </Box>
       </Box>
