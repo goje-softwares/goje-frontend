@@ -27,6 +27,7 @@ export default function DeleteModal({
   const { setToasts } = useToasts();
 
   const handleClick = () => {
+    onClose();
     const request = APIs.product.delete;
     request.url = "products/destroy/" + productId;
     api(request)
@@ -34,26 +35,19 @@ export default function DeleteModal({
         if (res.status === 200 || res.data[0] === "success") {
           setToasts({ successes: [res.data.message] });
           // delete from app state too
-          console.log(products);
           const tmpNewProducts = products.filter((p) => p.id !== productId);
           setProducts(tmpNewProducts);
-          onClose();
         }
         if (isDev()) console.log(res);
       })
       //TODO: DRY dont repeat you self + add product and other .then(errs)...
-      .then((err) => {
-        if (isDev()) console.error(err);
-        if (err) {
-          if (err.code === "ERR_NETWORK") {
-            setToasts({ errors: ["ارتباط با سرور برقرار نشد."] });
-          } else {
-            if (err) {
-              setToasts({ errors: ["خطا"] });
-              if (isDev()) console.error(err);
-            }
-          }
+      .catch((err) => {
+        if (err.code == "ERR_NETWORK") {
+          setToasts({ errors: ["ارتباط با سرور برقرار نشد."] });
+        } else {
+          setToasts({ errors: ["خطا"] });
         }
+        if (isDev()) console.error(err);
       });
   };
 

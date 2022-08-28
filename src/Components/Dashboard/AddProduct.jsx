@@ -1,6 +1,7 @@
 import { Box, FormControl, Heading, Input, Textarea } from "@chakra-ui/react";
 import convertToEnDigits from "convert-to-en-digits";
 import React from "react";
+import { useRef } from "react";
 import { useState } from "react";
 import useToasts from "../../Hooks/useToasts";
 import { api, APIs } from "../../plugins/api";
@@ -19,6 +20,7 @@ export default function AddProduct({ products, setProducts }) {
   const [description, setDescription] = useState("");
   const { toasts, setToasts } = useToasts();
   const [disableSubmit, setDisableSubmit] = useState(false);
+  const inputRef = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -52,6 +54,7 @@ export default function AddProduct({ products, setProducts }) {
             setAmount("");
             setDescription("");
             setToasts({ successes: ["محصول اضافه شد."] });
+            inputRef.current.select();
             if (isDev()) console.log("product added:", res.data);
           }
         })
@@ -87,6 +90,7 @@ export default function AddProduct({ products, setProducts }) {
           >
             <FormControl width={"24%"}>
               <Input
+                ref={inputRef}
                 onChange={(e) => {
                   setName(e.target.value);
                 }}

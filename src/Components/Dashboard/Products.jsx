@@ -1,5 +1,6 @@
 import {
   Box,
+  Heading,
   Table,
   TableContainer,
   Tbody,
@@ -55,47 +56,53 @@ export default function Products() {
         alignItems="center"
       >
         {products?.length > 0 ? (
-          <TableContainer overflowY={"scroll"} height="400px">
-            <Table variant="striped" colorScheme="gray">
-              <Thead position={"sticky"} top="0" background={"Menu"}>
-                <Tr>
-                  <Th>ردیف</Th>
-                  <Th>نام</Th>
-                  <Th>تعداد</Th>
-                  <Th>قیمت</Th>
-                  <Th>توضیحات</Th>
-                  <Th>حذف</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {products.map((p, index) => {
-                  return (
-                    <Tr key={index}>
-                      <Td>{index + 1}</Td>
-                      <Td>{p.name}</Td>
-                      <Td>0</Td>
-                      <Td>{p.price}</Td>
-                      <Td>
-                        {p.description ? (
-                          <DescriptionModal description={p.description} />
-                        ) : (
-                          <Text textAlign={"center"}>...</Text>
-                        )}
-                      </Td>
-                      <Td>
-                        <DeleteModal
-                          products={products}
-                          setProducts={setProducts}
-                          productName={p.name}
-                          productId={p.id}
-                        />
-                      </Td>
-                    </Tr>
-                  );
-                })}
-              </Tbody>
-            </Table>
-          </TableContainer>
+          <>
+            <Heading p={"5px 0 10px 0"} fontSize="xl">
+              محصولات
+            </Heading>
+            <hr />
+            <TableContainer overflowY={"scroll"} height="400px">
+              <Table variant="striped" colorScheme="gray">
+                <Thead position={"sticky"} top="0" background={"Menu"}>
+                  <Tr>
+                    <Th>ردیف</Th>
+                    <Th>نام</Th>
+                    <Th>تعداد</Th>
+                    <Th>قیمت</Th>
+                    <Th>توضیحات</Th>
+                    <Th>حذف</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {products.map((p, index) => {
+                    return (
+                      <Tr key={index}>
+                        <Td>{index + 1}</Td>
+                        <Td>{p.name}</Td>
+                        <Td>0</Td>
+                        <Td>{p.price}</Td>
+                        <Td>
+                          {p.description ? (
+                            <DescriptionModal description={p.description} />
+                          ) : (
+                            <Text textAlign={"center"}>...</Text>
+                          )}
+                        </Td>
+                        <Td>
+                          <DeleteModal
+                            products={products}
+                            setProducts={setProducts}
+                            productName={p.name}
+                            productId={p.id}
+                          />
+                        </Td>
+                      </Tr>
+                    );
+                  })}
+                </Tbody>
+              </Table>
+            </TableContainer>
+          </>
         ) : (
           // TODO: loader... if not loaded after 3sec then:
           <Text fontSize={".9rem"} color={"gray"}>
