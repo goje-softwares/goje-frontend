@@ -5,7 +5,7 @@ import { register } from "../../Global/Routes";
 
 export default function RegisterBotton() {
   return (
-    <Link id="login-button" to={register}>
+    <Link id="register-button" to={register}>
       <Button colorScheme={"green"}>عضویت</Button>
     </Link>
   );

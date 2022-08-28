@@ -54,6 +54,7 @@ export default function DeleteModal({
   return (
     <Box>
       <IconButton
+        id={`deleteButton${productId}`}
         position={"inherit"}
         zIndex={"-100"}
         aria-label="Search database"

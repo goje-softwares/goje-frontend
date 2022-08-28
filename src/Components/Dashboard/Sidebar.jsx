@@ -32,6 +32,7 @@ export default function Sidebar() {
         <UnorderedList m="0" p={"0"} fontSize={"1.1rem"}>
           <Link to={products}>
             <ListItem
+              id="productItem"
               className="listItem"
               display={"flex"}
               alignItems={"center"}
