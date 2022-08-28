@@ -11,7 +11,7 @@ export default function Sidebar() {
       id="side-bar"
       display={"flex"}
       flexDir="column"
-      height="100vh"
+      height="auto"
       color={"white"}
       bg={"gray.900"}
       w={"20%"}

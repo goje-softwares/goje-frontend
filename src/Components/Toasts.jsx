@@ -45,6 +45,7 @@ export default function Toasts() {
         }
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [toasts]);
 
   return <></>;

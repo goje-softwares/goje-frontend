@@ -1,16 +1,22 @@
-import { Box, FormControl, FormLabel, Heading, Input } from "@chakra-ui/react";
+import { Box, FormControl, Heading, Input, Textarea } from "@chakra-ui/react";
 import convertToEnDigits from "convert-to-en-digits";
 import React from "react";
 import { useState } from "react";
 import useToasts from "../../Hooks/useToasts";
 import { api, APIs } from "../../plugins/api";
 import { isDev } from "../../plugins/utils";
-import { validateName, validatePrice } from "../../plugins/validator";
+import {
+  validateAmount,
+  validateName,
+  validatePrice,
+} from "../../plugins/validator";
 import SubmitButton from "../Form/SubmitButton";
 
 export default function AddProduct({ products, setProducts }) {
   const [name, setName] = useState("");
+  const [amount, setAmount] = useState("");
   const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
   const { toasts, setToasts } = useToasts();
   const [disableSubmit, setDisableSubmit] = useState(false);
 
@@ -18,18 +24,23 @@ export default function AddProduct({ products, setProducts }) {
     e.preventDefault();
     setDisableSubmit(true);
     const tmpErrors = [];
-    if (validateName(name)) tmpErrors.push(validateName(name));
     const tmpPrice = convertToEnDigits(price);
+    const tmpAmount = convertToEnDigits(amount);
+    if (validateName(name)) tmpErrors.push(validateName(name));
+    if (validateAmount(tmpAmount)) tmpErrors.push(validateAmount(tmpAmount));
     if (validatePrice(tmpPrice)) tmpErrors.push(validatePrice(tmpPrice));
-
+    // TODO: validate description
     if (tmpErrors.length > 0) {
       setToasts({ ...toasts, errors: [...tmpErrors] });
       setDisableSubmit(false);
     } else {
       const data = {
         name: name,
+        amount: amount,
         price: tmpPrice,
+        description: description,
       };
+      // TODO: backend not getting amount!
       const request = APIs.product.create;
       request.data = data;
       api(request)
@@ -38,6 +49,7 @@ export default function AddProduct({ products, setProducts }) {
             setProducts([res.data, ...products]);
             setName("");
             setPrice("");
+            setAmount("");
             setToasts({ successes: ["محصول اضافه شد."] });
             if (isDev()) console.log("product added:", res.data);
           }
@@ -70,10 +82,9 @@ export default function AddProduct({ products, setProducts }) {
             flexDir={"row"}
             justifyContent="space-between"
             alignItems={"end"}
-            width="80%"
+            width="100%"
           >
-            <FormControl width={"30%"}>
-              <FormLabel>نام محصول</FormLabel>
+            <FormControl width={"24%"}>
               <Input
                 onChange={(e) => {
                   setName(e.target.value);
@@ -83,20 +94,40 @@ export default function AddProduct({ products, setProducts }) {
                 value={name}
               />
             </FormControl>
-            <FormControl width={"30%"}>
-              <FormLabel>قیمت</FormLabel>
+            <FormControl width={"24%"}>
+              <Input
+                onChange={(e) => {
+                  setAmount(e.target.value);
+                }}
+                type="text"
+                placeholder="تعداد/وزن(kg)"
+                value={amount}
+              />
+            </FormControl>
+            <FormControl width={"24%"}>
               <Input
                 onChange={(e) => {
                   setPrice(e.target.value);
                 }}
                 type="text"
-                placeholder="قیمت"
+                placeholder="قیمت(﷼)"
                 value={price}
               />
             </FormControl>
-            <FormControl width={"30%"}>
+
+            <FormControl width={"24%"}>
               <SubmitButton disableSubmit={disableSubmit} text={"اضافه"} />
             </FormControl>
+          </Box>
+          <Box mt={"20px"} width="100%">
+            <Textarea
+              value={description}
+              onChange={(e) => {
+                setDescription(e.target.value);
+              }}
+              placeholder="توضیحات...(اختیاری)"
+              size="sm"
+            />
           </Box>
         </form>
       </Box>

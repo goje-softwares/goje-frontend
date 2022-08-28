@@ -44,6 +44,19 @@ export const validatePrice = (price) => {
     return "قیمت نمیتواند خالی باشد.";
   } else if (!validator.isNumeric(price)) {
     return "لطفا در وارد کردن قیمت فقط از اعداد استفاده کنید";
+  } else if (price < 0) {
+    return "قیمت نمیتواند منفی باشد.";
+  }
+  return false;
+};
+
+export const validateAmount = (amount) => {
+  if (validator.isEmpty(amount)) {
+    return "تعداد/وزن نمیتواند خالی باشد.";
+  } else if (!validator.isNumeric(amount)) {
+    return "لطفا در وارد کردن تعداد/وزن فقط از اعداد استفاده کنید";
+  } else if (amount < 0) {
+    return "تعداد/وزن نمیتواند منفی باشد.";
   }
   return false;
 };
