@@ -83,7 +83,12 @@ export default function Products() {
                         )}
                       </Td>
                       <Td>
-                        <DeleteModal productName={p.name} />
+                        <DeleteModal
+                          products={products}
+                          setProducts={setProducts}
+                          productName={p.name}
+                          productId={p.id}
+                        />
                       </Td>
                     </Tr>
                   );

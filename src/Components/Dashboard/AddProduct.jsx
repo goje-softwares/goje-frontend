@@ -50,6 +50,7 @@ export default function AddProduct({ products, setProducts }) {
             setName("");
             setPrice("");
             setAmount("");
+            setDescription("");
             setToasts({ successes: ["محصول اضافه شد."] });
             if (isDev()) console.log("product added:", res.data);
           }
