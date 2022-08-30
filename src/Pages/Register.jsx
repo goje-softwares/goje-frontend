@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { api, APIs } from "../api/api";
+import { Link, useNavigate } from "react-router-dom";
+import { api, APIs } from "../plugins/api";
 import {
   FormControl,
   FormErrorMessage,
@@ -21,14 +21,15 @@ import {
   validateEmail,
   validatePassword,
   validateRPassword,
-} from "../utils/validator";
+} from "../plugins/validator";
 import { toastConfig } from "../Global/toastConfig";
 import CancelButton from "../Components/Form/CancelButton";
 import FormWrapper from "../Components/Form/FormWrapper";
 import SubmitButton from "../Components/Form/SubmitButton";
 import useAuth from "../Hooks/useAuth";
-import { routes } from "../Global/Routes";
-import { isDev } from "../utils/utils";
+import { dashboard, login } from "../Global/Routes";
+import { isDev } from "../plugins/utils";
+import Navbar from "../Components/Navbar";
 
 // eslint-disable-next-line react/prop-types
 export default function Register() {
@@ -154,7 +155,7 @@ export default function Register() {
             });
             setToastErrors([]);
             setSuccess(true);
-            navigate(routes.dashboard);
+            navigate(dashboard);
           }
         })
         .catch((err) => {
@@ -212,110 +213,122 @@ export default function Register() {
   const isRPasswordValid = rPassword.err ? true : false;
 
   return (
-    <FormWrapper>
-      <form onSubmit={handleSubmit}>
-        <Box pt={"10px"} pb={"14px"}>
-          <Text textAlign={"center"} fontSize="sm" color="gray">
-            لطفا اطلاعات زیر را با دقت وارد نمایید.
-          </Text>
-        </Box>
+    <>
+      <Navbar />
+      <FormWrapper>
+        <form onSubmit={handleSubmit}>
+          <Box pt={"10px"} pb={"14px"}>
+            <Text textAlign={"center"} fontSize="sm" color="gray">
+              لطفا اطلاعات زیر را با دقت وارد نمایید.
+            </Text>
+          </Box>
 
-        <Box>
-          <VStack spacing={"10px"}>
-            <FormControl isInvalid={isNameValid}>
-              <Input
-                id="name"
-                value={name.name}
-                onChange={handleNameChange}
-                onBlur={handleNameBlur}
-                placeholder="نام"
-                size="md"
-              />
-              {name.err ? (
-                <FormErrorMessage>{name.err}</FormErrorMessage>
-              ) : (
-                <></>
-              )}
-            </FormControl>
-
-            <FormControl isInvalid={isEmailValid}>
-              <Input
-                id="email"
-                value={email.email}
-                onChange={handleEmailChange}
-                onBlur={handleEmailBlur}
-                type="email"
-                placeholder="ایمیل"
-              />
-              {email.err ? (
-                <FormErrorMessage>{email.err}</FormErrorMessage>
-              ) : (
-                <></>
-              )}
-            </FormControl>
-
-            <InputGroup size="md">
-              <FormControl isInvalid={isPasswordValid}>
+          <Box>
+            <VStack spacing={"10px"}>
+              <FormControl isInvalid={isNameValid}>
                 <Input
-                  id="password"
-                  value={password.password}
-                  onChange={handlePasswordChange}
-                  onBlur={handlePasswordBlur}
-                  pr="15px"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="رمز عبور"
+                  id="name"
+                  value={name.name}
+                  onChange={handleNameChange}
+                  onBlur={handleNameBlur}
+                  placeholder="نام"
+                  size="md"
                 />
-                <InputLeftElement width="3.2rem">
-                  <Button h="1.75rem" size="sm" onClick={handleEyeClick}>
-                    <ViewIcon />
-                  </Button>
-                </InputLeftElement>
-                {password.err ? (
-                  <FormErrorMessage>{password.err}</FormErrorMessage>
+                {name.err ? (
+                  <FormErrorMessage>{name.err}</FormErrorMessage>
                 ) : (
                   <></>
                 )}
               </FormControl>
-            </InputGroup>
 
-            <FormControl isInvalid={isRPasswordValid}>
-              <InputGroup size="md">
+              <FormControl isInvalid={isEmailValid}>
                 <Input
-                  id="rPassword"
-                  value={rPassword.rPassword}
-                  onChange={handleRPasswordChange}
-                  onBlur={handleRPasswordBlur}
-                  pr="15px"
-                  type={showRPassword ? "text" : "password"}
-                  placeholder="تکرار رمز عبور"
+                  id="email"
+                  value={email.email}
+                  onChange={handleEmailChange}
+                  onBlur={handleEmailBlur}
+                  type="email"
+                  placeholder="ایمیل"
                 />
-                <InputLeftElement width="3.2rem">
-                  <Button h="1.75rem" size="sm" onClick={handleSecondEyeClick}>
-                    <ViewIcon />
-                  </Button>
-                </InputLeftElement>
-              </InputGroup>
-              {rPassword.err ? (
-                <FormErrorMessage>{rPassword.err}</FormErrorMessage>
-              ) : (
-                <></>
-              )}
-            </FormControl>
-          </VStack>
-        </Box>
+                {email.err ? (
+                  <FormErrorMessage>{email.err}</FormErrorMessage>
+                ) : (
+                  <></>
+                )}
+              </FormControl>
 
-        <Box pt="20px">
-          <HStack
-            display={"flex"}
-            justifyContent="space-around"
-            justify={"left"}
-            spacing={"10px"}
-          >
-            <SubmitButton disableSubmit={disableSubmit} text="ثبت نام" />
-            <CancelButton />
-          </HStack>
-        </Box>
-      </form>
-    </FormWrapper>
+              <InputGroup size="md">
+                <FormControl isInvalid={isPasswordValid}>
+                  <Input
+                    id="password"
+                    value={password.password}
+                    onChange={handlePasswordChange}
+                    onBlur={handlePasswordBlur}
+                    pr="15px"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="رمز عبور"
+                  />
+                  <InputLeftElement width="3.2rem">
+                    <Button h="1.75rem" size="sm" onClick={handleEyeClick}>
+                      <ViewIcon />
+                    </Button>
+                  </InputLeftElement>
+                  {password.err ? (
+                    <FormErrorMessage>{password.err}</FormErrorMessage>
+                  ) : (
+                    <></>
+                  )}
+                </FormControl>
+              </InputGroup>
+
+              <FormControl isInvalid={isRPasswordValid}>
+                <InputGroup size="md">
+                  <Input
+                    id="rPassword"
+                    value={rPassword.rPassword}
+                    onChange={handleRPasswordChange}
+                    onBlur={handleRPasswordBlur}
+                    pr="15px"
+                    type={showRPassword ? "text" : "password"}
+                    placeholder="تکرار رمز عبور"
+                  />
+                  <InputLeftElement width="3.2rem">
+                    <Button
+                      h="1.75rem"
+                      size="sm"
+                      onClick={handleSecondEyeClick}
+                    >
+                      <ViewIcon />
+                    </Button>
+                  </InputLeftElement>
+                </InputGroup>
+                {rPassword.err ? (
+                  <FormErrorMessage>{rPassword.err}</FormErrorMessage>
+                ) : (
+                  <></>
+                )}
+              </FormControl>
+            </VStack>
+          </Box>
+
+          <Box pt="20px">
+            <HStack
+              display={"flex"}
+              justifyContent="space-around"
+              justify={"left"}
+              spacing={"10px"}
+            >
+              <SubmitButton disableSubmit={disableSubmit} text="ثبت نام" />
+              <CancelButton />
+            </HStack>
+          </Box>
+          <Box pt={"20px"} textAlign="center">
+            <Text fontSize={".8rem"}>
+              قبلا ثبت نام کرده اید؟ <Link to={login}>وارد شوید</Link>
+            </Text>
+          </Box>
+        </form>
+      </FormWrapper>
+    </>
   );
 }

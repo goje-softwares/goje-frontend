@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, HStack } from "@chakra-ui/react";
 import LoginButton from "./Auth/LoginButton";
-import SignUpBotton from "./Auth/SignUpButton";
+import SignUpBotton from "./Auth/RegisterButton";
 import NavBarWrapper from "./NavBarWrapper";
 import SwitchThemeButton from "./SwitchThemeButton";
 import GAvatar from "./GAvatar";

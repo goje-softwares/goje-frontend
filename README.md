@@ -1,4 +1,4 @@
-![goje logo](https://github.com/goje-softwares/goje-frontend/raw/dev/src/assets/logo192.png)
+![goje logo](src/assets/logo192.png)
 
 # goje-frontend
 
@@ -16,10 +16,6 @@ yarn start
 
 project will run on [localhost:3000](http://localhost:3000)
 
-## pre-commit
+## Documentation
 
-for husky to work run:
-
-```shell
-npx husky install
-```
+for more information on how to use project as developer read the [docs](DOCS.md)

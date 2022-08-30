@@ -4013,6 +4013,11 @@ convert-source-map@^1.4.0, convert-source-map@^1.5.0, convert-source-map@^1.6.0,
   dependencies:
     safe-buffer "~5.1.1"
 
+convert-to-en-digits@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/convert-to-en-digits/-/convert-to-en-digits-1.0.2.tgz#08e8bf9435d7d1472e6f089702501dba5e6c0b5f"
+  integrity sha512-RGgH+v0HyatYXgG70x24/84nUTkI2LavQH9g5X/bKlTmldTnG8q77Jel/zj5jrqdIwjm3f2OnF4QsAQNvoFxjw==
+
 cookie-signature@1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/cookie-signature/-/cookie-signature-1.0.6.tgz#e303a882b342cc3ee8ca513a79999734dab3ae2c"
@@ -8693,6 +8698,11 @@ react-focus-lock@^2.9.1:
     react-clientside-effect "^1.2.6"
     use-callback-ref "^1.3.0"
     use-sidecar "^1.1.2"
+
+react-icons@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.4.0.tgz#a13a8a20c254854e1ec9aecef28a95cdf24ef703"
+  integrity sha512-fSbvHeVYo/B5/L4VhB7sBA1i2tS8MkT0Hb9t2H1AVPkwGfVHLJCqyr2Py9dKMxsyM63Eng1GkdZfbWj+Fmv8Rg==
 
 react-is@^16.13.1, react-is@^16.7.0:
   version "16.13.1"
