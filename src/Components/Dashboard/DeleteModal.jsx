@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { FiTrash2 } from "react-icons/fi";
-import useToasts from "../../Hooks/useToasts";
+import useNotifs from "../../Hooks/useNotifs";
 import { api, APIs } from "../../plugins/api";
 import { isDev } from "../../plugins/utils";
 
@@ -24,7 +24,7 @@ export default function DeleteModal({
   setProducts,
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { setToasts } = useToasts();
+  const { setNotifs } = useNotifs();
 
   const handleClick = () => {
     onClose();
@@ -33,7 +33,7 @@ export default function DeleteModal({
     api(request)
       .then((res) => {
         if (res.status === 200 || res.data[0] === "success") {
-          setToasts({ successes: [res.data.message] });
+          setNotifs({ successes: [res.data.message] });
           // delete from app state too
           const tmpNewProducts = products.filter((p) => p.id !== productId);
           setProducts(tmpNewProducts);
@@ -43,9 +43,9 @@ export default function DeleteModal({
       //TODO: DRY dont repeat you self + add product and other .then(errs)...
       .catch((err) => {
         if (err.code == "ERR_NETWORK") {
-          setToasts({ errors: ["ارتباط با سرور برقرار نشد."] });
+          setNotifs({ errors: ["ارتباط با سرور برقرار نشد."] });
         } else {
-          setToasts({ errors: ["خطا"] });
+          setNotifs({ errors: ["خطا"] });
         }
         if (isDev()) console.error(err);
       });

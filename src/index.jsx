@@ -6,7 +6,7 @@ import { ColorModeScript, createStandaloneToast } from "@chakra-ui/react";
 import theme from "./Global/theme";
 import App from "./App";
 import { AuthProvider } from "./Context/AuthProvider";
-import { ToastProvider } from "./Context/ToastsProvider";
+import { NotifsProvider } from "./Context/NotifsProvider";
 
 const { ToastContainer } = createStandaloneToast({ theme: theme });
 
@@ -15,13 +15,13 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <ToastProvider>
+        <NotifsProvider>
           <ColorModeScript initialColorMode={theme.config.initialColorMode} />
           <Routes>
             <Route path="/*" element={<App />} />
           </Routes>
           <ToastContainer />
-        </ToastProvider>
+        </NotifsProvider>
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>

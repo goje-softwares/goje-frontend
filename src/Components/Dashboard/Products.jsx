@@ -13,7 +13,7 @@ import {
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import useToasts from "../../Hooks/useToasts";
+import useNotifs from "../../Hooks/useNotifs";
 import { api, APIs } from "../../plugins/api";
 import { isDev } from "../../plugins/utils";
 import AddProduct from "./AddProduct";
@@ -22,7 +22,7 @@ import DescriptionModal from "./DescriptionModal";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
-  const { setToasts } = useToasts();
+  const { setNotifs } = useNotifs();
 
   // TODO: clean code
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function Products() {
       })
       .catch((err) => {
         if (err && err.code === "ERR_NETWORK") {
-          setToasts({ errors: ["ارتباط با سرور برقرار نشد."] });
+          setNotifs({ errors: ["ارتباط با سرور برقرار نشد."] });
           if (isDev()) console.error(err);
         }
       });

@@ -3,7 +3,7 @@ import convertToEnDigits from "convert-to-en-digits";
 import React from "react";
 import { useRef } from "react";
 import { useState } from "react";
-import useToasts from "../../Hooks/useToasts";
+import useNotifs from "../../Hooks/useNotifs";
 import { api, APIs } from "../../plugins/api";
 import { isDev } from "../../plugins/utils";
 import {
@@ -18,7 +18,7 @@ export default function AddProduct({ products, setProducts }) {
   const [amount, setAmount] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-  const { toasts, setToasts } = useToasts();
+  const { notifs, setNotifs } = useNotifs();
   const [disableSubmit, setDisableSubmit] = useState(false);
   const inputRef = useRef();
 
@@ -33,7 +33,7 @@ export default function AddProduct({ products, setProducts }) {
     if (validatePrice(tmpPrice)) tmpErrors.push(validatePrice(tmpPrice));
     // TODO: validate description
     if (tmpErrors.length > 0) {
-      setToasts({ ...toasts, errors: [...tmpErrors] });
+      setNotifs({ ...notifs, errors: [...tmpErrors] });
       setDisableSubmit(false);
     } else {
       const data = {
@@ -53,17 +53,17 @@ export default function AddProduct({ products, setProducts }) {
             setPrice("");
             setAmount("");
             setDescription("");
-            setToasts({ successes: ["محصول اضافه شد."] });
+            setNotifs({ successes: ["محصول اضافه شد."] });
             inputRef.current.select();
             if (isDev()) console.log("product added:", res.data);
           }
         })
         .catch((err) => {
           if (err.code === "ERR_NETWORK") {
-            setToasts({ errors: ["ارتباط با سرور برقرار نشد."] });
+            setNotifs({ errors: ["ارتباط با سرور برقرار نشد."] });
           } else {
             if (err) {
-              setToasts({ errors: ["خطا"] });
+              setNotifs({ errors: ["خطا"] });
               if (isDev()) console.error(err);
             }
           }
