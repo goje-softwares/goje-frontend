@@ -13,6 +13,7 @@ import {
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+import { messages } from "../../Global/messages";
 import useNotifs from "../../Hooks/useNotifs";
 import { api, APIs } from "../../plugins/api";
 import { isDev } from "../../plugins/utils";
@@ -36,7 +37,7 @@ export default function Products() {
       })
       .catch((err) => {
         if (err && err.code === "ERR_NETWORK") {
-          setNotifs({ errors: ["ارتباط با سرور برقرار نشد."] });
+          setNotifs({ errors: [messages.err.noServer] });
           if (isDev()) console.error(err);
         }
       });

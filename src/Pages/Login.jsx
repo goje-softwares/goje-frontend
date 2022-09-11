@@ -23,6 +23,7 @@ import { dashboard, register } from "../Global/Routes";
 import { isDev } from "../plugins/utils";
 import Navbar from "../Components/Navbar";
 import useNotifs from "../Hooks/useNotifs";
+import { messages } from "../Global/messages";
 
 export default function Login() {
   const { setAuth } = useAuth();
@@ -77,13 +78,13 @@ export default function Login() {
             console.error("api error:", err);
           }
           if (err?.response?.status === 401) {
-            setNotifs({ errors: ["ایمیل یا رمز عبور اشتباه است"] });
+            setNotifs({ errors: [messages.err.wrongEmailPass] });
           } else if (err.response?.status === 404) {
             setNotifs({
-              errors: ["ارتباط با سرور برقرار نشد(اینترنت خود را بررسی کنید)"],
+              errors: [messages.err.noServer],
             });
           } else {
-            setNotifs({ errors: ["عملیات ورود با خطا روبرو شد"] });
+            setNotifs({ errors: [messages.err.err] });
           }
           setDisableSubmit(false);
         });

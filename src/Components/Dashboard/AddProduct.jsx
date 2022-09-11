@@ -3,6 +3,7 @@ import convertToEnDigits from "convert-to-en-digits";
 import React from "react";
 import { useRef } from "react";
 import { useState } from "react";
+import { messages } from "../../Global/messages";
 import useNotifs from "../../Hooks/useNotifs";
 import { api, APIs } from "../../plugins/api";
 import { isDev } from "../../plugins/utils";
@@ -53,17 +54,17 @@ export default function AddProduct({ products, setProducts }) {
             setPrice("");
             setAmount("");
             setDescription("");
-            setNotifs({ successes: ["محصول اضافه شد."] });
+            setNotifs({ successes: [messages.success.productAdded] });
             inputRef.current.select();
             if (isDev()) console.log("product added:", res.data);
           }
         })
         .catch((err) => {
           if (err.code === "ERR_NETWORK") {
-            setNotifs({ errors: ["ارتباط با سرور برقرار نشد."] });
+            setNotifs({ errors: [messages.err.noServer] });
           } else {
             if (err) {
-              setNotifs({ errors: ["خطا"] });
+              setNotifs({ errors: [messages.err.err] });
               if (isDev()) console.error(err);
             }
           }
@@ -105,7 +106,7 @@ export default function AddProduct({ products, setProducts }) {
                   setAmount(e.target.value);
                 }}
                 type="text"
-                placeholder="تعداد/وزن(kg)"
+                placeholder="تعداد"
                 value={amount}
               />
             </FormControl>

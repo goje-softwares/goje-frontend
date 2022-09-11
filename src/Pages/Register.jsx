@@ -29,6 +29,7 @@ import { dashboard, login } from "../Global/Routes";
 import { isDev } from "../plugins/utils";
 import Navbar from "../Components/Navbar";
 import useNotifs from "../Hooks/useNotifs";
+import { messages } from "../Global/messages";
 
 export default function Register() {
   const { setAuth } = useAuth();
@@ -88,7 +89,7 @@ export default function Register() {
             res.status === 200 &&
             res?.data?.email[0] === "The email has already been taken."
           ) {
-            setNotifs({ errors: ["ایمیل قبلا در سیستم ثبت شده است"] });
+            setNotifs({ errors: [messages.err.emailTaken] });
             setDisableSubmit(false);
           } else if (res.status === 201) {
             setAuth({
@@ -97,7 +98,7 @@ export default function Register() {
               access_token: res.data.access_token,
               token_type: res.data.token_type,
             });
-            setNotifs({ successes: ["حساب کاربری با موفقیت ایجاد شد"] });
+            setNotifs({ successes: [messages.success.accountCreated] });
             navigate(dashboard);
           }
         })
@@ -105,7 +106,7 @@ export default function Register() {
           if (isDev()) {
             console.error("api error:", err);
           }
-          setNotifs({ errors: ["عملیات ورود با خطا روبرو شد"] });
+          setNotifs({ errors: [messages.err.err] });
           setDisableSubmit(false);
         });
     }
