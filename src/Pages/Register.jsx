@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { api, APIs } from "../plugins/api";
 import {
@@ -12,7 +12,6 @@ import {
   Text,
   Button,
   Box,
-  useToast,
 } from "@chakra-ui/react";
 import { ViewIcon } from "@chakra-ui/icons";
 
@@ -22,7 +21,6 @@ import {
   validatePassword,
   validateRPassword,
 } from "../plugins/validator";
-import { toastConfig } from "../Global/toastConfig";
 import CancelButton from "../Components/Form/CancelButton";
 import FormWrapper from "../Components/Form/FormWrapper";
 import SubmitButton from "../Components/Form/SubmitButton";
@@ -30,10 +28,12 @@ import useAuth from "../Hooks/useAuth";
 import { dashboard, login } from "../Global/Routes";
 import { isDev } from "../plugins/utils";
 import Navbar from "../Components/Navbar";
+import useNotifs from "../Hooks/useNotifs";
 
 export default function Register() {
   const { setAuth } = useAuth();
   const navigate = useNavigate();
+  const { notifs, setNotifs } = useNotifs();
 
   // show and hide password states
   const [showPassword, setShowPassword] = useState(false);
@@ -46,8 +46,6 @@ export default function Register() {
   const [password, setPassword] = useState({ password: "", err: false });
   const [rPassword, setRPassword] = useState({ rPassword: "", err: false });
   const [disableSubmit, setDisableSubmit] = useState(false);
-  const [toastErrors, setToastErrors] = useState([]);
-  const [success, setSuccess] = useState(false);
 
   const handlePasswordBlur = () => {
     setPassword({ ...password, err: validatePassword(password.password) });
@@ -55,13 +53,6 @@ export default function Register() {
       ...rPassword,
       err: validateRPassword(password.password, rPassword.rPassword),
     });
-  };
-
-  const clearToastsErrorsAfter3sec = () => {
-    setTimeout(() => {
-      setToastErrors([]);
-      setDisableSubmit(false);
-    }, 3000);
   };
 
   const handleSubmit = (e) => {
@@ -76,8 +67,8 @@ export default function Register() {
       tmpErrors.push(validateRPassword(password.password, rPassword.rPassword));
 
     if (tmpErrors.length > 0) {
-      setToastErrors(tmpErrors);
-      clearToastsErrorsAfter3sec();
+      setNotifs({ ...notifs, errors: [...tmpErrors] });
+      setDisableSubmit(false);
     } else {
       const data = {
         name: name.name,
@@ -97,8 +88,8 @@ export default function Register() {
             res.status === 200 &&
             res?.data?.email[0] === "The email has already been taken."
           ) {
-            setToastErrors(["ایمیل قبلا در سیستم ثبت شده است"]);
-            clearToastsErrorsAfter3sec();
+            setNotifs({ errors: ["ایمیل قبلا در سیستم ثبت شده است"] });
+            setDisableSubmit(false);
           } else if (res.status === 201) {
             setAuth({
               email: res.data.data.email,
@@ -106,8 +97,7 @@ export default function Register() {
               access_token: res.data.access_token,
               token_type: res.data.token_type,
             });
-            setToastErrors([]);
-            setSuccess(true);
+            setNotifs({ successes: ["حساب کاربری با موفقیت ایجاد شد"] });
             navigate(dashboard);
           }
         })
@@ -115,50 +105,11 @@ export default function Register() {
           if (isDev()) {
             console.error("api error:", err);
           }
-          setToastErrors(["عملیات ورود با خطا روبرو شد"]);
-          clearToastsErrorsAfter3sec();
+          setNotifs({ errors: ["عملیات ورود با خطا روبرو شد"] });
           setDisableSubmit(false);
         });
     }
   };
-
-  const toast = useToast();
-  const { position, duration, isClosable } = toastConfig;
-
-  // toasts
-  useEffect(() => {
-    if (success) {
-      if (!toast.isActive("success")) {
-        toast({
-          status: "success",
-          description: "حساب کاربری با موفقیت ایجاد شد",
-          id: "success",
-          position: position,
-          duration: duration,
-          isClosable: isClosable,
-          icon: <></>,
-        });
-      }
-      setSuccess(false);
-      // TODO: rediredct...
-    }
-
-    if (toastErrors.length > 0) {
-      for (let i = 0; i < toastErrors.length; i++) {
-        if (!toast.isActive(i)) {
-          toast({
-            status: "error",
-            description: toastErrors[i],
-            id: i,
-            position: "bottom-left",
-            duration: 4000,
-            isClosable: true,
-            icon: <></>,
-          });
-        }
-      }
-    }
-  }, [success, toastErrors, toast, position, duration, isClosable]);
 
   const isNameValid = name.err ? true : false;
   const isEmailValid = email.err ? true : false;
