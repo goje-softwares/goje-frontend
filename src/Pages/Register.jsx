@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { api, APIs } from "../plugins/api";
 import {
@@ -12,7 +12,6 @@ import {
   Text,
   Button,
   Box,
-  useToast,
 } from "@chakra-ui/react";
 import { ViewIcon } from "@chakra-ui/icons";
 
@@ -22,7 +21,6 @@ import {
   validatePassword,
   validateRPassword,
 } from "../plugins/validator";
-import { toastConfig } from "../Global/toastConfig";
 import CancelButton from "../Components/Form/CancelButton";
 import FormWrapper from "../Components/Form/FormWrapper";
 import SubmitButton from "../Components/Form/SubmitButton";
@@ -30,12 +28,13 @@ import useAuth from "../Hooks/useAuth";
 import { dashboard, login } from "../Global/Routes";
 import { isDev } from "../plugins/utils";
 import Navbar from "../Components/Navbar";
+import useNotifs from "../Hooks/useNotifs";
+import { messages } from "../Global/messages";
 
-// eslint-disable-next-line react/prop-types
 export default function Register() {
   const { setAuth } = useAuth();
-
   const navigate = useNavigate();
+  const { notifs, setNotifs } = useNotifs();
 
   // show and hide password states
   const [showPassword, setShowPassword] = useState(false);
@@ -43,35 +42,12 @@ export default function Register() {
   const [showRPassword, setShowRepeatPassword] = useState(false);
   const handleSecondEyeClick = () => setShowRepeatPassword(!showRPassword);
 
-  // name
   const [name, setName] = useState({ name: "", err: false });
-  const handleNameChange = (e) => {
-    const value = e.target.value;
-    setName({ name: value, err: validateName(value) });
-  };
-  const handleNameBlur = () => {
-    setName({ ...name, err: validateName(name.name) });
-  };
-
-  // email
   const [email, setEmail] = useState({ email: "", err: false });
-  const handleEmailChange = (e) => {
-    const value = e.target.value;
-    setEmail({ email: value, err: validateEmail(value) });
-  };
-  const handleEmailBlur = () => {
-    setEmail({ ...email, err: validateEmail(email.email) });
-  };
+  const [password, setPassword] = useState({ password: "", err: false });
+  const [rPassword, setRPassword] = useState({ rPassword: "", err: false });
+  const [disableSubmit, setDisableSubmit] = useState(false);
 
-  // password
-  const [password, setPassword] = useState({
-    password: "",
-    err: false,
-  });
-  const handlePasswordChange = (e) => {
-    const value = e.target.value;
-    setPassword({ password: value, err: validatePassword(value) });
-  };
   const handlePasswordBlur = () => {
     setPassword({ ...password, err: validatePassword(password.password) });
     setRPassword({
@@ -79,37 +55,6 @@ export default function Register() {
       err: validateRPassword(password.password, rPassword.rPassword),
     });
   };
-
-  // repeat password
-  const [rPassword, setRPassword] = useState({
-    rPassword: "",
-    err: false,
-  });
-  const handleRPasswordChange = (e) => {
-    const value = e.target.value;
-    setRPassword({
-      rPassword: value,
-      err: validateRPassword(password.password, value),
-    });
-  };
-  const handleRPasswordBlur = () => {
-    setRPassword({
-      ...rPassword,
-      err: validateRPassword(password.password, rPassword.rPassword),
-    });
-  };
-
-  const clearToastsErrorsAfter3sec = () => {
-    setTimeout(() => {
-      setToastErrors([]);
-      setDisableSubmit(false);
-    }, 3000);
-  };
-
-  // submit
-  const [disableSubmit, setDisableSubmit] = useState(false);
-  const [toastErrors, setToastErrors] = useState([]);
-  const [success, setSuccess] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -123,8 +68,8 @@ export default function Register() {
       tmpErrors.push(validateRPassword(password.password, rPassword.rPassword));
 
     if (tmpErrors.length > 0) {
-      setToastErrors(tmpErrors);
-      clearToastsErrorsAfter3sec();
+      setNotifs({ ...notifs, errors: [...tmpErrors] });
+      setDisableSubmit(false);
     } else {
       const data = {
         name: name.name,
@@ -144,8 +89,8 @@ export default function Register() {
             res.status === 200 &&
             res?.data?.email[0] === "The email has already been taken."
           ) {
-            setToastErrors(["ایمیل قبلا در سیستم ثبت شده است"]);
-            clearToastsErrorsAfter3sec();
+            setNotifs({ errors: [messages.err.emailTaken] });
+            setDisableSubmit(false);
           } else if (res.status === 201) {
             setAuth({
               email: res.data.data.email,
@@ -153,8 +98,7 @@ export default function Register() {
               access_token: res.data.access_token,
               token_type: res.data.token_type,
             });
-            setToastErrors([]);
-            setSuccess(true);
+            setNotifs({ successes: [messages.success.accountCreated] });
             navigate(dashboard);
           }
         })
@@ -162,50 +106,11 @@ export default function Register() {
           if (isDev()) {
             console.error("api error:", err);
           }
-          setToastErrors(["عملیات ورود با خطا روبرو شد"]);
-          clearToastsErrorsAfter3sec();
+          setNotifs({ errors: [messages.err.err] });
           setDisableSubmit(false);
         });
     }
   };
-
-  const toast = useToast();
-  const { position, duration, isClosable } = toastConfig;
-
-  // toasts
-  useEffect(() => {
-    if (success) {
-      if (!toast.isActive("success")) {
-        toast({
-          status: "success",
-          description: "حساب کاربری با موفقیت ایجاد شد",
-          id: "success",
-          position: position,
-          duration: duration,
-          isClosable: isClosable,
-          icon: <></>,
-        });
-      }
-      setSuccess(false);
-      // TODO: rediredct...
-    }
-
-    if (toastErrors.length > 0) {
-      for (let i = 0; i < toastErrors.length; i++) {
-        if (!toast.isActive(i)) {
-          toast({
-            status: "error",
-            description: toastErrors[i],
-            id: i,
-            position: "bottom-left",
-            duration: 4000,
-            isClosable: true,
-            icon: <></>,
-          });
-        }
-      }
-    }
-  }, [success, toastErrors, toast, position, duration, isClosable]);
 
   const isNameValid = name.err ? true : false;
   const isEmailValid = email.err ? true : false;
@@ -229,8 +134,13 @@ export default function Register() {
                 <Input
                   id="name"
                   value={name.name}
-                  onChange={handleNameChange}
-                  onBlur={handleNameBlur}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setName({ name: value, err: validateName(value) });
+                  }}
+                  onBlur={() => {
+                    setName({ ...name, err: validateName(name.name) });
+                  }}
                   placeholder="نام"
                   size="md"
                 />
@@ -245,8 +155,13 @@ export default function Register() {
                 <Input
                   id="email"
                   value={email.email}
-                  onChange={handleEmailChange}
-                  onBlur={handleEmailBlur}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setEmail({ email: value, err: validateEmail(value) });
+                  }}
+                  onBlur={() => {
+                    setEmail({ ...email, err: validateEmail(email.email) });
+                  }}
                   type="email"
                   placeholder="ایمیل"
                 />
@@ -262,7 +177,13 @@ export default function Register() {
                   <Input
                     id="password"
                     value={password.password}
-                    onChange={handlePasswordChange}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setPassword({
+                        password: value,
+                        err: validatePassword(value),
+                      });
+                    }}
                     onBlur={handlePasswordBlur}
                     pr="15px"
                     type={showPassword ? "text" : "password"}
@@ -286,8 +207,14 @@ export default function Register() {
                   <Input
                     id="rPassword"
                     value={rPassword.rPassword}
-                    onChange={handleRPasswordChange}
-                    onBlur={handleRPasswordBlur}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setRPassword({
+                        rPassword: value,
+                        err: validateRPassword(password.password, value),
+                      });
+                    }}
+                    onBlur={handlePasswordBlur}
                     pr="15px"
                     type={showRPassword ? "text" : "password"}
                     placeholder="تکرار رمز عبور"

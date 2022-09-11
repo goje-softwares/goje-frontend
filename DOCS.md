@@ -10,6 +10,7 @@ goje-frontend document for developers
   - [Run](#run)
 - [Testing](#testing)
 - [Folder/File Structure](#folderfile-structure)
+- [.env](#env)
 
 ## What You need to know?
 
@@ -87,13 +88,12 @@ yarn dev
 
 ## Testing
 
-we use [Cypress](https://www.cypress.io/) for testing. 
+we use [Cypress](https://www.cypress.io/) for testing.
 for running test run:
 
 ```shell
 yarn test
 ```
-
 
 for opening Cypress run:
 
@@ -115,4 +115,8 @@ for easy reading of the source here is an explanation of some important files an
   - /Pages: Pages of application
   - App.jsx: main file and routings
 
-also, i do my best to get the "code should speak itself" approach so if you are a React developer it shouldn't be hard to work with source code
+also, i do my best to get the "code should speak itself" approach so if you are a React developer it shouldn't be hard to work with source code## .ENV
+
+## .env
+
+[Adding Custom Environment Variables](https://create-react-app.dev/docs/adding-custom-environment-variables/)

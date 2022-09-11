@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { api, APIs } from "../plugins/api";
 import {
@@ -11,12 +11,10 @@ import {
   Text,
   Button,
   Box,
-  useToast,
 } from "@chakra-ui/react";
 import { ViewIcon } from "@chakra-ui/icons";
 
 import { validateEmail, validatePassword } from "../plugins/validator";
-import { toastConfig } from "../Global/toastConfig";
 import CancelButton from "../Components/Form/CancelButton";
 import SubmitButton from "../Components/Form/SubmitButton";
 import FormWrapper from "../Components/Form/FormWrapper";
@@ -24,41 +22,21 @@ import useAuth from "../Hooks/useAuth";
 import { dashboard, register } from "../Global/Routes";
 import { isDev } from "../plugins/utils";
 import Navbar from "../Components/Navbar";
+import useNotifs from "../Hooks/useNotifs";
+import { messages } from "../Global/messages";
 
 export default function Login() {
   const { setAuth } = useAuth();
 
   // TODO: https://youtu.be/oUZjO00NkhY?list=PL0Zuz27SZ-6PRCpm9clX0WiBEMB70FWwd&t=1010
   const navigate = useNavigate();
+  const { notifs, setNotifs } = useNotifs();
 
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
-
-  // email
   const [email, setEmail] = useState({ email: "", err: false });
-  const handleEmailChange = (e) => {
-    const value = e.target.value;
-    setEmail({ ...email, email: value });
-  };
-
-  // password
   const [password, setPassword] = useState({ password: "", err: false });
-  const handlePasswordChange = (e) => {
-    const value = e.target.value;
-    setPassword({ ...password, password: value });
-  };
-
-  const clearToastsErrorsAfter3sec = () => {
-    setTimeout(() => {
-      setToastErrors([]);
-      setDisableSubmit(false);
-    }, 3000);
-  };
-
-  // submit
   const [disableSubmit, setDisableSubmit] = useState(false);
-  const [toastErrors, setToastErrors] = useState([]);
-  const [success, setSuccess] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -69,8 +47,8 @@ export default function Login() {
       tmpErrors.push(validatePassword(password.password));
 
     if (tmpErrors.length > 0) {
-      setToastErrors(tmpErrors);
-      clearToastsErrorsAfter3sec();
+      setNotifs({ ...notifs, errors: [...tmpErrors] });
+      setDisableSubmit(false);
     } else {
       const data = {
         email: email.email,
@@ -92,8 +70,6 @@ export default function Login() {
               access_token: res.data.access_token,
               token_type: res.data.token_type,
             });
-            setToastErrors([]);
-            setSuccess(true);
             navigate(dashboard);
           }
         })
@@ -102,56 +78,18 @@ export default function Login() {
             console.error("api error:", err);
           }
           if (err?.response?.status === 401) {
-            setToastErrors(["ایمیل یا رمز عبور اشتباه است"]);
+            setNotifs({ errors: [messages.err.wrongEmailPass] });
           } else if (err.response?.status === 404) {
-            setToastErrors([
-              "ارتباط با سرور برقرار نشد(اینترنت خود را بررسی کنید)",
-            ]);
+            setNotifs({
+              errors: [messages.err.noServer],
+            });
           } else {
-            setToastErrors(["عملیات ورود با خطا روبرو شد"]);
+            setNotifs({ errors: [messages.err.err] });
           }
-          clearToastsErrorsAfter3sec();
           setDisableSubmit(false);
         });
     }
   };
-
-  const toast = useToast();
-  const { position, duration, isClosable } = toastConfig;
-
-  // toasts
-  useEffect(() => {
-    if (success) {
-      if (!toast.isActive("success")) {
-        toast({
-          status: "success",
-          description: "با موفقیت وارد شدید",
-          id: "success",
-          position: position,
-          duration: duration,
-          isClosable: isClosable,
-          icon: <></>,
-        });
-      }
-      setSuccess(false);
-    }
-
-    if (toastErrors && toastErrors.length > 0) {
-      for (let i = 0; i < toastErrors.length; i++) {
-        if (!toast.isActive(i)) {
-          toast({
-            status: "error",
-            description: toastErrors[i],
-            id: i,
-            position: position,
-            duration: duration,
-            isClosable: isClosable,
-            icon: <></>,
-          });
-        }
-      }
-    }
-  }, [success, toastErrors, toast, position, duration, isClosable]);
 
   return (
     <>
@@ -170,7 +108,9 @@ export default function Login() {
                   <Input
                     id="email"
                     value={email.email}
-                    onChange={handleEmailChange}
+                    onChange={(e) => {
+                      setEmail({ ...email, email: e.target.value });
+                    }}
                     placeholder="ایمیل"
                     size="md"
                   />
@@ -180,7 +120,9 @@ export default function Login() {
                     id="password"
                     pr="15px"
                     value={password.password}
-                    onChange={handlePasswordChange}
+                    onChange={(e) => {
+                      setPassword({ ...password, password: e.target.value });
+                    }}
                     type={show ? "text" : "password"}
                     placeholder="رمز عبور"
                   />
