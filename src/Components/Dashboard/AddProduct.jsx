@@ -1,4 +1,11 @@
-import { Box, FormControl, Heading, Input, Textarea } from "@chakra-ui/react";
+import {
+  Box,
+  Divider,
+  FormControl,
+  Heading,
+  Input,
+  Textarea,
+} from "@chakra-ui/react";
 import convertToEnDigits from "convert-to-en-digits";
 import React from "react";
 import { useRef } from "react";
@@ -78,7 +85,7 @@ export default function AddProduct({ products, setProducts }) {
       <Heading p={"5px 0 10px 0"} fontSize="xl">
         اضافه کردن محصول
       </Heading>
-      <hr />
+      <Divider />
       <Box width={"100%"}>
         <form onSubmit={handleSubmit}>
           <Box

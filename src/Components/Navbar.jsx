@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, HStack } from "@chakra-ui/react";
+import { Box, Divider, HStack } from "@chakra-ui/react";
 import LoginButton from "./Auth/LoginButton";
 import SignUpBotton from "./Auth/RegisterButton";
 import NavBarWrapper from "./NavBarWrapper";
@@ -32,7 +32,7 @@ export default function Navbar() {
         </HStack>
       </NavBarWrapper>
       <Box mr={"10px"} ml={"10px"}>
-        <hr />
+        <Divider />
       </Box>
     </Box>
   );

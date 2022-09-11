@@ -1,5 +1,6 @@
 import {
   Box,
+  Divider,
   Heading,
   Table,
   TableContainer,
@@ -48,7 +49,7 @@ export default function Products() {
     <Box>
       {/* TODO: search for products */}
       <AddProduct products={products} setProducts={setProducts} />
-      <hr />
+      <Divider />
       <Box
         mt={"20px"}
         display={"flex"}
@@ -61,7 +62,6 @@ export default function Products() {
             <Heading p={"5px 0 10px 0"} fontSize="xl">
               محصولات
             </Heading>
-            <hr />
             <TableContainer overflowY={"scroll"} height="400px">
               <Table variant="striped" colorScheme="gray">
                 <Thead position={"sticky"} top="0" background={"Menu"}>
