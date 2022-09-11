@@ -31,10 +31,8 @@ import { dashboard, login } from "../Global/Routes";
 import { isDev } from "../plugins/utils";
 import Navbar from "../Components/Navbar";
 
-// eslint-disable-next-line react/prop-types
 export default function Register() {
   const { setAuth } = useAuth();
-
   const navigate = useNavigate();
 
   // show and hide password states
@@ -43,56 +41,16 @@ export default function Register() {
   const [showRPassword, setShowRepeatPassword] = useState(false);
   const handleSecondEyeClick = () => setShowRepeatPassword(!showRPassword);
 
-  // name
   const [name, setName] = useState({ name: "", err: false });
-  const handleNameChange = (e) => {
-    const value = e.target.value;
-    setName({ name: value, err: validateName(value) });
-  };
-  const handleNameBlur = () => {
-    setName({ ...name, err: validateName(name.name) });
-  };
-
-  // email
   const [email, setEmail] = useState({ email: "", err: false });
-  const handleEmailChange = (e) => {
-    const value = e.target.value;
-    setEmail({ email: value, err: validateEmail(value) });
-  };
-  const handleEmailBlur = () => {
-    setEmail({ ...email, err: validateEmail(email.email) });
-  };
+  const [password, setPassword] = useState({ password: "", err: false });
+  const [rPassword, setRPassword] = useState({ rPassword: "", err: false });
+  const [disableSubmit, setDisableSubmit] = useState(false);
+  const [toastErrors, setToastErrors] = useState([]);
+  const [success, setSuccess] = useState(false);
 
-  // password
-  const [password, setPassword] = useState({
-    password: "",
-    err: false,
-  });
-  const handlePasswordChange = (e) => {
-    const value = e.target.value;
-    setPassword({ password: value, err: validatePassword(value) });
-  };
   const handlePasswordBlur = () => {
     setPassword({ ...password, err: validatePassword(password.password) });
-    setRPassword({
-      ...rPassword,
-      err: validateRPassword(password.password, rPassword.rPassword),
-    });
-  };
-
-  // repeat password
-  const [rPassword, setRPassword] = useState({
-    rPassword: "",
-    err: false,
-  });
-  const handleRPasswordChange = (e) => {
-    const value = e.target.value;
-    setRPassword({
-      rPassword: value,
-      err: validateRPassword(password.password, value),
-    });
-  };
-  const handleRPasswordBlur = () => {
     setRPassword({
       ...rPassword,
       err: validateRPassword(password.password, rPassword.rPassword),
@@ -105,11 +63,6 @@ export default function Register() {
       setDisableSubmit(false);
     }, 3000);
   };
-
-  // submit
-  const [disableSubmit, setDisableSubmit] = useState(false);
-  const [toastErrors, setToastErrors] = useState([]);
-  const [success, setSuccess] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -229,8 +182,13 @@ export default function Register() {
                 <Input
                   id="name"
                   value={name.name}
-                  onChange={handleNameChange}
-                  onBlur={handleNameBlur}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setName({ name: value, err: validateName(value) });
+                  }}
+                  onBlur={() => {
+                    setName({ ...name, err: validateName(name.name) });
+                  }}
                   placeholder="نام"
                   size="md"
                 />
@@ -245,8 +203,13 @@ export default function Register() {
                 <Input
                   id="email"
                   value={email.email}
-                  onChange={handleEmailChange}
-                  onBlur={handleEmailBlur}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setEmail({ email: value, err: validateEmail(value) });
+                  }}
+                  onBlur={() => {
+                    setEmail({ ...email, err: validateEmail(email.email) });
+                  }}
                   type="email"
                   placeholder="ایمیل"
                 />
@@ -262,7 +225,13 @@ export default function Register() {
                   <Input
                     id="password"
                     value={password.password}
-                    onChange={handlePasswordChange}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setPassword({
+                        password: value,
+                        err: validatePassword(value),
+                      });
+                    }}
                     onBlur={handlePasswordBlur}
                     pr="15px"
                     type={showPassword ? "text" : "password"}
@@ -286,8 +255,14 @@ export default function Register() {
                   <Input
                     id="rPassword"
                     value={rPassword.rPassword}
-                    onChange={handleRPasswordChange}
-                    onBlur={handleRPasswordBlur}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setRPassword({
+                        rPassword: value,
+                        err: validateRPassword(password.password, value),
+                      });
+                    }}
+                    onBlur={handlePasswordBlur}
                     pr="15px"
                     type={showRPassword ? "text" : "password"}
                     placeholder="تکرار رمز عبور"

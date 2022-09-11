@@ -33,20 +33,11 @@ export default function Login() {
 
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
-
-  // email
   const [email, setEmail] = useState({ email: "", err: false });
-  const handleEmailChange = (e) => {
-    const value = e.target.value;
-    setEmail({ ...email, email: value });
-  };
-
-  // password
   const [password, setPassword] = useState({ password: "", err: false });
-  const handlePasswordChange = (e) => {
-    const value = e.target.value;
-    setPassword({ ...password, password: value });
-  };
+  const [disableSubmit, setDisableSubmit] = useState(false);
+  const [toastErrors, setToastErrors] = useState([]);
+  const [success, setSuccess] = useState(false);
 
   const clearToastsErrorsAfter3sec = () => {
     setTimeout(() => {
@@ -54,11 +45,6 @@ export default function Login() {
       setDisableSubmit(false);
     }, 3000);
   };
-
-  // submit
-  const [disableSubmit, setDisableSubmit] = useState(false);
-  const [toastErrors, setToastErrors] = useState([]);
-  const [success, setSuccess] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -170,7 +156,9 @@ export default function Login() {
                   <Input
                     id="email"
                     value={email.email}
-                    onChange={handleEmailChange}
+                    onChange={(e) => {
+                      setEmail({ ...email, email: e.target.value });
+                    }}
                     placeholder="ایمیل"
                     size="md"
                   />
@@ -180,7 +168,9 @@ export default function Login() {
                     id="password"
                     pr="15px"
                     value={password.password}
-                    onChange={handlePasswordChange}
+                    onChange={(e) => {
+                      setPassword({ ...password, password: e.target.value });
+                    }}
                     type={show ? "text" : "password"}
                     placeholder="رمز عبور"
                   />
