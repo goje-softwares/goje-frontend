@@ -46,7 +46,7 @@ export default function AddProduct({ products, setProducts }) {
     } else {
       const data = {
         name: name,
-        amount: amount,
+        amount: tmpAmount,
         price: tmpPrice,
         description: description,
       };
