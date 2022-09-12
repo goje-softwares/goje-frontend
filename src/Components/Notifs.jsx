@@ -1,10 +1,10 @@
 import React from "react";
 import { useEffect } from "react";
 import { useToast } from "@chakra-ui/toast";
-import useToasts from "../Hooks/useToasts";
+import useNotifs from "../Hooks/useNotifs";
 
-export default function Toasts() {
-  const { toasts } = useToasts();
+export default function Notifs() {
+  const { notifs } = useNotifs();
 
   const toast = useToast();
   const position = "bottom-left";
@@ -12,7 +12,7 @@ export default function Toasts() {
   const isClosable = true;
 
   useEffect(() => {
-    const toastErrors = toasts.errors;
+    const toastErrors = notifs.errors;
     if (toastErrors && toastErrors.length > 0) {
       for (let i = 0; i < toastErrors.length; i++) {
         if (!toast.isActive(i)) {
@@ -29,7 +29,7 @@ export default function Toasts() {
       }
     }
 
-    const toastSuccesses = toasts.successes;
+    const toastSuccesses = notifs.successes;
     if (toastSuccesses && toastSuccesses.length > 0) {
       for (let i = 0; i < toastSuccesses.length; i++) {
         if (!toast.isActive(i)) {
@@ -46,7 +46,7 @@ export default function Toasts() {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [toasts]);
+  }, [notifs]);
 
   return <></>;
 }
