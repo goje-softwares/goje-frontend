@@ -80,7 +80,7 @@ export default function Products() {
                       <Tr key={index}>
                         <Td>{index + 1}</Td>
                         <Td>{p.name}</Td>
-                        <Td>0</Td>
+                        <Td>{p.amount}</Td>
                         <Td>{p.price}</Td>
                         <Td>
                           {p.description ? (
