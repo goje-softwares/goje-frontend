@@ -1,6 +1,6 @@
 import axios from "axios";
 import store from "../plugins/store";
-import { isDev } from "../plugins/utils";
+import { clearAuthLocalStorage, isDev } from "../plugins/utils";
 
 // eslint-disable-next-line no-undef
 const endPoint = process.env.REACT_APP_API_ENDPOINT;
@@ -23,6 +23,20 @@ api.interceptors.request.use((req) => {
   }
   return req;
 });
+// Add a response interceptor
+api.interceptors.response.use(
+  (res) => {
+    return res;
+  },
+  (err) => {
+    console.log(err);
+    if (err.response.status === 401) {
+      clearAuthLocalStorage();
+      window.location.reload();
+    }
+    return err;
+  }
+);
 export const APIs = {
   auth: {
     login: {
