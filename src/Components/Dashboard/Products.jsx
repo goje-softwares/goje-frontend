@@ -62,7 +62,8 @@ export default function Products() {
             <Heading p={"5px 0 10px 0"} fontSize="xl">
               محصولات
             </Heading>
-            <TableContainer overflowY={"scroll"} height="400px">
+            <hr />
+            <TableContainer overflowY={"scroll"} height="400px" width="100%">
               <Table variant="striped" colorScheme="gray">
                 <Thead position={"sticky"} top="0" background={"Menu"}>
                   <Tr>
