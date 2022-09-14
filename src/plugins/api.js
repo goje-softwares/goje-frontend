@@ -26,10 +26,15 @@ api.interceptors.request.use((req) => {
 // Add a response interceptor
 api.interceptors.response.use(
   (res) => {
+    if (isDev()) {
+      console.log("api response:", res);
+    }
     return res;
   },
   (err) => {
-    console.log(err);
+    if (isDev()) {
+      console.log("api error:", err);
+    }
     if (err.response.status === 401) {
       clearAuthLocalStorage();
       window.location.reload();

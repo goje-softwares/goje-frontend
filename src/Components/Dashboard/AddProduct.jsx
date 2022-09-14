@@ -13,7 +13,7 @@ import { useState } from "react";
 import { messages } from "../../Global/messages";
 import useNotifs from "../../Hooks/useNotifs";
 import { api, APIs } from "../../plugins/api";
-import { isDev } from "../../plugins/utils";
+import { handleApiErrors, isDev } from "../../plugins/utils";
 import {
   validateAmount,
   validateName,
@@ -50,7 +50,6 @@ export default function AddProduct({ products, setProducts }) {
         price: tmpPrice,
         description: description,
       };
-      // TODO: backend not getting amount!
       const request = APIs.product.create;
       request.data = data;
       api(request)
@@ -67,14 +66,7 @@ export default function AddProduct({ products, setProducts }) {
           }
         })
         .catch((err) => {
-          if (err.code === "ERR_NETWORK") {
-            setNotifs({ errors: [messages.err.noServer] });
-          } else {
-            if (err) {
-              setNotifs({ errors: [messages.err.err] });
-              if (isDev()) console.error(err);
-            }
-          }
+          handleApiErrors(err, setNotifs);
         });
       setDisableSubmit(false);
     }

@@ -13,10 +13,9 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { FiTrash2 } from "react-icons/fi";
-import { messages } from "../../Global/messages";
 import useNotifs from "../../Hooks/useNotifs";
 import { api, APIs } from "../../plugins/api";
-import { isDev } from "../../plugins/utils";
+import { handleApiErrors, isDev } from "../../plugins/utils";
 
 export default function DeleteModal({
   productName,
@@ -35,20 +34,13 @@ export default function DeleteModal({
       .then((res) => {
         if (res.status === 200 || res.data[0] === "success") {
           setNotifs({ successes: [res.data.message] });
-          // delete from app state too
           const tmpNewProducts = products.filter((p) => p.id !== productId);
           setProducts(tmpNewProducts);
         }
         if (isDev()) console.log(res);
       })
-      //TODO: DRY dont repeat you self + add product and other .then(errs)...
       .catch((err) => {
-        if (err.code == "ERR_NETWORK") {
-          setNotifs({ errors: [messages.err.noServer] });
-        } else {
-          setNotifs({ errors: [messages.err.err] });
-        }
-        if (isDev()) console.error(err);
+        handleApiErrors(err, setNotifs);
       });
   };
 

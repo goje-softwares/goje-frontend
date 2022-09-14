@@ -14,10 +14,9 @@ import {
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { messages } from "../../Global/messages";
 import useNotifs from "../../Hooks/useNotifs";
 import { api, APIs } from "../../plugins/api";
-import { isDev } from "../../plugins/utils";
+import { handleApiErrors } from "../../plugins/utils";
 import AddProduct from "./AddProduct";
 import DeleteModal from "./DeleteModal";
 import DescriptionModal from "./DescriptionModal";
@@ -26,7 +25,6 @@ export default function Products() {
   const [products, setProducts] = useState([]);
   const { setNotifs } = useNotifs();
 
-  // TODO: clean code
   useEffect(() => {
     const request = APIs.product.list;
     api(request)
@@ -37,10 +35,7 @@ export default function Products() {
         }
       })
       .catch((err) => {
-        if (err && err.code === "ERR_NETWORK") {
-          setNotifs({ errors: [messages.err.noServer] });
-          if (isDev()) console.error(err);
-        }
+        handleApiErrors(err, setNotifs);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

@@ -23,7 +23,6 @@ export const validatePassword = (password) => {
     return "رمز عبور نمیتواند خالی باشد.";
   } else if (validator.isLength(password, { max: 7 })) {
     return "رمز عبور باید حداقل شامل 8 کارکتر باشد.";
-    // TODO: check min
   } else if (validator.isLength(password, { min: 255 })) {
     return "رمز عبور نمیتواند بیشتر از 255 کارکتر باشد.";
   }
