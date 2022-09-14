@@ -77,7 +77,6 @@ export default function Register() {
         password: password.password,
       };
 
-      // TODO: cleanCode (seperate file)
       const request = APIs.auth.register;
       request.data = data;
       api(request)

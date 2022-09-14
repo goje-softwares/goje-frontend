@@ -50,7 +50,6 @@ export default function AddProduct({ products, setProducts }) {
         price: tmpPrice,
         description: description,
       };
-      // TODO: backend not getting amount!
       const request = APIs.product.create;
       request.data = data;
       api(request)

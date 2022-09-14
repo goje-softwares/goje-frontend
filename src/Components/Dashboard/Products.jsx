@@ -26,7 +26,6 @@ export default function Products() {
   const [products, setProducts] = useState([]);
   const { setNotifs } = useNotifs();
 
-  // TODO: clean code
   useEffect(() => {
     const request = APIs.product.list;
     api(request)

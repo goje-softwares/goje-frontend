@@ -35,13 +35,11 @@ export default function DeleteModal({
       .then((res) => {
         if (res.status === 200 || res.data[0] === "success") {
           setNotifs({ successes: [res.data.message] });
-          // delete from app state too
           const tmpNewProducts = products.filter((p) => p.id !== productId);
           setProducts(tmpNewProducts);
         }
         if (isDev()) console.log(res);
       })
-      //TODO: DRY dont repeat you self + add product and other .then(errs)...
       .catch((err) => {
         if (err.code == "ERR_NETWORK") {
           setNotifs({ errors: [messages.err.noServer] });
