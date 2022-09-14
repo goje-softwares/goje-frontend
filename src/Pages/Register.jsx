@@ -100,6 +100,9 @@ export default function Register() {
             });
             setNotifs({ successes: [messages.success.accountCreated] });
             navigate(dashboard);
+          } else if (res.code === "ERR_BAD_RESPONSE") {
+            setNotifs({ errors: [messages.err.err] });
+            setDisableSubmit(false);
           }
         })
         .catch((err) => {
