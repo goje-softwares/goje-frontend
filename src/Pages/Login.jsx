@@ -20,10 +20,9 @@ import SubmitButton from "../Components/Form/SubmitButton";
 import FormWrapper from "../Components/Form/FormWrapper";
 import useAuth from "../Hooks/useAuth";
 import { dashboard, register } from "../Global/Routes";
-import { isDev } from "../plugins/utils";
+import { handleApiErrors } from "../plugins/utils";
 import Navbar from "../Components/Navbar";
 import useNotifs from "../Hooks/useNotifs";
-import { messages } from "../Global/messages";
 
 export default function Login() {
   const { setAuth } = useAuth();
@@ -60,9 +59,6 @@ export default function Login() {
       request.data = data;
       api(request)
         .then((res) => {
-          if (isDev()) {
-            console.log("api response:", res);
-          }
           if (res.status === 200) {
             setAuth({
               email: res.data.data.email,
@@ -74,19 +70,7 @@ export default function Login() {
           }
         })
         .catch((err) => {
-          if (isDev()) {
-            console.error("api error:", err);
-          }
-          if (err?.response?.status === 401) {
-            setNotifs({ errors: [messages.err.wrongEmailPass] });
-          } else if (err.response?.status === 404) {
-            setNotifs({
-              errors: [messages.err.noServer],
-            });
-          } else {
-            setNotifs({ errors: [messages.err.err] });
-          }
-          setDisableSubmit(false);
+          handleApiErrors(err, setNotifs, setDisableSubmit);
         });
     }
   };

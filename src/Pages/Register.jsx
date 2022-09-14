@@ -26,7 +26,7 @@ import FormWrapper from "../Components/Form/FormWrapper";
 import SubmitButton from "../Components/Form/SubmitButton";
 import useAuth from "../Hooks/useAuth";
 import { dashboard, login } from "../Global/Routes";
-import { isDev } from "../plugins/utils";
+import { handleApiErrors } from "../plugins/utils";
 import Navbar from "../Components/Navbar";
 import useNotifs from "../Hooks/useNotifs";
 import { messages } from "../Global/messages";
@@ -81,9 +81,6 @@ export default function Register() {
       request.data = data;
       api(request)
         .then((res) => {
-          if (isDev()) {
-            console.log("api response:", res);
-          }
           if (
             res.status === 200 &&
             res?.data?.email[0] === "The email has already been taken."
@@ -99,17 +96,10 @@ export default function Register() {
             });
             setNotifs({ successes: [messages.success.accountCreated] });
             navigate(dashboard);
-          } else if (res.code === "ERR_BAD_RESPONSE") {
-            setNotifs({ errors: [messages.err.err] });
-            setDisableSubmit(false);
           }
         })
         .catch((err) => {
-          if (isDev()) {
-            console.error("api error:", err);
-          }
-          setNotifs({ errors: [messages.err.err] });
-          setDisableSubmit(false);
+          handleApiErrors(err, setNotifs, setDisableSubmit);
         });
     }
   };
