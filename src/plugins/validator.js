@@ -21,11 +21,10 @@ export const validateName = (name) => {
 export const validatePassword = (password) => {
   if (validator.isEmpty(password)) {
     return "رمز عبور نمیتواند خالی باشد.";
-  } else if (validator.isLength(password, { min: 1, max: 7 })) {
+  } else if (validator.isLength(password, { max: 7 })) {
     return "رمز عبور باید حداقل شامل 8 کارکتر باشد.";
-    // TODO: check min
-  } else if (validator.isLength(password, { min: 128 })) {
-    return "رمز عبور نمیتواند بیشتر از 128 کارکتر باشد.";
+  } else if (validator.isLength(password, { min: 255 })) {
+    return "رمز عبور نمیتواند بیشتر از 255 کارکتر باشد.";
   }
   return false;
 };
@@ -46,6 +45,8 @@ export const validatePrice = (price) => {
     return "لطفا در وارد کردن قیمت فقط از اعداد استفاده کنید";
   } else if (price < 0) {
     return "قیمت نمیتواند منفی باشد.";
+  } else if (validator.isLength(price, { min: 255, max: 1 })) {
+    return "قیمت خارج از محدوده است";
   }
   return false;
 };
